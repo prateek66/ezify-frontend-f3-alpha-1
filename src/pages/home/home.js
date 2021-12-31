@@ -8,6 +8,7 @@ import cleaningIcon from "./../../assets/home_page/cleaning_service_icon.svg";
 import laundryIcon from "./../../assets/home_page/laundry_service_icon.svg";
 import paintingIcon from "./../../assets/home_page/painting_service_icon.svg";
 import repairingIcon from "./../../assets/home_page/repairing_service_icon.svg";
+import covidFrame from "./../../assets/home_page/covid_frame.svg";
 
 const Home = () => {
   const homePageServices = [
@@ -20,12 +21,12 @@ const Home = () => {
       icon: laundryIcon,
     },
     {
-      name: "painting",
-      icon: paintingIcon,
-    },
-    {
       name: "repairing",
       icon: repairingIcon,
+    },
+    {
+      name: "painting",
+      icon: paintingIcon,
     },
   ];
 
@@ -56,6 +57,24 @@ const Home = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+      <section className="section-covid">
+        <div className="container">
+          <div className="row">
+            <div className="col-6">
+              <div className="section-covid__container">
+                <img src={covidFrame} alt="Covid Frame" />
+              </div>
+            </div>
+            <div className="col-5 offset-1 d-flex flex-column align-items-start justify-content-center">
+              <h3 className="section-covid__heading">Fully Vaccinated</h3>
+              <p className="section-covid__text">
+                Our Service Provoiders are Fully Vaccinated and they follow proper covid protocols so that we can provide you the best services while
+                you safe.
+              </p>
+            </div>
           </div>
         </div>
       </section>
