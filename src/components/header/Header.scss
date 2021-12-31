@@ -3,7 +3,13 @@
 .header {
   padding: 1rem 0;
   box-shadow: $box-shadow;
-  font-size: .9rem;
+  font-size: 0.9rem;
+
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: #fff;
 }
 
 .button-vendor {

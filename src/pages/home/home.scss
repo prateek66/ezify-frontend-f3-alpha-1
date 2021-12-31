@@ -4,6 +4,30 @@
   &-hero {
     padding: 2rem 0;
     box-shadow: $box-shadow;
-    height: 100vh;
+
+    & .service-container {
+      text-align: center;
+      box-shadow: $box-shadow;
+      padding: 1.5rem;
+      height: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $box-shadow-darker;
+      }
+
+      &__name {
+        text-transform: uppercase;
+        font-family: $montserrat-font-family;
+        margin-bottom: 1rem;
+        font-weight: 600;
+
+        & span {
+          color: $primary-color;
+        }
+      }
+    }
   }
 }
