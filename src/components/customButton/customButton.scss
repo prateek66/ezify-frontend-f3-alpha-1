@@ -7,11 +7,12 @@
   border-radius: 5px;
   font-family: $montserrat-font-family;
   font-size: 0.9rem;
-  transition: 0.2s;
+  transition: 0.3s;
 
   &:hover {
     color: white;
     box-shadow: $box-shadow;
+    transform: translateY(-2px);
   }
 
   &-ghost {
@@ -22,5 +23,9 @@
     &:hover {
       background-color: $primary-color;
     }
+  }
+
+  &.cp-2 {
+    padding: 0.4rem 2rem;
   }
 }

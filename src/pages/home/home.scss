@@ -1,0 +1,9 @@
+@import "./../../sassStyles/variables";
+
+.section {
+  &-hero {
+    padding: 2rem 0;
+    box-shadow: $box-shadow;
+    height: 100vh;
+  }
+}

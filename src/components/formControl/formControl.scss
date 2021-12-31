@@ -1,0 +1,23 @@
+@import "./../../sassStyles/variables";
+
+.formControl {
+  &-label {
+    font-family: $montserrat-font-family;
+    font-weight: 500;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: $quaternary-color;
+  }
+
+  &.form-control {
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  &-input {
+    border-radius: 7px;
+    border-color: $quaternary-color;
+  }
+}
