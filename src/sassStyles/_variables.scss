@@ -1,6 +1,7 @@
 // COLORS
 $primary-color: #09b162;
 $primary-color-light: #9bdfbf;
+$primary-color-dark: #036235;
 $secondary-color: #ffc200;
 $tertiary-color: #3d2729;
 $quaternary-color: #30334f;
@@ -16,6 +17,7 @@ $montserrat-font-family: "Montserrat", sans-serif;
 :export {
   primary-color: $primary-color;
   primary-color-light: $primary-color-light;
+  primary-color-dark: $primary-color-dark;
   secondary-color: $secondary-color;
   tertiary-color: $tertiary-color;
   quaternary-color: $quaternary-color;

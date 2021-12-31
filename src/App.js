@@ -1,4 +1,5 @@
 import "./App.scss";
+import Footer from "./components/footer/footer";
 import Header from "./components/header/Header";
 import Home from "./pages/home/home";
 import ApiContext from "./services/api.service";
@@ -8,6 +9,7 @@ function App() {
     <ApiContext>
       <Header></Header>
       <Home></Home>
+      <Footer></Footer>
     </ApiContext>
   );
 }
