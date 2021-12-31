@@ -30,16 +30,16 @@ const Footer = () => {
     <footer className="footer">
       <div className="container">
         <div className="row">
-          <div className="col-6 offset-6">
+          <div className="col-lg-6 offset-lg-6">
             <div className="row">
-              <div className="col-4">
+              <div className="col-sm-4">
                 <div className="footer__link-title">Mobile App</div>
                 <ul className="footer__links-list">
                   <li className="footer__links">Features</li>
                   <li className="footer__links">Live Track</li>
                 </ul>
               </div>
-              <div className="col-4">
+              <div className="col-sm-4">
                 <div className="footer__link-title">Community</div>
                 <ul className="footer__links-list">
                   <li className="footer__links">Featured Vendors</li>
@@ -47,7 +47,7 @@ const Footer = () => {
                   <li className="footer__links">Live events</li>
                 </ul>
               </div>
-              <div className="col-4">
+              <div className="col-sm-4">
                 <div className="footer__link-title">Company</div>
                 <ul className="footer__links-list">
                   <li className="footer__links">About Us</li>
@@ -59,9 +59,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="row mt-5">
-          <div className="col-3">© Ezzify, Inc. 2022. Unbox Zindagi!</div>
-          <div className="col-3 offset-6 d-flex align-items-center">
+        <div className="row mt-lg-5">
+          <div className="col-md-6 col-lg-3">© Ezzify, Inc. 2022. Unbox Zindagi!</div>
+          <div className="col-md-6 col-lg-3 offset-lg-6 mt-3 mt-md-0 d-flex align-items-center">
             <div className="footer__social-links">Follow Us :</div>
             <ul className="footer__social-links--list">
               {socialLinks.map((link, index) => (

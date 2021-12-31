@@ -35,17 +35,17 @@ const Home = () => {
       <section className="section-hero">
         <div className="container">
           <div className="row">
-            <div className="col-4">
+            <div className="col-lg-4">
               <BannerForm />
             </div>
-            <div className="col-8">
+            <div className="col-lg-8 mt-5 mt-lg-0">
               <BannerCarousel />
             </div>
           </div>
           <div className="row mt-5">
             {homePageServices.map((service, index) => {
               return (
-                <div className="col-3" key={index}>
+                <div className="col-6 col-lg-3 mt-4 mt-lg-0" key={index}>
                   <div className="service-container">
                     <div className="service-container__name">
                       <span className="service-container__name--formatted">{service.name}</span> services
@@ -63,12 +63,12 @@ const Home = () => {
       <section className="section-covid">
         <div className="container">
           <div className="row">
-            <div className="col-6">
+            <div className="col-lg-6">
               <div className="section-covid__container">
                 <img src={covidFrame} alt="Covid Frame" />
               </div>
             </div>
-            <div className="col-5 offset-1 d-flex flex-column align-items-start justify-content-center">
+            <div className="col-lg-5 offset-lg-1 mt-3 mt-lg-0 d-flex flex-column align-items-start justify-content-center">
               <h3 className="section-covid__heading">Fully Vaccinated</h3>
               <p className="section-covid__text">
                 Our Service Provoiders are Fully Vaccinated and they follow proper covid protocols so that we can provide you the best services while

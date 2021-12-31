@@ -15,7 +15,7 @@
       content: "";
       position: absolute;
       top: 0;
-      left: -2%;
+      left: -12px;
       width: 6px;
       height: 100%;
       background-color: $primary-color;
@@ -41,6 +41,10 @@
         color: $primary-color;
         font-weight: bold;
       }
+    }
+
+    & .carousel-inner {
+      height: 100%;
     }
 
     & .carousel-control-prev {
@@ -73,6 +77,26 @@
 
     & .carousel {
       height: 100%;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .bannerCarousel {
+    &-carousel {
+      & .carousel-item-text {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 756px) {
+  .bannerCarousel {
+    &-carousel {
+      & .carousel-item-text {
+        font-size: 1.5rem;
+      }
     }
   }
 }
