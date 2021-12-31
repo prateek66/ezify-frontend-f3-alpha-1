@@ -64,8 +64,8 @@ const Footer = () => {
           <div className="col-3 offset-6 d-flex align-items-center">
             <div className="footer__social-links">Follow Us :</div>
             <ul className="footer__social-links--list">
-              {socialLinks.map((link) => (
-                <li className="footer__social-links--list--item" title={link.name}>
+              {socialLinks.map((link, index) => (
+                <li className="footer__social-links--list--item" title={link.name} key={index}>
                   <img src={link.icon} alt={link.name} />
                 </li>
               ))}
