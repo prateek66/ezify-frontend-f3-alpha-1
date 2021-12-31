@@ -43,12 +43,36 @@
       }
     }
 
-    & .carousel {
-      height: 100%;
+    & .carousel-control-prev {
+      left: -10%;
+      opacity: 1;
+      &-icon {
+        background-image: url("./../../assets/home_page/prev_arrow.svg");
+        height: 30px;
+        width: 30px;
+      }
     }
 
-    & .carousel-indicators {
-      z-index: 1;
+    & .carousel-control-next {
+      right: -10%;
+      opacity: 1;
+      &-icon {
+        background-image: url("./../../assets/home_page/next_arrow.svg");
+        height: 30px;
+        width: 30px;
+      }
+    }
+
+    & .carousel-item.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      padding: 1rem;
+    }
+
+    & .carousel {
+      height: 100%;
     }
   }
 }
