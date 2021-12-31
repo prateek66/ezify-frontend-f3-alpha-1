@@ -1,0 +1,26 @@
+@import "./../../sassStyles/variables";
+
+.customButton {
+  color: #fff;
+  padding: 0.2rem 1rem;
+  background-color: $primary-color;
+  border-radius: 5px;
+  font-family: $montserrat-font-family;
+  font-size: 0.9rem;
+  transition: 0.2s;
+
+  &:hover {
+    color: white;
+    box-shadow: $box-shadow;
+  }
+
+  &-ghost {
+    background-color: white;
+    border-color: $primary-color;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $primary-color;
+    }
+  }
+}

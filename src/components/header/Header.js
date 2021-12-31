@@ -1,29 +1,27 @@
-import React, { useContext, useEffect } from "react";
-import { ApiCallsContext } from "../../services/api.service";
-import { catchHandler } from "../../utlis/catchHandler.utlis";
-import { API_URLS } from "../../utlis/constants";
+import React from "react";
+import CustomButton from "../customButton/customButton";
 import "./Header.scss";
 
 const Header = () => {
-  const ApiContext = useContext(ApiCallsContext);
-
-  const sampleAPICall = async () => {
-    const postObj = {
-      name: "Harshit",
-    };
-    const data = await ApiContext.postData(API_URLS.SAMPLE_URL, postObj);
-
-    console.log(data);
-  };
-
-  useEffect(() => {
-    catchHandler(sampleAPICall);
-  }, []);
-
   return (
-    <div>
-      <h1>Header</h1>
-    </div>
+    <header className="header">
+      <div className="container">
+        <div className="row">
+          <div className="col-1">
+            <div className="logo-container"></div>
+          </div>
+          <div className="col-4 offset-7">
+            <div className="button-group d-flex align-items-center justify-content-between">
+              <a href="#" className="button-vendor">
+                Become a Vendor
+              </a>
+              <CustomButton type="button" text="Sign Up"></CustomButton>
+              <CustomButton type="button" text="Sign In" classes="customButton-ghost"></CustomButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 

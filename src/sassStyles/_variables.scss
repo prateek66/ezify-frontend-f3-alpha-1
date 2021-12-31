@@ -1,0 +1,22 @@
+// COLORS
+$primary-color: #09b162;
+$primary-color-light: #9bdfbf;
+$secondary-color: #ffc200;
+$tertiary-color: #3d2729;
+$quaternary-color: #30334f;
+
+// BOX SHADOW
+$box-shadow: 0px 4px 4px rgba(103, 109, 109, 0.18);
+
+// FONT FAMILIES
+$montserrat-font-family: "Montserrat", sans-serif;
+
+:export {
+  primary-color: $primary-color;
+  primary-color-light: $primary-color-light;
+  secondary-color: $secondary-color;
+  tertiary-color: $tertiary-color;
+  quaternary-color: $quaternary-color;
+  box-shadow: $box-shadow;
+  montserrat-font-family: $montserrat-font-family;
+}

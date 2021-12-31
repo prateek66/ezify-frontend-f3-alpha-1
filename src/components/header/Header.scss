@@ -1,3 +1,17 @@
-h1 {
-  color: blue;
+@import "./../../sassStyles/_variables.scss";
+
+.header {
+  padding: 1rem 0;
+  box-shadow: $box-shadow;
+  font-size: .9rem;
+}
+
+.button-vendor {
+  color: $primary-color;
+  font-family: $montserrat-font-family;
+
+  &:hover {
+    text-decoration: none;
+    color: $primary-color;
+  }
 }
