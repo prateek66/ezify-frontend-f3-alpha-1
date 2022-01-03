@@ -19,15 +19,4 @@
     font-weight: 600;
     font-size: 1.5rem;
   }
-
-  .emailPopup {
-    &__text {
-      font-size: 0.8rem;
-      margin-bottom: 7rem;
-
-      span {
-        color: $primary-color;
-      }
-    }
-  }
 }

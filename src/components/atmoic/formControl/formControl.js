@@ -3,7 +3,7 @@ import React from "react";
 import "./formControl.scss";
 
 const FormControl = (props) => {
-  const { id, type, label, isMandatory, onChange, validators } = props;
+  const { id, type, label, isMandatory, onChange, validators, disabled } = props;
 
   const onFocus = () => {
     const inputLabel = document.getElementById(`label-${id}`);
@@ -30,7 +30,15 @@ const FormControl = (props) => {
 
       <div>
         {(type === "input" || type === "email") && (
-          <input className="form-control formControl-input" id={id} onFocus={onFocus} onBlur={onFocusOut} onChange={onChange} {...validators} />
+          <input
+            className="form-control formControl-input"
+            id={id}
+            onFocus={onFocus}
+            onBlur={onFocusOut}
+            onChange={onChange}
+            {...validators}
+            disabled={disabled}
+          />
         )}
       </div>
     </div>

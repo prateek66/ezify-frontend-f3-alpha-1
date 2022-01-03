@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import EmailPopup from "./emailPopup/emailPopup";
+import OtpPopup from "./otpPopup/otpPopup";
 
 export class UserSignup extends Component {
   state = {
@@ -39,7 +40,7 @@ export class UserSignup extends Component {
         return <EmailPopup nextStep={this.nextStep} handleChange={this.handleChange} values={values} />;
 
       case 2:
-        return <div>OTP</div>;
+        return <OtpPopup nextStep={this.nextStep} handleChange={this.handleChange} prevStep={this.prevStep} values={values} />;
 
       case 3:
         return <div>Personal Details</div>;
