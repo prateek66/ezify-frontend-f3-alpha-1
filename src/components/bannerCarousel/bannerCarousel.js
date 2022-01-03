@@ -9,7 +9,7 @@ const BannerCarousel = () => {
       <div className="bannerCarousel-heading">Why Choose Us</div>
 
       <div className="bannerCarousel-carousel">
-        <Carousel indicators={true} prevLabel="" nextLabel="">
+        <Carousel indicators={false} prevLabel="" nextLabel="">
           <Carousel.Item>
             <div className="carousel-item-text">Provides reliable, affordable</div>
             <div className="carousel-item-text text-right pr-4">
