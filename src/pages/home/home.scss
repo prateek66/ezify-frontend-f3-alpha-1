@@ -29,11 +29,16 @@
         }
       }
     }
+
+    & a {
+      text-decoration: none;
+      color: $quaternary-color;
+    }
   }
 
   &-covid {
     padding: 2rem 0;
-    
+
     &__container {
       img {
         width: 100%;

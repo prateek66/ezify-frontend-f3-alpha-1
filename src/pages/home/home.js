@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import BannerCarousel from "../../components/bannerCarousel/bannerCarousel";
 import BannerForm from "../../components/bannerForm/bannerForm";
 
@@ -46,14 +48,16 @@ const Home = () => {
             {homePageServices.map((service, index) => {
               return (
                 <div className="col-6 col-lg-3 mt-4 mt-lg-0" key={index}>
-                  <div className="service-container">
-                    <div className="service-container__name">
-                      <span className="service-container__name--formatted">{service.name}</span> services
+                  <Link to="/services">
+                    <div className="service-container">
+                      <div className="service-container__name">
+                        <span className="service-container__name--formatted">{service.name}</span> services
+                      </div>
+                      <div className="service-container__icon">
+                        <img src={service.icon} alt={service.name} />
+                      </div>
                     </div>
-                    <div className="service-container__icon">
-                      <img src={service.icon} alt={service.name} />
-                    </div>
-                  </div>
+                  </Link>
                 </div>
               );
             })}
