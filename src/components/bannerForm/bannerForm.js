@@ -1,6 +1,6 @@
 import React from "react";
-import CustomButton from "../customButton/customButton";
-import FormControl from "../formControl/formControl";
+import CustomButton from "../atmoic/customButton/customButton";
+import FormControl from "../atmoic/formControl/formControl";
 import "./bannerForm.scss";
 
 const BannerForm = () => {

@@ -24,11 +24,13 @@ const FormControl = (props) => {
   return (
     <div className="form-group formControl">
       <label htmlFor={id} id={`label-${id}`} className="formControl-label">
-        {isMandatory ? "*" : null}
+        {isMandatory ? "* " : null}
         {label}
       </label>
 
-      <div>{type === "input" && <input className="form-control formControl-input" id={id} onFocus={onFocus} onBlur={onFocusOut} />}</div>
+      <div>
+        {(type === "input" || type === "email") && <input className="form-control formControl-input" id={id} onFocus={onFocus} onBlur={onFocusOut} />}
+      </div>
     </div>
   );
 };
