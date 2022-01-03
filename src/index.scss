@@ -1,6 +1,10 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "./../src/sass/variables";
 
+body {
+  font-family: $montserrat-font-family;
+}
+
 .custom-modal {
   .modal-header {
     border-bottom: none;
