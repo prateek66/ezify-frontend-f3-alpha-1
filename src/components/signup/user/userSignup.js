@@ -36,7 +36,7 @@ export class UserSignup extends Component {
 
     switch (step) {
       case 1:
-        return <EmailPopup />;
+        return <EmailPopup nextStep={this.nextStep} handleChange={this.handleChange} values={values} />;
 
       case 2:
         return <div>OTP</div>;

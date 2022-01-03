@@ -3,16 +3,27 @@ import { Modal } from "react-bootstrap";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
-const EmailPopup = () => {
+const EmailPopup = ({ values, handleChange, nextStep }) => {
+  const proceed = (e) => {
+    e.preventDefault();
+    nextStep();
+  };
+
+  
+
   const emailFormControlAttributes = {
     id: "email",
     label: "Enter Your Email Address",
     isMandatory: true,
     type: "email",
+    onChange: handleChange("email"),
+    validators: {
+      required: true,
+    },
   };
 
   const buttonAttributes = {
-    type: "button",
+    type: "submit",
     text: "SEND OTP",
     classes: "btn-block font-weight-bold",
   };
@@ -21,11 +32,13 @@ const EmailPopup = () => {
     <div className="emailPopup">
       <Modal.Header closeButton>Login / Signup</Modal.Header>
       <Modal.Body>
-        <FormControl {...emailFormControlAttributes} />
-        <p className="emailPopup__text">
-          By signing up, you accept our <span>Terms of use</span> and <span>Privacy Policy</span>
-        </p>
-        <CustomButton {...buttonAttributes} />
+        <form onSubmit={proceed}>
+          <FormControl {...emailFormControlAttributes} />
+          <p className="emailPopup__text">
+            By signing up, you accept our <span>Terms of use</span> and <span>Privacy Policy</span>
+          </p>
+          <CustomButton {...buttonAttributes} />
+        </form>
       </Modal.Body>
     </div>
   );

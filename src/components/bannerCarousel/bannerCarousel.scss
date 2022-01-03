@@ -43,6 +43,10 @@
       }
     }
 
+    & .carousel-indicators {
+      z-index: 1;
+    }
+
     & .carousel-inner {
       height: 100%;
     }
