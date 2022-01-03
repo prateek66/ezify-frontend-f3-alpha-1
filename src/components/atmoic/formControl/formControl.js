@@ -40,6 +40,18 @@ const FormControl = (props) => {
             disabled={disabled}
           />
         )}
+
+        {type === "textarea" && (
+          <textarea
+            className="form-control formControl-input"
+            id={id}
+            onFocus={onFocus}
+            onBlur={onFocusOut}
+            onChange={onChange}
+            {...validators}
+            disabled={disabled}
+          ></textarea>
+        )}
       </div>
     </div>
   );

@@ -34,8 +34,8 @@ const OtpPopup = ({ values, handleChange, nextStep, prevStep }) => {
         <form>
           <FormControl {...emailFormControlAttributes} />
           <div className="d-flex justify-content-between align-items-center">
-            <label className="formControl-label">Enter the OTP sent to your Email</label>
-            <p className="emailPopup__change-email">
+            <label className="formControl-label mb-0">Enter the OTP sent to your Email</label>
+            <p className="emailPopup__change-email mb-0">
               <span onClick={prevStep}>Change Email</span>
             </p>
           </div>

@@ -8,8 +8,13 @@ import "./Header.scss";
 
 const Header = () => {
   const [show, setShow] = useState(false);
+  const [size, setSize] = useState("md");
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setSize("md");
+    setShow(false);
+  };
+  
   const handleShow = () => setShow(true);
 
   return (
@@ -33,9 +38,9 @@ const Header = () => {
         </div>
       </header>
 
-      <ModalBase show={show} handleClose={handleClose} handleShow={handleShow} dialogClassName="signup">
+      <ModalBase show={show} handleClose={handleClose} handleShow={handleShow} dialogClassName="signup" size={size}>
         <>
-          <UserSignup></UserSignup>
+          <UserSignup setSize={setSize}></UserSignup>
         </>
       </ModalBase>
     </>

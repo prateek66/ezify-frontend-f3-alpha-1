@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import EmailPopup from "./emailPopup/emailPopup";
 import OtpPopup from "./otpPopup/otpPopup";
+import PersonalDetails from "./personalDetails/personalDetails";
 
 export class UserSignup extends Component {
   state = {
@@ -12,6 +13,10 @@ export class UserSignup extends Component {
   // Proceed to next step
   nextStep = () => {
     const { step } = this.state;
+    if (step > 1) {
+      this.props.setSize("lg");
+    }
+
     this.setState({
       step: step + 1,
     });
@@ -43,7 +48,7 @@ export class UserSignup extends Component {
         return <OtpPopup nextStep={this.nextStep} handleChange={this.handleChange} prevStep={this.prevStep} values={values} />;
 
       case 3:
-        return <div>Personal Details</div>;
+        return <PersonalDetails />;
 
       default:
         console.log("This is a multi-step form built with React.");
