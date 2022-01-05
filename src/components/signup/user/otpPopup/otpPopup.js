@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
+import { ApiCallsContext } from "../../../../services/api.service";
+import { catchHandler } from "../../../../utlis/catchHandler.utlis";
+import { API_URLS } from "../../../../utlis/constants";
 
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
 import "./otpPopup.scss";
 
-const OtpPopup = ({ values, handleChange, nextStep, prevStep }) => {
-  const proceed = (e) => {
-    e.preventDefault();
-    nextStep();
-  };
+const OtpPopup = ({ values, handleChange, nextStep, prevStep, handleClose }) => {
+  const ApiContext = useContext(ApiCallsContext);
 
   const emailFormControlAttributes = {
     id: "email",
@@ -18,13 +18,45 @@ const OtpPopup = ({ values, handleChange, nextStep, prevStep }) => {
     isMandatory: true,
     type: "email",
     disabled: true,
+    value: values.email,
   };
 
   const buttonAttributes = {
     type: "submit",
     text: "NEXT",
     classes: "btn-block font-weight-bold",
-    onClick: proceed,
+  };
+
+  const sendOTPAPI = async () => {
+    const postObj = {
+      email: values.email,
+    };
+
+    const data = await ApiContext.postData(API_URLS.SEND_OTP, postObj);
+    return data;
+  };
+
+  const verifyOTPAPI = async (otp) => {
+    const postObj = {
+      id: values.id,
+      otp,
+    };
+
+    const data = await ApiContext.postData(API_URLS.VERIFY_OTP, postObj);
+    return data;
+  };
+
+  const handleOTPChange = async (e) => {
+    const { value } = e.target;
+
+    if (value.length === 4) {
+      const response = await catchHandler(() => verifyOTPAPI(value));
+      if (!response.isActive) {
+        nextStep();
+      } else {
+        handleClose();
+      }
+    }
   };
 
   return (
@@ -39,9 +71,9 @@ const OtpPopup = ({ values, handleChange, nextStep, prevStep }) => {
               <span onClick={prevStep}>Change Email</span>
             </p>
           </div>
-          <input className="form-control formControl-input mb-3 otp-input" id="otp" />
+          <input className="form-control formControl-input mb-3 otp-input" id="otp" maxLength={4} onChange={handleOTPChange} />
           <p className="emailPopup__change-email">
-            <span>Resend OTP</span>
+            <span onClick={sendOTPAPI}>Resend OTP</span>
           </p>
           <CustomButton {...buttonAttributes} />
         </form>

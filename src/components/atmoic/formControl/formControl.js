@@ -3,7 +3,7 @@ import React from "react";
 import "./formControl.scss";
 
 const FormControl = (props) => {
-  const { id, type, label, isMandatory, onChange, validators, disabled } = props;
+  const { id, type, label, isMandatory, onChange, validators, disabled, value } = props;
 
   const onFocus = () => {
     const inputLabel = document.getElementById(`label-${id}`);
@@ -38,6 +38,7 @@ const FormControl = (props) => {
             onChange={onChange}
             {...validators}
             disabled={disabled}
+            value={value}
           />
         )}
 

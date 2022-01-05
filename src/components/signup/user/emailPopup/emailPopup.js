@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
+import { ApiCallsContext } from "../../../../services/api.service";
+import { catchHandler } from "../../../../utlis/catchHandler.utlis";
+import { API_URLS } from "../../../../utlis/constants";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
-const EmailPopup = ({ values, handleChange, nextStep }) => {
-  const proceed = (e) => {
-    e.preventDefault();
-    nextStep();
+const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
+  const ApiContext = useContext(ApiCallsContext);
+
+  const sendOTPAPI = async () => {
+    const postObj = {
+      email: values.email,
+    };
+
+    const data = await ApiContext.postData(API_URLS.SEND_OTP, postObj);
+    return data;
+  };
+
+  const sendOTP = async () => {
+    if (values.email) {
+      const response = await catchHandler(sendOTPAPI);
+      updateState('id', response._id)
+      nextStep();
+    }
   };
 
   const emailFormControlAttributes = {
@@ -15,16 +32,17 @@ const EmailPopup = ({ values, handleChange, nextStep }) => {
     isMandatory: true,
     type: "email",
     onChange: handleChange("email"),
-    // validators: {
-    //   required: true,
-    // },
+    validators: {
+      required: true,
+    },
+    value: values.email,
   };
 
-  const buttonAttributes = {
+  let buttonAttributes = {
     type: "submit",
     text: "SEND OTP",
     classes: "btn-block font-weight-bold",
-    onClick: proceed,
+    onClick: sendOTP,
   };
 
   return (

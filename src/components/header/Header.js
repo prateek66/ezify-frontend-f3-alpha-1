@@ -40,7 +40,7 @@ const Header = () => {
 
       <ModalBase show={show} handleClose={handleClose} handleShow={handleShow} dialogClassName="signup" size={size}>
         <>
-          <UserSignup setSize={setSize}></UserSignup>
+          <UserSignup setSize={setSize} handleClose={handleClose}></UserSignup>
         </>
       </ModalBase>
     </>

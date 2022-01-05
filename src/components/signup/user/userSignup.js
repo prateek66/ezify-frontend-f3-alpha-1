@@ -8,6 +8,7 @@ export class UserSignup extends Component {
   state = {
     step: 1,
     email: "",
+    id: "",
     otp: "",
     firstName: "",
     lastName: "",
@@ -42,17 +43,29 @@ export class UserSignup extends Component {
     this.setState({ [input]: e.target.value });
   };
 
+  updateState = (field, value) => {
+    this.setState({ [field]: value });
+  };
+
   render() {
     const { step } = this.state;
-    const { email, otp } = this.state;
-    const values = { email, otp };
+    const { email, id, otp, firstName, lastName, state, city, address, mobileNumber } = this.state;
+    const values = { email, id, otp, firstName, lastName, state, city, address, mobileNumber };
 
     switch (step) {
       case 1:
-        return <EmailPopup nextStep={this.nextStep} handleChange={this.handleChange} values={values} />;
+        return <EmailPopup nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} />;
 
       case 2:
-        return <OtpPopup nextStep={this.nextStep} handleChange={this.handleChange} prevStep={this.prevStep} values={values} />;
+        return (
+          <OtpPopup
+            nextStep={this.nextStep}
+            handleChange={this.handleChange}
+            handleClose={this.props.handleClose}
+            prevStep={this.prevStep}
+            values={values}
+          />
+        );
 
       case 3:
         return <PersonalDetails nextStep={this.nextStep} handleChange={this.handleChange} values={values} />;
