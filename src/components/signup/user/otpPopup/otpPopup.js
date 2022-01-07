@@ -54,11 +54,12 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
 
     if (value.length === 4) {
       const response = await catchHandler(() => verifyOTPAPI(value));
-      setToken(response.token);
+
       updateState("token", response.token);
       if (!response.user.isActive) {
         nextStep();
       } else {
+        setToken(response.token);
         handleClose();
       }
     }

@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
+import { connect } from "react-redux";
+import { setCurrentUser } from "../../../../redux/user/user.actions";
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../../../utlis/constants";
@@ -7,13 +9,8 @@ import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 import "./personalDetails.scss";
 
-const PersonalDetails = ({ values, handleChange, nextStep }) => {
+const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
   const ApiContext = useContext(ApiCallsContext);
-
-  const proceed = (e) => {
-    e.preventDefault();
-    nextStep();
-  };
 
   const fNameFormControlAttributes = {
     id: "fname",
@@ -88,6 +85,7 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
 
   const handleUserRegistration = async () => {
     await catchHandler(userRegistrationAPI);
+    setToken(values.token);
     nextStep();
   };
 
@@ -136,4 +134,8 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
   );
 };
 
-export default PersonalDetails;
+const mapDispatchToProps = (dispatch) => ({
+  setToken: (token) => dispatch(setCurrentUser(token)),
+});
+
+export default connect(null, mapDispatchToProps)(PersonalDetails);
