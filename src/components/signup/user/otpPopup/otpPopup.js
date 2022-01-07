@@ -25,9 +25,11 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
   };
 
   const buttonAttributes = {
-    type: "submit",
+    type: "button",
     text: "NEXT",
     classes: "btn-block font-weight-bold",
+
+    onClick: () => handleOTPChange(),
   };
 
   const sendOTPAPI = async () => {
@@ -54,8 +56,6 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
 
     if (value.length === 4) {
       const response = await catchHandler(() => verifyOTPAPI(value));
-
-      console.log(response);
 
       updateState("token", response.token);
       if (!response.user.isActive) {

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import { useHistory } from "react-router-dom";
+
 import { setCurrentUserToken } from "../../redux/user/user.actions";
 import { selectToken, selectUserDetails } from "../../redux/user/user.selectors";
 
@@ -13,6 +15,8 @@ import UserSignup from "../signup/user/userSignup";
 import "./Header.scss";
 
 const Header = ({ token, setToken, userDetails }) => {
+  const history = useHistory();
+
   const [show, setShow] = useState(false);
   const [size, setSize] = useState("md");
 
@@ -26,6 +30,7 @@ const Header = ({ token, setToken, userDetails }) => {
   const handleSignupSignIn = () => {
     if (token) {
       setToken(null);
+      history.push('/')
     } else {
       handleShow();
     }

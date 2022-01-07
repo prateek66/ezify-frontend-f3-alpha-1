@@ -1,9 +1,10 @@
 import React from "react";
+import Select from "react-select";
 
 import "./formControl.scss";
 
 const FormControl = (props) => {
-  const { id, type, label, isMandatory, onChange, validators, disabled, value } = props;
+  const { id, type, label, isMandatory, onChange, validators, disabled, value, options, bindValue, bindLabel } = props;
 
   const onFocus = () => {
     const inputLabel = document.getElementById(`label-${id}`);
@@ -52,6 +53,17 @@ const FormControl = (props) => {
             {...validators}
             disabled={disabled}
           ></textarea>
+        )}
+
+        {type === "select" && (
+          <Select id={id} options={options} onFocus={onFocus} onBlur={onFocusOut} onChange={onChange} />
+          // <select className="form-control formControl-input">
+          //   {value.map((el, index) => (
+          //     <option value={el[bindValue]} key={index}>
+          //       {el[bindLabel]}
+          //     </option>
+          //   ))}
+          // </select>
         )}
       </div>
     </div>

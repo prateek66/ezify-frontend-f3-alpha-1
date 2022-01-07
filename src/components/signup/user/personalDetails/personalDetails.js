@@ -1,16 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setCurrentUserToken } from "../../../../redux/user/user.actions";
+import { State, City } from "country-state-city";
+
+import { setCurrentUser, setCurrentUserToken } from "../../../../redux/user/user.actions";
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../../../utlis/constants";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
+
 import "./personalDetails.scss";
 
-const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
+const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState, setUser }) => {
   const ApiContext = useContext(ApiCallsContext);
+
+  const stateOptions = State.getStatesOfCountry("IN").map((state) => {
+    return { value: state.isoCode, label: state.name };
+  });
+
+  const [citiesConfig, setCitiesConfig] = useState({
+    id: "cityField",
+    label: "City",
+    isMandatory: true,
+    type: "select",
+    onChange: (e) => updateState("city", e.value),
+    options: [],
+    bindValue: "name",
+    bindLabel: "name",
+  });
 
   const fNameFormControlAttributes = {
     id: "fname",
@@ -32,16 +50,11 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
     id: "state",
     label: "State",
     isMandatory: true,
-    type: "input",
-    onChange: handleChange("state"),
-  };
-
-  const cityFormControlAttributes = {
-    id: "cityField",
-    label: "City",
-    isMandatory: true,
-    type: "input",
-    onChange: handleChange("city"),
+    type: "select",
+    onChange: (e) => updateState("state", e.value),
+    options: stateOptions,
+    bindValue: "isoCode",
+    bindLabel: "name",
   };
 
   const addressFormControlAttributes = {
@@ -84,8 +97,9 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
   };
 
   const handleUserRegistration = async () => {
-    await catchHandler(userRegistrationAPI);
+    const response = await catchHandler(userRegistrationAPI);
     setToken(values.token);
+    setUser(response);
     nextStep();
   };
 
@@ -95,6 +109,23 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
     classes: "font-weight-bold cp-2",
     onClick: handleUserRegistration,
   };
+
+  useEffect(() => {
+    let citiesOptions = City.getCitiesOfState("IN", values.state).map((city) => {
+      return { value: city.name, label: city.name };
+    });
+
+    setCitiesConfig({
+      id: "cityField",
+      label: "City",
+      isMandatory: true,
+      type: "select",
+      onChange: (e) => updateState("city", e.value),
+      options: citiesOptions,
+      bindValue: "name",
+      bindLabel: "name",
+    });
+  }, [values.state]);
 
   return (
     <div className="personalDetails">
@@ -116,7 +147,7 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
               <FormControl {...stateFormControlAttributes} />
             </div>
             <div className="col-md-6">
-              <FormControl {...cityFormControlAttributes} />
+              <FormControl {...citiesConfig} />
             </div>
             <div className="col-12">
               <FormControl {...addressFormControlAttributes} />
@@ -136,6 +167,7 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   setToken: (token) => dispatch(setCurrentUserToken(token)),
+  setUser: (user) => dispatch(setCurrentUser(user)),
 });
 
 export default connect(null, mapDispatchToProps)(PersonalDetails);

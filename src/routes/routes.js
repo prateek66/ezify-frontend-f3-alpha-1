@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+
+import { Switch, Route } from "react-router-dom";
 
 import Profile from "../pages/profile/profile";
 import Services from "../pages/services/services";

@@ -70,7 +70,7 @@ export class UserSignup extends Component {
         );
 
       case 3:
-        return <PersonalDetails nextStep={this.nextStep} handleChange={this.handleChange} values={values} />;
+        return <PersonalDetails nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} />;
 
       case 4:
         return <Success />;
