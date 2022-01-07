@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
+import { connect } from "react-redux";
+import { setCurrentUser } from "../../../../redux/user/user.actions";
+
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../../../utlis/constants";
@@ -9,7 +12,7 @@ import FormControl from "../../../atmoic/formControl/formControl";
 
 import "./otpPopup.scss";
 
-const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose }) => {
+const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setToken }) => {
   const ApiContext = useContext(ApiCallsContext);
 
   const emailFormControlAttributes = {
@@ -51,6 +54,7 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose }) => {
 
     if (value.length === 4) {
       const response = await catchHandler(() => verifyOTPAPI(value));
+      setToken(response.token);
       updateState("token", response.token);
       if (!response.user.isActive) {
         nextStep();
@@ -83,4 +87,8 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose }) => {
   );
 };
 
-export default OtpPopup;
+const mapDispatchToProps = (dispatch) => ({
+  setToken: (token) => dispatch(setCurrentUser(token)),
+});
+
+export default connect(null, mapDispatchToProps)(OtpPopup);
