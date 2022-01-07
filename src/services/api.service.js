@@ -51,7 +51,34 @@ const ApiContext = ({ children }) => {
     });
   };
 
-  return <ApiCallsContext.Provider value={{ getData, postData }}>{children}</ApiCallsContext.Provider>;
+  const patchData = (url, postObj, options) => {
+    return new Promise((resolve, reject) => {
+      const path = `${env.BASE_URL}${url}`;
+
+      let data = postObj;
+      if (env.ENVIRONMENT === "PROD") {
+        data = {
+          data: encyption(postObj),
+        };
+      }
+
+      axios
+        .patch(path, data, options)
+        .then((response) => {
+          let resData = response.data.data;
+          if (env.ENVIRONMENT === "PROD") {
+            resData = decryption(resData);
+          }
+          resolve(resData);
+        })
+        .catch((err) => {
+          const errorResponse = err.response.data;
+          reject(errorResponse);
+        });
+    });
+  };
+
+  return <ApiCallsContext.Provider value={{ getData, postData, patchData }}>{children}</ApiCallsContext.Provider>;
 };
 
 export default ApiContext;

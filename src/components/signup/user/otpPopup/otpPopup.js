@@ -9,7 +9,7 @@ import FormControl from "../../../atmoic/formControl/formControl";
 
 import "./otpPopup.scss";
 
-const OtpPopup = ({ values, handleChange, nextStep, prevStep, handleClose }) => {
+const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose }) => {
   const ApiContext = useContext(ApiCallsContext);
 
   const emailFormControlAttributes = {
@@ -51,7 +51,8 @@ const OtpPopup = ({ values, handleChange, nextStep, prevStep, handleClose }) => 
 
     if (value.length === 4) {
       const response = await catchHandler(() => verifyOTPAPI(value));
-      if (!response.isActive) {
+      updateState("token", response.token);
+      if (!response.user.isActive) {
         nextStep();
       } else {
         handleClose();

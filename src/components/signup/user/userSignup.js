@@ -16,6 +16,7 @@ export class UserSignup extends Component {
     city: "",
     address: "",
     mobileNumber: "",
+    token: "",
   };
 
   // Proceed to next step
@@ -49,8 +50,8 @@ export class UserSignup extends Component {
 
   render() {
     const { step } = this.state;
-    const { email, id, otp, firstName, lastName, state, city, address, mobileNumber } = this.state;
-    const values = { email, id, otp, firstName, lastName, state, city, address, mobileNumber };
+    const { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token } = this.state;
+    const values = { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token };
 
     switch (step) {
       case 1:
@@ -62,6 +63,7 @@ export class UserSignup extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             handleClose={this.props.handleClose}
+            updateState={this.updateState}
             prevStep={this.prevStep}
             values={values}
           />

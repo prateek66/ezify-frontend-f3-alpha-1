@@ -21,7 +21,8 @@ const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
   const sendOTP = async () => {
     if (values.email) {
       const response = await catchHandler(sendOTPAPI);
-      updateState('id', response._id)
+      console.log("otpVerify", response.otpVerify);
+      updateState("id", response._id);
       nextStep();
     }
   };

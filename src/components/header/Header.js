@@ -25,13 +25,13 @@ const Header = () => {
             <div className="col-1">
               <div className="logo-container"></div>
             </div>
-            <div className="col-4 offset-7">
+            <div className="col-3 offset-8">
               <div className="button-group d-flex align-items-center justify-content-between">
                 <a href="#" className="button-vendor">
                   Become a Vendor
                 </a>
-                <CustomButton type="button" text="Sign Up" onClick={handleShow}></CustomButton>
-                <CustomButton type="button" text="Sign In" classes="customButton-ghost" onClick={handleShow}></CustomButton>
+                <CustomButton type="button" text="Sign In" onClick={handleShow}></CustomButton>
+                {/* <CustomButton type="button" text="Sign In" classes="customButton-ghost" onClick={handleShow}></CustomButton> */}
               </div>
             </div>
           </div>

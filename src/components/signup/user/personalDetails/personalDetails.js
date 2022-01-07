@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
+import { ApiCallsContext } from "../../../../services/api.service";
+import { catchHandler } from "../../../../utlis/catchHandler.utlis";
+import { API_URLS } from "../../../../utlis/constants";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 import "./personalDetails.scss";
 
 const PersonalDetails = ({ values, handleChange, nextStep }) => {
+  const ApiContext = useContext(ApiCallsContext);
+
   const proceed = (e) => {
     e.preventDefault();
     nextStep();
@@ -15,6 +20,7 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "First Name",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("firstName"),
   };
 
   const lNameFormControlAttributes = {
@@ -22,6 +28,7 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "Last Name",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("lastName"),
   };
 
   const stateFormControlAttributes = {
@@ -29,6 +36,7 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "State",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("state"),
   };
 
   const cityFormControlAttributes = {
@@ -36,6 +44,7 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "City",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("city"),
   };
 
   const addressFormControlAttributes = {
@@ -43,6 +52,7 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "Address",
     isMandatory: true,
     type: "textarea",
+    onChange: handleChange("address"),
   };
 
   const mobileFormControlAttributes = {
@@ -50,13 +60,42 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "Mobile Number",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("mobileNumber"),
+  };
+
+  const userRegistrationAPI = async () => {
+    const { email, otp, firstName, lastName, state, city, address, mobileNumber } = values;
+    const postObj = {
+      email,
+      otp,
+      firstName,
+      lastname: lastName,
+      state,
+      city,
+      address,
+      mobile_number: mobileNumber,
+      is_emaiVerified: true,
+      isActive: true,
+    };
+
+    const headers = {
+      Authorization: `Bearer ${values.token}`,
+    };
+
+    const data = await ApiContext.patchData(API_URLS.UPDATE_USER, postObj, { headers });
+    return data;
+  };
+
+  const handleUserRegistration = async () => {
+    await catchHandler(userRegistrationAPI);
+    nextStep();
   };
 
   const buttonAttributes = {
     type: "submit",
     text: "Submit",
     classes: "font-weight-bold cp-2",
-    onClick: proceed,
+    onClick: handleUserRegistration,
   };
 
   return (
@@ -69,22 +108,22 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
           </p>
 
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...fNameFormControlAttributes} />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...lNameFormControlAttributes} />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...stateFormControlAttributes} />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...cityFormControlAttributes} />
             </div>
             <div className="col-12">
               <FormControl {...addressFormControlAttributes} />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...mobileFormControlAttributes} />
             </div>
             <div className="col-12 text-right">
