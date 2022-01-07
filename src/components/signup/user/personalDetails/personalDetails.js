@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setCurrentUser } from "../../../../redux/user/user.actions";
+import { setCurrentUserToken } from "../../../../redux/user/user.actions";
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../../../utlis/constants";
@@ -135,7 +135,7 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setToken: (token) => dispatch(setCurrentUser(token)),
+  setToken: (token) => dispatch(setCurrentUserToken(token)),
 });
 
 export default connect(null, mapDispatchToProps)(PersonalDetails);

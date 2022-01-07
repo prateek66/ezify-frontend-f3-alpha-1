@@ -7,13 +7,11 @@ import Home from "./../pages/home/home";
 
 const Routes = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/services" component={Services} />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/profile" component={Profile} />
+      <Route exact path="/services" component={Services} />
+    </Switch>
   );
 };
 

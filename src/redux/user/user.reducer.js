@@ -2,6 +2,7 @@ import { UserActionTypes } from "./user.types";
 
 const INITIAL_STATE = {
   token: null,
+  details: null,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +11,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         token: action.payload,
+      };
+
+    case UserActionTypes.SET_CURRENT_USER:
+      return {
+        ...state,
+        details: action.payload,
       };
     default:
       return state;

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { setCurrentUser } from "../../redux/user/user.actions";
+import { setCurrentUserToken } from "../../redux/user/user.actions";
 import { selectToken } from "../../redux/user/user.selectors";
 
 import CustomButton from "../atmoic/customButton/customButton";
 import ModalBase from "../atmoic/modal/modal";
+import ProfileOptions from "../profileOptions/profileOptions";
 
 import UserSignup from "../signup/user/userSignup";
 
@@ -38,13 +39,13 @@ const Header = ({ token, setToken }) => {
             <div className="col-1">
               <div className="logo-container"></div>
             </div>
-            <div className="col-4 offset-7">
+            <div className="col-7 offset-4">
               <div className="button-group d-flex align-items-center justify-content-end">
                 <a href="#" className="button-vendor mr-3">
                   Become a Vendor
                 </a>
                 <CustomButton type="button" text={token ? "Sign Out" : "Sign In"} onClick={handleSignupSignIn}></CustomButton>
-                {/* <CustomButton type="button" text="Sign In" classes="customButton-ghost" onClick={handleShow}></CustomButton> */}
+                {token && <ProfileOptions />}
               </div>
             </div>
           </div>
@@ -65,7 +66,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setToken: (token) => dispatch(setCurrentUser(token)),
+  setToken: (token) => dispatch(setCurrentUserToken(token)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
