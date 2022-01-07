@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { setCurrentUserToken } from "../../redux/user/user.actions";
-import { selectToken } from "../../redux/user/user.selectors";
+import { selectToken, selectUserDetails } from "../../redux/user/user.selectors";
 
 import CustomButton from "../atmoic/customButton/customButton";
 import ModalBase from "../atmoic/modal/modal";
@@ -12,7 +12,7 @@ import UserSignup from "../signup/user/userSignup";
 
 import "./Header.scss";
 
-const Header = ({ token, setToken }) => {
+const Header = ({ token, setToken, userDetails }) => {
   const [show, setShow] = useState(false);
   const [size, setSize] = useState("md");
 
@@ -45,7 +45,7 @@ const Header = ({ token, setToken }) => {
                   Become a Vendor
                 </a>
                 <CustomButton type="button" text={token ? "Sign Out" : "Sign In"} onClick={handleSignupSignIn}></CustomButton>
-                {token && <ProfileOptions />}
+                {token && <ProfileOptions {...userDetails} />}
               </div>
             </div>
           </div>
@@ -63,6 +63,7 @@ const Header = ({ token, setToken }) => {
 
 const mapStateToProps = createStructuredSelector({
   token: selectToken,
+  userDetails: selectUserDetails,
 });
 
 const mapDispatchToProps = (dispatch) => ({

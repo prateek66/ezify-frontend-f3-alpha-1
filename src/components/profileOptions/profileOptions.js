@@ -6,7 +6,22 @@ import "./profileOptions.scss";
 import Avatar from "./../../assets/profile/avatar-1.svg";
 import { Link } from "react-router-dom";
 
-const ProfileOptions = () => {
+const ProfileOptions = ({ firstName, roles }) => {
+  let menuOptions = [];
+
+  switch (roles) {
+    case "user":
+      menuOptions = [
+        { label: "Profile", link: "/profile" },
+        { label: "Bookings", link: "/bookings" },
+      ];
+      break;
+
+    default:
+      menuOptions = [];
+      break;
+  }
+
   return (
     <Dropdown className="ml-3 profileOptionsDropdown">
       <Dropdown.Toggle>
@@ -14,17 +29,16 @@ const ProfileOptions = () => {
           <div className="profileOptionsDropdown__img">
             <img src={Avatar} alt="Profile" />
           </div>
-          <span>Hi, Harshit</span>
+          <span>Hi, {firstName}</span>
         </div>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item as="button">
-          <Link to="/profile">Profile</Link>
-        </Dropdown.Item>
-        <Dropdown.Item as="button">
-          <Link to="/profile">Bookings</Link>
-        </Dropdown.Item>
+        {menuOptions.map((option, index) => (
+          <Dropdown.Item as="button" key={index}>
+            <Link to={option.link}>{option.label}</Link>
+          </Dropdown.Item>
+        ))}
       </Dropdown.Menu>
     </Dropdown>
   );
