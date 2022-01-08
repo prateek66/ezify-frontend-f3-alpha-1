@@ -44,6 +44,13 @@ const Profile = ({ userDetails }) => {
         </div>
 
         <div className="col-12 px-5 pl-lg-3 profilePage__box">
+          <div className="row mt-3">
+            <div className="col-12 d-flex align-items-center justify-content-end">
+              {!update && <CustomButton {...updateButtonAttributes} />}
+              {update && <CustomButton {...saveButtonAttributes} />}
+              {update && <CustomButton {...discardButtonAttributes} />}
+            </div>
+          </div>
           <div className="row">
             <div className="col-lg-3 mb-5 mb-lg-0 d-flex align-items-start justify-content-center">
               <div className="profilePage__image">
@@ -110,14 +117,6 @@ const Profile = ({ userDetails }) => {
                   {update && (
                     <textarea value="1 - D - 23 New Housing Board, Pali (Marwar), Rajasthan, 306401" className="form-control formControl-input" />
                   )}
-                </div>
-              </div>
-
-              <div className="row mt-3">
-                <div className="col-12 d-flex align-items-center justify-content-end">
-                  {!update && <CustomButton {...updateButtonAttributes} />}
-                  {update && <CustomButton {...saveButtonAttributes} />}
-                  {update && <CustomButton {...discardButtonAttributes} />}
                 </div>
               </div>
             </div>
