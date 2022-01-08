@@ -13,6 +13,7 @@ export class UserSignup extends Component {
     firstName: "",
     lastName: "",
     state: "",
+    stateCode: "",
     city: "",
     address: "",
     mobileNumber: "",
@@ -50,8 +51,8 @@ export class UserSignup extends Component {
 
   render() {
     const { step } = this.state;
-    const { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token } = this.state;
-    const values = { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token };
+    const { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token, stateCode } = this.state;
+    const values = { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token, stateCode };
 
     switch (step) {
       case 1:

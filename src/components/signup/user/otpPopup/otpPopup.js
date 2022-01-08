@@ -84,7 +84,7 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
           <p className="emailPopup__change-email">
             <span onClick={sendOTPAPI}>Resend OTP</span>
           </p>
-          <CustomButton {...buttonAttributes} />
+          {/* <CustomButton {...buttonAttributes} /> */}
         </form>
       </Modal.Body>
     </div>

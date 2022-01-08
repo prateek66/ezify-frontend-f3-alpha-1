@@ -4,8 +4,11 @@ import "./profile.scss";
 
 import Avatar1 from "./../../assets/profile/avatar-1.svg";
 import CustomButton from "../../components/atmoic/customButton/customButton";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectUserDetails } from "../../redux/user/user.selectors";
 
-const Profile = () => {
+const Profile = ({ userDetails }) => {
   const [update, setUpdate] = useState(false);
 
   const handleUpdate = () => setUpdate(true);
@@ -53,14 +56,14 @@ const Profile = () => {
                   <label htmlFor="firstName" className="profilePage__box--label">
                     First Name
                   </label>
-                  {!update && <div className="profilePage__box--value">Harshit</div>}
+                  {!update && <div className="profilePage__box--value">{userDetails.firstName}</div>}
                   {update && <input type="text" value="Harshit" className="form-control formControl-input" />}
                 </div>
                 <div className="col-md-6 mt-4 mt-md-0">
                   <label htmlFor="firstName" className="profilePage__box--label">
                     Last Name
                   </label>
-                  {!update && <div className="profilePage__box--value">Chouhan</div>}
+                  {!update && <div className="profilePage__box--value">{userDetails.lastname}</div>}
                   {update && <input type="text" value="Chouhan" className="form-control formControl-input" />}
                 </div>
               </div>
@@ -70,13 +73,13 @@ const Profile = () => {
                   <label htmlFor="firstName" className="profilePage__box--label">
                     Email
                   </label>
-                  <div className="profilePage__box--value">harshitsinghchouhan@gmail.com</div>
+                  <div className="profilePage__box--value">{userDetails.email}</div>
                 </div>
                 <div className="col-md-6 mt-4 mt-md-0">
                   <label htmlFor="firstName" className="profilePage__box--label">
                     Mobile Number
                   </label>
-                  {!update && <div className="profilePage__box--value">+91 8107136147</div>}
+                  {!update && <div className="profilePage__box--value">+91 {userDetails.mobile_number}</div>}
                   {update && <input type="text" value="+91 8107136147" className="form-control formControl-input" />}
                 </div>
               </div>
@@ -86,14 +89,14 @@ const Profile = () => {
                   <label htmlFor="firstName" className="profilePage__box--label">
                     State
                   </label>
-                  {!update && <div className="profilePage__box--value">Rajasthan</div>}
+                  {!update && <div className="profilePage__box--value">{userDetails.state}</div>}
                   {update && <input type="text" value="Rajasthan" className="form-control formControl-input" />}
                 </div>
                 <div className="col-md-6 mt-4 mt-md-0">
                   <label htmlFor="firstName" className="profilePage__box--label">
                     City
                   </label>
-                  {!update && <div className="profilePage__box--value">Pali</div>}
+                  {!update && <div className="profilePage__box--value">{userDetails.city}</div>}
                   {update && <input type="text" value="Pali" className="form-control formControl-input" />}
                 </div>
               </div>
@@ -103,7 +106,7 @@ const Profile = () => {
                   <label htmlFor="firstName" className="profilePage__box--label">
                     Address
                   </label>
-                  {!update && <div className="profilePage__box--value">1 - D - 23 New Housing Board, Pali (Marwar), Rajasthan, 306401</div>}
+                  {!update && <div className="profilePage__box--value">{userDetails.address}</div>}
                   {update && (
                     <textarea value="1 - D - 23 New Housing Board, Pali (Marwar), Rajasthan, 306401" className="form-control formControl-input" />
                   )}
@@ -125,4 +128,8 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = createStructuredSelector({
+  userDetails: selectUserDetails,
+});
+
+export default connect(mapStateToProps, null)(Profile);

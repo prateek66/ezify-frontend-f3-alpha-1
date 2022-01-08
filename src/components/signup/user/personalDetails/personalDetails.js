@@ -51,10 +51,12 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
     label: "State",
     isMandatory: true,
     type: "select",
-    onChange: (e) => updateState("state", e.value),
+    onChange: (e) => {
+      console.log(e)
+      updateState("state", e.label);
+      updateState("stateCode", e.value);
+    },
     options: stateOptions,
-    bindValue: "isoCode",
-    bindLabel: "name",
   };
 
   const addressFormControlAttributes = {
@@ -111,9 +113,11 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
   };
 
   useEffect(() => {
-    let citiesOptions = City.getCitiesOfState("IN", values.state).map((city) => {
+    let citiesOptions = City.getCitiesOfState("IN", values.stateCode).map((city) => {
       return { value: city.name, label: city.name };
     });
+
+    console.log(citiesOptions)
 
     setCitiesConfig({
       id: "cityField",
@@ -125,7 +129,7 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
       bindValue: "name",
       bindLabel: "name",
     });
-  }, [values.state]);
+  }, [values.stateCode]);
 
   return (
     <div className="personalDetails">

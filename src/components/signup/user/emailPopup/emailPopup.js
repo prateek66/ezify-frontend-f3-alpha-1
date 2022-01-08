@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 
 import { ApiCallsContext } from "../../../../services/api.service";
@@ -8,8 +8,6 @@ import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
 const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
-  const ApiContext = useContext(ApiCallsContext);
-
   const sendOTPAPI = async () => {
     const postObj = {
       email: values.email,
@@ -28,6 +26,16 @@ const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
     }
   };
 
+  const [buttonAttributes, setButtonAttributes] = useState({
+    type: "submit",
+    text: "SEND OTP",
+    classes: "btn-block font-weight-bold",
+    disabled: true,
+    onClick: sendOTP,
+  });
+
+  const ApiContext = useContext(ApiCallsContext);
+
   const emailFormControlAttributes = {
     id: "email",
     label: "Enter Your Email Address",
@@ -40,12 +48,26 @@ const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
     value: values.email,
   };
 
-  let buttonAttributes = {
-    type: "submit",
-    text: "SEND OTP",
-    classes: "btn-block font-weight-bold",
-    onClick: sendOTP,
-  };
+  useEffect(() => {
+    const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+    if (values.email.match(emailRegex) && values.email) {
+      setButtonAttributes({
+        type: "submit",
+        text: "SEND OTP",
+        classes: "btn-block font-weight-bold",
+        disabled: false,
+        onClick: sendOTP,
+      });
+    } else {
+      setButtonAttributes({
+        type: "submit",
+        text: "SEND OTP",
+        classes: "btn-block font-weight-bold",
+        disabled: true,
+        onClick: sendOTP,
+      });
+    }
+  }, [values.email]);
 
   return (
     <div className="emailPopup">
