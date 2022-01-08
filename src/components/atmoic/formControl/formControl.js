@@ -18,7 +18,6 @@ const FormControl = (props) => {
     const inputLabel = document.getElementById(`label-${id}`);
     const input = document.getElementById(`${id}`);
 
-    console.log(input);
     inputLabel.style.color = "#30334f";
     input.style.borderColor = "#30334f";
     input.style.boxShadow = "none";

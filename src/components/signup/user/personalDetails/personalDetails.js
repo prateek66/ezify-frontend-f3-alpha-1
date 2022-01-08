@@ -52,7 +52,7 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
     isMandatory: true,
     type: "select",
     onChange: (e) => {
-      console.log(e)
+      console.log(e);
       updateState("state", e.label);
       updateState("stateCode", e.value);
     },
@@ -81,12 +81,12 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
       email,
       otp,
       firstName,
-      lastname: lastName,
+      lastName,
       state,
       city,
       address,
-      mobile_number: mobileNumber,
-      is_emaiVerified: true,
+      mobileNumber,
+      isEmaiVerified: true,
       isActive: true,
     };
 
@@ -117,7 +117,7 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
       return { value: city.name, label: city.name };
     });
 
-    console.log(citiesOptions)
+    console.log(citiesOptions);
 
     setCitiesConfig({
       id: "cityField",

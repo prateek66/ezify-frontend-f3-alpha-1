@@ -7,6 +7,8 @@ import { State, City } from "country-state-city";
 import "./profile.scss";
 
 import Avatar1 from "./../../assets/profile/avatar-1.svg";
+import editIcon from "./../../assets/profile/edit-icon.svg";
+
 import CustomButton from "../../components/atmoic/customButton/customButton";
 import { connect } from "react-redux";
 import { selectToken, selectUserDetails } from "../../redux/user/user.selectors";
@@ -20,10 +22,14 @@ const Profile = ({ userDetails, userToken, setUser }) => {
   const ApiContext = useContext(ApiCallsContext);
 
   const [update, setUpdate] = useState(false);
+  const [preview, setPreview] = useState(Avatar1);
 
   const handleUpdate = () => setUpdate(true);
   const handleSave = () => setUpdate(false);
-  const handleDiscard = () => setUpdate(false);
+  const handleDiscard = () => {
+    setPreview(Avatar1);
+    setUpdate(false);
+  };
 
   const stateOptions = State.getStatesOfCountry("IN").map((state) => {
     return { value: state.isoCode, label: state.name };
@@ -35,20 +41,24 @@ const Profile = ({ userDetails, userToken, setUser }) => {
     return { value: city.name, label: city.name };
   });
 
+  const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/jpg"];
+
   const formik = useFormik({
     initialValues: {
       firstName: userDetails.firstName,
-      lastname: userDetails.lastname,
-      mobile_number: userDetails.mobile_number,
+      lastName: userDetails.lastName,
+      mobileNumber: userDetails.mobileNumber,
       state: userDetails.state,
       stateCode: selectedStateCode,
       city: userDetails.city,
       address: userDetails.address,
+      profileImage: userDetails.profileImage,
+      profileImageFile: "",
     },
     validationSchema: Yup.object({
       firstName: Yup.string().min(3).max(15, "Must be 15 characters or less").required("Required"),
-      lastname: Yup.string().min(3).max(20, "Must be 20 characters or less").required("Required"),
-      mobile_number: Yup.string("Invalid mobile number")
+      lastName: Yup.string().min(3).max(20, "Must be 20 characters or less").required("Required"),
+      mobileNumber: Yup.string("Invalid mobile number")
         .min(10, "Must be a valid 10 digit number")
         .max(10, "Must be a valid 10 digit number")
         .required("Required"),
@@ -56,8 +66,13 @@ const Profile = ({ userDetails, userToken, setUser }) => {
       stateCode: Yup.string("Invalid state").required("Required"),
       city: Yup.string("Invalid city").required("Required"),
       address: Yup.string("Invalid address").min(10).max(200).required("Required"),
+      profileImageFile: Yup.mixed()
+        .nullable()
+        .test("FILE_SIZE", "File should be less than 3mb", (value) => !value || (value && value.size > 1024 * 3))
+        .test("FILE_FORMAT", "File should be in png/jpg/jpeg format", (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type))),
     }),
     onSubmit: (values) => {
+      console.log(values);
       if (formik.isValid) {
         handleProfileUpdate();
       }
@@ -71,15 +86,16 @@ const Profile = ({ userDetails, userToken, setUser }) => {
   };
 
   const profileUpdateAPI = async () => {
-    const { firstName, lastname, mobile_number, state, city, address } = formik.values;
+    const { firstName, lastName, mobileNumber, state, city, address, profileImageFile } = formik.values;
 
     let formData = new FormData();
     formData.append("firstName", firstName);
-    formData.append("lastname", lastname);
-    formData.append("mobile_number", mobile_number);
+    formData.append("lastName", lastName);
+    formData.append("mobileNumber", mobileNumber);
     formData.append("state", state);
     formData.append("city", city);
     formData.append("address", address);
+    // formData.append("profileImage", profileImageFile);
 
     const headers = {
       Authorization: `Bearer ${userToken}`,
@@ -129,7 +145,7 @@ const Profile = ({ userDetails, userToken, setUser }) => {
   };
 
   const lNameAttributes = {
-    id: "lastname",
+    id: "lastName",
     label: "Last Name",
     isMandatory: true,
     type: "input-formik",
@@ -137,7 +153,7 @@ const Profile = ({ userDetails, userToken, setUser }) => {
   };
 
   const MobileNoAttributes = {
-    id: "mobile_number",
+    id: "mobileNumber",
     label: "Mobile",
     isMandatory: true,
     type: "input-formik",
@@ -200,6 +216,14 @@ const Profile = ({ userDetails, userToken, setUser }) => {
     formik,
   };
 
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setPreview(reader.result);
+    };
+  };
+
   return (
     <div className="container profilePage">
       <form onSubmit={formik.handleSubmit}>
@@ -212,7 +236,30 @@ const Profile = ({ userDetails, userToken, setUser }) => {
             <div className="row">
               <div className="col-lg-3 mb-5 mb-lg-0 d-flex align-items-start justify-content-center">
                 <div className="profilePage__image">
-                  <img src={Avatar1} alt="Profile" />
+                  {!update && <img src={Avatar1} alt="Profile" className="profilePage__image--img" />}
+                  {update && <img src={preview} alt="Profile" className="profilePage__image--img" />}
+                  {update && (
+                    <img
+                      src={editIcon}
+                      alt="Edit"
+                      className="profilePage__image--edit"
+                      onClick={() => document.getElementById("profileImageFile").click()}
+                    />
+                  )}
+                  {update && (
+                    <>
+                      <input
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg"
+                        id="profileImageFile"
+                        onChange={(e) => {
+                          formik.setFieldValue("profileImageFile", e.target.files[0]);
+                          previewFile(e.target.files[0]);
+                        }}
+                      />
+                      <small className="text-danger errorMsg">{formik.errors["profileImageFile"]}</small>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="col-lg-9">
@@ -235,7 +282,7 @@ const Profile = ({ userDetails, userToken, setUser }) => {
                         <label htmlFor="firstName" className="profilePage__box--label">
                           Last Name
                         </label>
-                        <div className="profilePage__box--value">{userDetails.lastname}</div>
+                        <div className="profilePage__box--value">{userDetails.lastName}</div>
                       </>
                     )}
 
@@ -256,7 +303,7 @@ const Profile = ({ userDetails, userToken, setUser }) => {
                         <label htmlFor="firstName" className="profilePage__box--label">
                           Mobile Number
                         </label>
-                        <div className="profilePage__box--value">+91 {userDetails.mobile_number}</div>
+                        <div className="profilePage__box--value">+91 {userDetails.mobileNumber}</div>
                       </>
                     )}
 
