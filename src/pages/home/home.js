@@ -73,7 +73,9 @@ const Home = () => {
               </div>
             </div>
             <div className="col-lg-5 offset-lg-1 mt-3 mt-lg-0 d-flex flex-column align-items-start justify-content-center">
-              <h3 className="section-covid__heading">Fully Vaccinated</h3>
+              <Link to="/admin">
+                <h3 className="section-covid__heading">Fully Vaccinated</h3>
+              </Link>
               <p className="section-covid__text">
                 Our Service Provoiders are Fully Vaccinated and they follow proper covid protocols so that we can provide you the best services while
                 you safe.
