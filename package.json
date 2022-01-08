@@ -10,6 +10,7 @@
     "bootstrap": "^4.6.0",
     "country-state-city": "^3.0.1",
     "crypto-js": "^4.1.1",
+    "formik": "^2.2.9",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
@@ -23,7 +24,8 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "reselect": "^4.1.5",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-dotenv && react-scripts start",

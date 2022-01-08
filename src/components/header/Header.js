@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { useHistory } from "react-router-dom";
 
-import { setCurrentUserToken } from "../../redux/user/user.actions";
+import { setCurrentUser, setCurrentUserToken } from "../../redux/user/user.actions";
 import { selectToken, selectUserDetails } from "../../redux/user/user.selectors";
 
 import CustomButton from "../atmoic/customButton/customButton";
@@ -14,7 +14,7 @@ import UserSignup from "../signup/user/userSignup";
 
 import "./Header.scss";
 
-const Header = ({ token, setToken, userDetails }) => {
+const Header = ({ token, setToken, userDetails, setUser }) => {
   const history = useHistory();
 
   const [show, setShow] = useState(false);
@@ -30,7 +30,8 @@ const Header = ({ token, setToken, userDetails }) => {
   const handleSignupSignIn = () => {
     if (token) {
       setToken(null);
-      history.push('/')
+      setUser(null);
+      history.push("/");
     } else {
       handleShow();
     }
@@ -73,6 +74,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   setToken: (token) => dispatch(setCurrentUserToken(token)),
+  setUser: (user) => dispatch(setCurrentUser(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
