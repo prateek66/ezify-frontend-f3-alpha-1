@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createStructuredSelector } from "reselect";
@@ -9,10 +9,16 @@ import "./profile.scss";
 import Avatar1 from "./../../assets/profile/avatar-1.svg";
 import CustomButton from "../../components/atmoic/customButton/customButton";
 import { connect } from "react-redux";
-import { selectUserDetails } from "../../redux/user/user.selectors";
+import { selectToken, selectUserDetails } from "../../redux/user/user.selectors";
 import FormControl from "../../components/atmoic/formControl/formControl";
+import { catchHandler } from "../../utlis/catchHandler.utlis";
+import { ApiCallsContext } from "../../services/api.service";
+import { API_URLS } from "../../utlis/constants";
+import { setCurrentUser } from "../../redux/user/user.actions";
 
-const Profile = ({ userDetails }) => {
+const Profile = ({ userDetails, userToken, setUser }) => {
+  const ApiContext = useContext(ApiCallsContext);
+
   const [update, setUpdate] = useState(false);
 
   const handleUpdate = () => setUpdate(true);
@@ -52,10 +58,37 @@ const Profile = ({ userDetails }) => {
       address: Yup.string("Invalid address").min(10).max(200).required("Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      alert(JSON.stringify(values, null, 2));
+      if (formik.isValid) {
+        handleProfileUpdate();
+      }
     },
   });
+
+  const handleProfileUpdate = async () => {
+    const response = await catchHandler(profileUpdateAPI);
+    setUser(response);
+    handleSave();
+  };
+
+  const profileUpdateAPI = async () => {
+    const { firstName, lastname, mobile_number, state, city, address } = formik.values;
+
+    let formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastname", lastname);
+    formData.append("mobile_number", mobile_number);
+    formData.append("state", state);
+    formData.append("city", city);
+    formData.append("address", address);
+
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+      "content-type": "multipart/form-data",
+    };
+
+    const data = await ApiContext.patchData(API_URLS.UPDATE_USER, formData, { headers });
+    return data;
+  };
 
   const updateButtonAttributes = {
     type: "button",
@@ -64,11 +97,21 @@ const Profile = ({ userDetails }) => {
     onClick: handleUpdate,
   };
 
-  const saveButtonAttributes = {
+  const [saveButtonAttributes, setSaveButtonAttributes] = useState({
     type: "submit",
     text: "Save Changes",
     classes: "font-weight-bold mr-3",
-  };
+    disabled: !formik.isValid,
+  });
+
+  useEffect(() => {
+    setSaveButtonAttributes({
+      type: "submit",
+      text: "Save Changes",
+      classes: "font-weight-bold mr-3",
+      disabled: !formik.isValid,
+    });
+  }, [formik.isValid]);
 
   const discardButtonAttributes = {
     type: "button",
@@ -108,6 +151,10 @@ const Profile = ({ userDetails }) => {
     type: "select-formik",
     options: cityOptions,
     defaultValue: cityOptions.find((option) => option.label === userDetails.city),
+    onChange: (cityValue) => {
+      console.log(cityValue);
+      formik.setFieldValue("city", cityValue.value);
+    },
     formik,
   });
 
@@ -136,6 +183,7 @@ const Profile = ({ userDetails }) => {
         options: cityOptions,
         defaultValue: cityOptions[0],
         onChange: (cityValue) => {
+          console.log(cityValue);
           formik.setFieldValue("city", cityValue.value);
         },
         formik,
@@ -208,7 +256,7 @@ const Profile = ({ userDetails }) => {
                         <label htmlFor="firstName" className="profilePage__box--label">
                           Mobile Number
                         </label>
-                        <div className="profilePage__box--value">{userDetails.mobile_number}</div>
+                        <div className="profilePage__box--value">+91 {userDetails.mobile_number}</div>
                       </>
                     )}
 
@@ -276,6 +324,11 @@ const Profile = ({ userDetails }) => {
 
 const mapStateToProps = createStructuredSelector({
   userDetails: selectUserDetails,
+  userToken: selectToken,
 });
 
-export default connect(mapStateToProps, null)(Profile);
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
