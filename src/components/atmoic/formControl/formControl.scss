@@ -1,6 +1,8 @@
 @import "./../../../sass/variables";
 
 .formControl {
+  width: 100%;
+  
   &-label {
     font-family: $montserrat-font-family;
     font-weight: 500;
