@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -7,19 +7,27 @@ import "./login.scss";
 import BannerImg from "./../../../assets/admin_page/banner.svg";
 import CustomButton from "../../../components/atmoic/customButton/customButton";
 import FormControl from "../../../components/atmoic/formControl/formControl";
+import { ApiCallsContext } from "../../../services/api.service";
+import { API_URLS } from "../../../utlis/constants";
+import { catchHandler } from "../../../utlis/catchHandler.utlis";
 
 const Login = () => {
+  const ApiContext = useContext(ApiCallsContext);
+
   const formik = useFormik({
     initialValues: {
       email: "",
       otp: "",
+      id: "",
     },
     validationSchema: Yup.object({
       email: Yup.string().email().min(3).required("Required"),
       otp: Yup.string().min(4).max(4).required("Required"),
+      id: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
       console.log(values);
+      verifyOtp();
     },
   });
 
@@ -46,8 +54,6 @@ const Login = () => {
     disabled: true,
   });
 
-  console.log(formik.isValid);
-
   useEffect(() => {
     (() => formik.validateForm())();
   }, []);
@@ -61,6 +67,44 @@ const Login = () => {
     });
   }, [formik.isValid]);
 
+  const sendOTP = async () => {
+    if (formik.values.email) {
+      const response = await catchHandler(sendOTPAPI);
+      formik.setFieldValue("id", response._id);
+      console.log("otpVerify", response.otpVerify);
+    }
+  };
+
+  const sendOTPAPI = async () => {
+    const postObj = {
+      email: formik.values.email,
+    };
+
+    const data = await ApiContext.postData(API_URLS.SEND_OTP, postObj);
+    return data;
+  };
+
+  const verifyOtp = async () => {
+    const response = await catchHandler(verifyOTPAPI);
+    if (response.user.roles !== "admin") {
+      formik.setFieldValue("otp", "", false);
+      formik.setFieldValue("id", null, false);
+      formik.setFieldError("email", "This email is not of admin");
+    }
+
+    console.log(response);
+  };
+
+  const verifyOTPAPI = async () => {
+    const postObj = {
+      id: formik.values.id,
+      otp: formik.values.otp,
+    };
+
+    const data = await ApiContext.postData(API_URLS.VERIFY_OTP, postObj);
+    return data;
+  };
+
   return (
     <div className="container-fluid admin">
       <div className="row">
@@ -70,14 +114,16 @@ const Login = () => {
           </div>
         </div>
         <div className="col-md-6 d-flex align-items-center justify-content-center admin__container--right">
-          <form className="admin__login">
+          <form className="admin__login" onSubmit={formik.handleSubmit}>
             <div className="admin__login--container d-flex flex-column align-items-center justify-content-between">
               <h3 className="mb-3">Login as Admin</h3>
 
               <div className="w-100">
                 <FormControl {...emailAttributes} />
                 <div className="sendOTP">
-                  <span>Send OTP</span>
+                  <span className={formik.errors.email ? "disable" : null} onClick={sendOTP}>
+                    Send OTP
+                  </span>
                 </div>
               </div>
 

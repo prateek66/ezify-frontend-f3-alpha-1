@@ -6,7 +6,7 @@ import "./profileOptions.scss";
 import Avatar from "./../../assets/profile/avatar-1.svg";
 import { Link } from "react-router-dom";
 
-const ProfileOptions = ({ firstName, roles }) => {
+const ProfileOptions = ({ firstName, roles, profileImage }) => {
   let menuOptions = [];
 
   switch (roles) {
@@ -27,7 +27,7 @@ const ProfileOptions = ({ firstName, roles }) => {
       <Dropdown.Toggle>
         <div className="d-flex align-items-center justify-content-center">
           <div className="profileOptionsDropdown__img">
-            <img src={Avatar} alt="Profile" />
+            <img src={profileImage} alt="Profile" />
           </div>
           <span>Hi, {firstName}</span>
         </div>

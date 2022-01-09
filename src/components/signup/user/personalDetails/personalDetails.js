@@ -85,7 +85,7 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
       state,
       city,
       address,
-      mobileNumber,
+      mobileNumber: +mobileNumber,
       isEmaiVerified: true,
       isActive: true,
     };

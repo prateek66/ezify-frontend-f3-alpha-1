@@ -6,7 +6,6 @@ import { State, City } from "country-state-city";
 
 import "./profile.scss";
 
-import Avatar1 from "./../../assets/profile/avatar-1.svg";
 import editIcon from "./../../assets/profile/edit-icon.svg";
 
 import CustomButton from "../../components/atmoic/customButton/customButton";
@@ -22,12 +21,12 @@ const Profile = ({ userDetails, userToken, setUser }) => {
   const ApiContext = useContext(ApiCallsContext);
 
   const [update, setUpdate] = useState(false);
-  const [preview, setPreview] = useState(Avatar1);
+  const [preview, setPreview] = useState(userDetails.profileImage);
 
   const handleUpdate = () => setUpdate(true);
   const handleSave = () => setUpdate(false);
   const handleDiscard = () => {
-    setPreview(Avatar1);
+    setPreview(userDetails.profileImage);
     setUpdate(false);
   };
 
@@ -95,7 +94,7 @@ const Profile = ({ userDetails, userToken, setUser }) => {
     formData.append("state", state);
     formData.append("city", city);
     formData.append("address", address);
-    // formData.append("profileImage", profileImageFile);
+    formData.append("file", profileImageFile);
 
     const headers = {
       Authorization: `Bearer ${userToken}`,
@@ -236,7 +235,7 @@ const Profile = ({ userDetails, userToken, setUser }) => {
             <div className="row">
               <div className="col-lg-3 mb-5 mb-lg-0 d-flex align-items-start justify-content-center">
                 <div className="profilePage__image">
-                  {!update && <img src={Avatar1} alt="Profile" className="profilePage__image--img" />}
+                  {!update && <img src={userDetails.profileImage} alt="Profile" className="profilePage__image--img" />}
                   {update && <img src={preview} alt="Profile" className="profilePage__image--img" />}
                   {update && (
                     <img
