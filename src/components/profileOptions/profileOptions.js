@@ -3,7 +3,6 @@ import { Dropdown } from "react-bootstrap";
 
 import "./profileOptions.scss";
 
-import Avatar from "./../../assets/profile/avatar-1.svg";
 import { Link } from "react-router-dom";
 
 const ProfileOptions = ({ firstName, roles, profileImage }) => {
@@ -15,6 +14,10 @@ const ProfileOptions = ({ firstName, roles, profileImage }) => {
         { label: "Profile", link: "/profile" },
         { label: "Bookings", link: "/bookings" },
       ];
+      break;
+
+    case "admin":
+      menuOptions = [{ label: "Dashboard", link: "/dashboard" }];
       break;
 
     default:

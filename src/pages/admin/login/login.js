@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import "./login.scss";
 
@@ -10,8 +12,9 @@ import FormControl from "../../../components/atmoic/formControl/formControl";
 import { ApiCallsContext } from "../../../services/api.service";
 import { API_URLS } from "../../../utlis/constants";
 import { catchHandler } from "../../../utlis/catchHandler.utlis";
+import { setCurrentUser, setCurrentUserToken } from "../../../redux/user/user.actions";
 
-const Login = () => {
+const Login = ({ setUser, setToken, history }) => {
   const ApiContext = useContext(ApiCallsContext);
 
   const formik = useFormik({
@@ -26,7 +29,6 @@ const Login = () => {
       id: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
       verifyOtp();
     },
   });
@@ -92,7 +94,9 @@ const Login = () => {
       formik.setFieldError("email", "This email is not of admin");
     }
 
-    console.log(response);
+    setUser(response.user);
+    setToken(response.token);
+    history.push("/dashboard");
   };
 
   const verifyOTPAPI = async () => {
@@ -140,4 +144,9 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  setToken: (token) => dispatch(setCurrentUserToken(token)),
+  setUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(Login));
