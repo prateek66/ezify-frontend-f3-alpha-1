@@ -1,7 +1,9 @@
 import React from "react";
-import DashboardContainer from "../../components/dashboardContainer/dashboardContainer";
+
 import DashboardHeader from "../../components/dashboardHeader/dashboardHeader";
 import Sidebar from "../../components/sidebar/sidebar";
+import DashboardRoutes from "../../routes/dashboard.routes";
+
 import "./dashboard.scss";
 
 const Dashboard = () => {
@@ -10,7 +12,7 @@ const Dashboard = () => {
       <Sidebar />
       <div className="w-100">
         <DashboardHeader />
-        <DashboardContainer />
+        <DashboardRoutes />
       </div>
     </div>
   );
