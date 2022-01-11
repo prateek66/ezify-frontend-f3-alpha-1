@@ -32,7 +32,7 @@ function App({ history }) {
 
   return (
     <ApiContext>
-      {showHeader && <Header />}
+      {showHeader && <Header showVendorBtn={true} />}
       <Routes />
       {showFooter && <Footer />}
     </ApiContext>

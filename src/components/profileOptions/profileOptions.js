@@ -17,7 +17,11 @@ const ProfileOptions = ({ firstName, roles, profileImage }) => {
       break;
 
     case "admin":
-      menuOptions = [{ label: "Dashboard", link: "/dashboard" }];
+      menuOptions = [
+        { label: "Dashboard", link: "/dashboard" },
+        { label: "Services", link: "/dashboard/services" },
+        { label: "Vendors", link: "/dashboard/vendors" },
+      ];
       break;
 
     default:

@@ -1,6 +1,6 @@
 import React from "react";
 
-import DashboardHeader from "../../components/dashboardHeader/dashboardHeader";
+import Header from "../../components/header/Header";
 import Sidebar from "../../components/sidebar/sidebar";
 import DashboardRoutes from "../../routes/dashboard.routes";
 
@@ -11,7 +11,7 @@ const Dashboard = () => {
     <div className="d-flex">
       <Sidebar />
       <div className="w-100">
-        <DashboardHeader />
+        <Header showVendorBtn={false} />
         <DashboardRoutes />
       </div>
     </div>

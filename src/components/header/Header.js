@@ -14,7 +14,7 @@ import UserSignup from "../signup/user/userSignup";
 
 import "./Header.scss";
 
-const Header = ({ token, setToken, userDetails, setUser }) => {
+const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
   const history = useHistory();
 
   const [show, setShow] = useState(false);
@@ -47,9 +47,11 @@ const Header = ({ token, setToken, userDetails, setUser }) => {
             </div>
             <div className="col-7 offset-4">
               <div className="button-group d-flex align-items-center justify-content-end">
-                <a href="#" className="button-vendor mr-3">
-                  Become a Vendor
-                </a>
+                {showVendorBtn && (
+                  <a href="#" className="button-vendor mr-3">
+                    Become a Vendor
+                  </a>
+                )}
                 <CustomButton type="button" text={token ? "Sign Out" : "Sign In"} onClick={handleSignupSignIn}></CustomButton>
                 {token && <ProfileOptions {...userDetails} />}
               </div>

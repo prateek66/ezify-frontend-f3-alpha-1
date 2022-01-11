@@ -59,7 +59,11 @@ const Sidebar = ({ userDetails }) => {
   return (
     <div className="sidebar" id="sidebar">
       <div className={`sidebar__logo-container d-flex align-items-center ${toggle ? "justify-content-between" : "justify-content-center"}`}>
-        {toggle && <div className="sidebar__logo-container--box">Logo</div>}
+        {toggle && (
+          <Link to="/">
+            <div className="sidebar__logo-container--box">Logo</div>
+          </Link>
+        )}
         <img src={hamburgerMenu} alt="hamburgerMenu" className="sidebar__logo-container--toogle-img" onClick={onToggle} />
       </div>
 
@@ -67,9 +71,11 @@ const Sidebar = ({ userDetails }) => {
         {sidebarMenuOptions.map((option, index) => (
           <li className="sidebar__menuList--item" key={index}>
             <Link to={option.path}>
-              <div className={`d-flex align-items-center ${toggle ? "justify-content-start" : "justify-content-center"}`}>
-                <img src={option.icon} alt="Icon" className={toggle ? "" : "mr-0"} />
-                {toggle && <span>{option.label}</span>}
+              <div className="row">
+                <div className="col-3">
+                  <img src={option.icon} alt="Icon" className={toggle ? "" : "mr-0"} />
+                </div>
+                <div className="col-9">{toggle && <span>{option.label}</span>}</div>
               </div>
             </Link>
           </li>

@@ -6,6 +6,10 @@
   background-color: #fff;
   color: #000;
   transition: 0.3s;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: $box-shadow;
 
   &__logo-container {
     height: 4rem;
