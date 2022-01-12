@@ -31,4 +31,28 @@
       word-break: break-word;
     }
   }
+
+  &__image {
+    position: relative;
+    height: 9rem;
+    width: 9rem;
+    border-radius: 50%;
+
+    &--img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+    }
+
+    &--edit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+    }
+
+    & #profileImageFile {
+      display: none;
+    }
+  }
 }

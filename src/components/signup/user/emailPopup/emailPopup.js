@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+
+import { ApiCallsContext } from "../../../../services/api.service";
+import { catchHandler } from "../../../../utlis/catchHandler.utlis";
+import { API_URLS } from "../../../../utlis/constants";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
-const EmailPopup = ({ values, handleChange, nextStep }) => {
-  const proceed = (e) => {
-    e.preventDefault();
-    nextStep();
+const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
+  const sendOTPAPI = async () => {
+    const postObj = {
+      email: values.email,
+    };
+
+    const data = await ApiContext.postData(API_URLS.SEND_OTP, postObj);
+    return data;
   };
+
+  const sendOTP = async () => {
+    if (values.email) {
+      const response = await catchHandler(sendOTPAPI);
+      console.log("otpVerify", response.otpVerify);
+      updateState("id", response._id);
+      nextStep();
+    }
+  };
+
+  const [buttonAttributes, setButtonAttributes] = useState({
+    type: "submit",
+    text: "SEND OTP",
+    classes: "btn-block font-weight-bold",
+    disabled: true,
+    onClick: sendOTP,
+  });
+
+  const ApiContext = useContext(ApiCallsContext);
 
   const emailFormControlAttributes = {
     id: "email",
@@ -15,17 +42,32 @@ const EmailPopup = ({ values, handleChange, nextStep }) => {
     isMandatory: true,
     type: "email",
     onChange: handleChange("email"),
-    // validators: {
-    //   required: true,
-    // },
+    validators: {
+      required: true,
+    },
+    value: values.email,
   };
 
-  const buttonAttributes = {
-    type: "submit",
-    text: "SEND OTP",
-    classes: "btn-block font-weight-bold",
-    onClick: proceed,
-  };
+  useEffect(() => {
+    const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+    if (values.email.match(emailRegex) && values.email) {
+      setButtonAttributes({
+        type: "submit",
+        text: "SEND OTP",
+        classes: "btn-block font-weight-bold",
+        disabled: false,
+        onClick: sendOTP,
+      });
+    } else {
+      setButtonAttributes({
+        type: "submit",
+        text: "SEND OTP",
+        classes: "btn-block font-weight-bold",
+        disabled: true,
+        onClick: sendOTP,
+      });
+    }
+  }, [values.email]);
 
   return (
     <div className="emailPopup">

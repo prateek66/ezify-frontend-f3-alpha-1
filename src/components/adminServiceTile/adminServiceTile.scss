@@ -1,0 +1,29 @@
+@import "./../../sass/variables";
+
+.adminServiceTile {
+  &__icons {
+    img {
+      height: 2rem;
+      width: 2rem;
+      cursor: pointer;
+    }
+  }
+
+  &__heading {
+    &--title {
+      color: $quaternary-color;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    &--date {
+      color: $quaternary-color;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__desc {
+    color: $quaternary-color;
+    font-size: .9rem;
+  }
+}

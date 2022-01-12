@@ -1,5 +1,5 @@
 export const catchHandler = (fn) => {
-  fn().catch((err) => {
+  return fn().catch((err) => {
     console.log(err);
   });
 };

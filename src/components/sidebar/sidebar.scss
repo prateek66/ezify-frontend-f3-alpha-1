@@ -1,0 +1,58 @@
+@import "./../../sass/variables";
+
+.sidebar {
+  width: 15rem;
+  height: 100vh;
+  background-color: #fff;
+  color: #000;
+  transition: 0.3s;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: $box-shadow;
+
+  &__logo-container {
+    height: 4rem;
+    background-color: $primary-color;
+    padding: 0 1rem;
+
+    &--box {
+      font-size: 1.5rem;
+      font-weight: bold;
+      font-style: italic;
+      color: #fff;
+    }
+
+    &--toogle-img {
+      cursor: pointer;
+    }
+  }
+
+  &__menuList {
+    padding: 0;
+    margin-top: 1rem;
+
+    &--item {
+      list-style: none;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+
+      a {
+        color: #a7a7a7;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      img {
+        margin-right: 1.5rem;
+      }
+
+      &:hover {
+        background-color: rgba($primary-color, 0.2);
+        color: $primary-color;
+      }
+    }
+  }
+}

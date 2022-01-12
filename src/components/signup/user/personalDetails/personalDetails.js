@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { connect } from "react-redux";
+import { State, City } from "country-state-city";
+
+import { setCurrentUser, setCurrentUserToken } from "../../../../redux/user/user.actions";
+import { ApiCallsContext } from "../../../../services/api.service";
+import { catchHandler } from "../../../../utlis/catchHandler.utlis";
+import { API_URLS } from "../../../../utlis/constants";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
+
 import "./personalDetails.scss";
 
-const PersonalDetails = ({ values, handleChange, nextStep }) => {
-  const proceed = (e) => {
-    e.preventDefault();
-    nextStep();
-  };
+const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState, setUser }) => {
+  const ApiContext = useContext(ApiCallsContext);
+
+  const stateOptions = State.getStatesOfCountry("IN").map((state) => {
+    return { value: state.isoCode, label: state.name };
+  });
+
+  const [citiesConfig, setCitiesConfig] = useState({
+    id: "cityField",
+    label: "City",
+    isMandatory: true,
+    type: "select",
+    onChange: (e) => updateState("city", e.value),
+    options: [],
+    bindValue: "name",
+    bindLabel: "name",
+  });
 
   const fNameFormControlAttributes = {
     id: "fname",
     label: "First Name",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("firstName"),
   };
 
   const lNameFormControlAttributes = {
@@ -22,20 +43,20 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "Last Name",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("lastName"),
   };
 
   const stateFormControlAttributes = {
     id: "state",
     label: "State",
     isMandatory: true,
-    type: "input",
-  };
-
-  const cityFormControlAttributes = {
-    id: "cityField",
-    label: "City",
-    isMandatory: true,
-    type: "input",
+    type: "select",
+    onChange: (e) => {
+      console.log(e);
+      updateState("state", e.label);
+      updateState("stateCode", e.value);
+    },
+    options: stateOptions,
   };
 
   const addressFormControlAttributes = {
@@ -43,6 +64,7 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "Address",
     isMandatory: true,
     type: "textarea",
+    onChange: handleChange("address"),
   };
 
   const mobileFormControlAttributes = {
@@ -50,14 +72,64 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
     label: "Mobile Number",
     isMandatory: true,
     type: "input",
+    onChange: handleChange("mobileNumber"),
+  };
+
+  const userRegistrationAPI = async () => {
+    const { email, otp, firstName, lastName, state, city, address, mobileNumber } = values;
+    const postObj = {
+      email,
+      otp,
+      firstName,
+      lastName,
+      state,
+      city,
+      address,
+      mobileNumber: +mobileNumber,
+      isEmaiVerified: true,
+      isActive: true,
+    };
+
+    const headers = {
+      Authorization: `Bearer ${values.token}`,
+    };
+
+    const data = await ApiContext.patchData(API_URLS.UPDATE_USER, postObj, { headers });
+    return data;
+  };
+
+  const handleUserRegistration = async () => {
+    const response = await catchHandler(userRegistrationAPI);
+    setToken(values.token);
+    setUser(response);
+    nextStep();
   };
 
   const buttonAttributes = {
     type: "submit",
     text: "Submit",
     classes: "font-weight-bold cp-2",
-    onClick: proceed,
+    onClick: handleUserRegistration,
   };
+
+  useEffect(() => {
+    let citiesOptions = City.getCitiesOfState("IN", values.stateCode).map((city) => {
+      return { value: city.name, label: city.name };
+    });
+
+    console.log(citiesOptions);
+
+    setCitiesConfig({
+      id: "cityField",
+      label: "City",
+      isMandatory: true,
+      type: "select",
+      onChange: (e) => updateState("city", e.value),
+      options: citiesOptions,
+      bindValue: "name",
+      bindLabel: "name",
+    });
+  }, [values.stateCode]);
 
   return (
     <div className="personalDetails">
@@ -69,22 +141,22 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
           </p>
 
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...fNameFormControlAttributes} />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...lNameFormControlAttributes} />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...stateFormControlAttributes} />
             </div>
-            <div className="col-6">
-              <FormControl {...cityFormControlAttributes} />
+            <div className="col-md-6">
+              <FormControl {...citiesConfig} />
             </div>
             <div className="col-12">
               <FormControl {...addressFormControlAttributes} />
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <FormControl {...mobileFormControlAttributes} />
             </div>
             <div className="col-12 text-right">
@@ -97,4 +169,9 @@ const PersonalDetails = ({ values, handleChange, nextStep }) => {
   );
 };
 
-export default PersonalDetails;
+const mapDispatchToProps = (dispatch) => ({
+  setToken: (token) => dispatch(setCurrentUserToken(token)),
+  setUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(PersonalDetails);
