@@ -1,7 +1,7 @@
 @import "./../../sass/variables";
 
 .adminServices {
-  padding: 2.5rem 0;
+  padding: 2.5rem;
 
   &__header {
     span {
@@ -21,9 +21,10 @@
 
   &__body {
     box-shadow: $box-shadow-darker;
-    height: 30rem;
+    // height: 30rem;
     width: 100%;
     border-radius: 1rem;
     margin-top: 1.5rem;
+    padding: 1.5rem;
   }
 }

@@ -1,5 +1,7 @@
 import React from "react";
 
+import AdminServiceTile from "./../adminServiceTile/adminServiceTile";
+
 import "./adminServices.scss";
 
 const AdminServices = () => {
@@ -10,7 +12,10 @@ const AdminServices = () => {
         <span>Add New Service</span>
       </div>
       <div className="adminServices__body">
-          
+        <AdminServiceTile />
+        <AdminServiceTile />
+        <AdminServiceTile />
+        <AdminServiceTile />
       </div>
     </div>
   );
