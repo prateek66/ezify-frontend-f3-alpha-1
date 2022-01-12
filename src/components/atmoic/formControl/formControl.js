@@ -4,7 +4,7 @@ import Select from "react-select";
 import "./formControl.scss";
 
 const FormControl = (props) => {
-  const { id, type, label, isMandatory, onChange, validators, disabled, value, options, formik, defaultValue } = props;
+  const { id, type, label, isMandatory, onChange, validators, disabled, value, options, formik, defaultValue, rows } = props;
 
   const onFocus = () => {
     const inputLabel = document.getElementById(`label-${id}`);
@@ -74,7 +74,7 @@ const FormControl = (props) => {
 
         {type === "textarea-formik" && (
           <>
-            <textarea className="form-control formControl-input" id={id} {...formik.getFieldProps(id)}></textarea>
+            <textarea className="form-control formControl-input" rows={rows} id={id} {...formik.getFieldProps(id)}></textarea>
             <small className="text-danger errorMsg">{formik.touched[id] && formik.errors[id] ? formik.errors[id] : ""}</small>
           </>
         )}
