@@ -1,0 +1,89 @@
+@import "./../../sass/variables";
+
+.homePage {
+  padding: 3rem 0;
+
+  &__text {
+    font-family: $rubik-font-family;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 36px;
+
+    &--para {
+      font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: Mixed;
+      font-size: 16px;
+    }
+
+    &--vendor_number {
+      font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      font-size: 20.23px;
+    }
+
+    &--vendor {
+      font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: regular;
+      font-size: 12.95px;
+    }
+
+    &--l1_text {
+      font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: medium;
+      font-size: 35px;
+    }
+
+    &--l2_text {
+        font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: mixed;
+      font-size: 16px;
+      flex: auto;
+    }
+
+    &--l3_text {
+        font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: medium;
+      font-size: 28px;
+    }
+
+  }
+
+  &__container_l1 {
+    padding: 1rem 0; 
+    background-color: #FAFAFA;
+
+
+    &--container_l2 {
+          padding: 1rem 0; 
+
+    }
+  }
+
+
+  &__box {
+    box-shadow: $box-shadow-darker;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    &:not(:first-child) {
+      margin-left: 2rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .homePage {
+    &__box {
+      margin-left: 0 !important;
+      &--row {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
