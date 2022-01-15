@@ -93,7 +93,30 @@ const ApiContext = ({ children, setSpinner }) => {
     });
   };
 
-  return <ApiCallsContext.Provider value={{ getData, postData, patchData }}>{children}</ApiCallsContext.Provider>;
+  const deleteData = (url, options) => {
+    setSpinner(true);
+    return new Promise((resolve, reject) => {
+      const path = `${env.BASE_URL}${url}`;
+
+      axios
+        .delete(path, options)
+        .then((response) => {
+          let resData = response.data.data;
+          if (env.ENVIRONMENT === "PROD") {
+            resData = decryption(resData);
+          }
+          setSpinner(false);
+          resolve(resData);
+        })
+        .catch((err) => {
+          setSpinner(false);
+          const errorResponse = err.response.data;
+          reject(errorResponse);
+        });
+    });
+  };
+
+  return <ApiCallsContext.Provider value={{ getData, postData, patchData, deleteData }}>{children}</ApiCallsContext.Provider>;
 };
 
 const mapDispatchToProps = (dispatch) => ({

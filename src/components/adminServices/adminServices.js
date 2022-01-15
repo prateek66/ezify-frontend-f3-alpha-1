@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Pagination } from "react-bootstrap";
 import { ApiCallsContext } from "../../services/api.service";
 import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../utlis/constants";
@@ -24,15 +23,19 @@ const AdminServices = () => {
 
   const fetchServices = async () => {
     const response = await catchHandler(fetchServicesAPI);
-
     setServices(response);
-
-    console.log(response);
   };
 
   const fetchServicesAPI = async () => {
     const data = await ApiContext.getData(API_URLS.VIEW_SERVICES);
     return data;
+  };
+
+  const removeService = (id) => {
+    const updatedService = services.filter((service) => service._id !== id);
+
+    console.log(updatedService);
+    setServices(updatedService);
   };
 
   return (
@@ -47,7 +50,7 @@ const AdminServices = () => {
             services.length > 0 &&
             services
               .slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-              .map((service, index) => <AdminServiceTile key={index} {...service} />)}
+              .map((service, index) => <AdminServiceTile key={index} {...service} removeService={removeService} />)}
         </div>
 
         <div className="d-flex align-items-center justify-content-end mt-4">

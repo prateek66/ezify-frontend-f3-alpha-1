@@ -97,6 +97,8 @@ const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices }) => {
   const createService = async () => {
     const response = await catchHandler(createServiceAPI);
 
+    console.log(response);
+
     if (response?.message?.includes("duplicate key error collection")) {
       formik.setFieldError("name", "Service with this name already create.");
       return;
@@ -108,6 +110,8 @@ const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices }) => {
       message: "Service added successfully",
       className: "success",
     });
+
+    setServices((prevValues) => [...prevValues, { ...response }]);
   };
 
   const createServiceAPI = async () => {
