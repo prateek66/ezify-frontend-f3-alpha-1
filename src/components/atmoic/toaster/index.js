@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Toast } from "react-bootstrap";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";

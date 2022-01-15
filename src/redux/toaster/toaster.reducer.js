@@ -2,9 +2,9 @@ import { ToasterActionTypes } from "./toaster.types";
 
 const INITIAL_STATE = {
   toasterConfig: {
-    show: true,
-    message: "Harshit is a very good boy",
-    className: "success",
+    show: false,
+    message: null,
+    className: null,
   },
 };
 

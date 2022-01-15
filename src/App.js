@@ -8,6 +8,7 @@ import "./App.scss";
 import Routes from "./routes/routes";
 import { useEffect, useState } from "react";
 import Toaster from "./components/atmoic/toaster";
+import CustomSpinner from "./components/atmoic/spinner";
 
 function App({ history }) {
   const [showHeader, setShowHeader] = useState(true);
@@ -38,6 +39,7 @@ function App({ history }) {
       {showFooter && <Footer />}
 
       <Toaster />
+      <CustomSpinner />
     </ApiContext>
   );
 }
