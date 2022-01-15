@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Pagination } from "react-bootstrap";
 import { ApiCallsContext } from "../../services/api.service";
 import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../utlis/constants";
+import CustomPagination from "../atmoic/customPagination";
 import ModalBase from "../atmoic/modal/modal";
 import ServiceForm from "../serviceForm/serviceForm";
 
@@ -13,6 +15,8 @@ const AdminServices = () => {
   const ApiContext = useContext(ApiCallsContext);
   const [show, setShow] = useState(false);
   const [services, setServices] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(4);
 
   useEffect(() => {
     fetchServices();
@@ -39,8 +43,14 @@ const AdminServices = () => {
           <span onClick={() => setShow(true)}>Add New Service</span>
         </div>
         <div className="adminServices__body">
-          {Array.isArray(services) && services.length > 0 && services.map((service, index) => <AdminServiceTile key={index} {...service} />)}
+          {Array.isArray(services) &&
+            services.length > 0 &&
+            services
+              .slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
+              .map((service, index) => <AdminServiceTile key={index} {...service} />)}
         </div>
+
+        <CustomPagination records={services} pageSize={pageSize} page={page} setPage={setPage} />
       </div>
 
       <ModalBase show={show} size="lg">
