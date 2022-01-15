@@ -106,6 +106,7 @@ const ServiceForm = ({ setShow, userToken, setToasterCofig }) => {
     setToasterCofig({
       show: true,
       message: "Service added successfully",
+      className: "success",
     });
   };
 
