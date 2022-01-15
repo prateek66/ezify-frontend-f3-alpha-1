@@ -1,0 +1,16 @@
+@import "./../../../sass/variables";
+
+.customPagination {
+  & .page-item.active .page-link {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+
+  & .page-link {
+    color: $quaternary-color;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}

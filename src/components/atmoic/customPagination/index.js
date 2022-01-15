@@ -1,9 +1,11 @@
 import React from "react";
 import { Pagination } from "react-bootstrap";
 
+import "./customPagination.scss";
+
 const CustomPagination = ({ records, pageSize, page, setPage }) => {
   return (
-    <Pagination>
+    <Pagination className="customPagination">
       {records.map((_, index) => {
         if (index % pageSize === 0) {
           return (

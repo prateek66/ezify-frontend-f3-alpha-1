@@ -14,7 +14,7 @@ import { API_URLS } from "../../utlis/constants";
 import { ApiCallsContext } from "../../services/api.service";
 import { setToasterConfig } from "../../redux/toaster/toaster.actions";
 
-const ServiceForm = ({ setShow, userToken, setToasterCofig }) => {
+const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices }) => {
   const ApiContext = useContext(ApiCallsContext);
   const [preview, setPreview] = useState(null);
 

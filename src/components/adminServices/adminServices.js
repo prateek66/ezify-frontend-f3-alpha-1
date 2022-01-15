@@ -50,11 +50,13 @@ const AdminServices = () => {
               .map((service, index) => <AdminServiceTile key={index} {...service} />)}
         </div>
 
-        <CustomPagination records={services} pageSize={pageSize} page={page} setPage={setPage} />
+        <div className="d-flex align-items-center justify-content-end mt-4">
+          <CustomPagination records={services} pageSize={pageSize} page={page} setPage={setPage} />
+        </div>
       </div>
 
       <ModalBase show={show} size="lg">
-        <ServiceForm setShow={setShow} />
+        <ServiceForm setShow={setShow} setServices={setServices} />
       </ModalBase>
     </>
   );
