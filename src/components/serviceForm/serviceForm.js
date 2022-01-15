@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { createStructuredSelector } from "reselect";
 
 import "./serviceForm.scss";
 import FormControl from "../atmoic/formControl/formControl";
 import CustomButton from "../atmoic/customButton/customButton";
+import { catchHandler } from "../../utlis/catchHandler.utlis";
+import { selectToken } from "../../redux/user/user.selectors";
+import { connect } from "react-redux";
+import { API_URLS } from "../../utlis/constants";
+import { ApiCallsContext } from "../../services/api.service";
+import { setToasterConfig } from "../../redux/toaster/toaster.actions";
 
-const ServiceForm = ({ setShow }) => {
+const ServiceForm = ({ setShow, userToken, setToasterCofig }) => {
+  const ApiContext = useContext(ApiCallsContext);
   const [preview, setPreview] = useState(null);
 
   const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/jpg"];
@@ -27,6 +35,9 @@ const ServiceForm = ({ setShow }) => {
         .test("FILE_SIZE", "File should be less than 3mb", (value) => !value || (value && value.size > 1024 * 3))
         .test("FILE_FORMAT", "File should be in png/jpg/jpeg format", (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type))),
     }),
+    onSubmit: (values) => {
+      createService();
+    },
   });
 
   const serviceNameAttributes = {
@@ -83,53 +94,96 @@ const ServiceForm = ({ setShow }) => {
     formik.validateForm();
   }, []);
 
+  const createService = async () => {
+    const response = await catchHandler(createServiceAPI);
+
+    if (response?.message?.includes("duplicate key error collection")) {
+      formik.setFieldError("name", "Service with this name already create.");
+      return;
+    }
+
+    setShow(false);
+    setToasterCofig({
+      show: true,
+      message: "Service added successfully",
+    });
+  };
+
+  const createServiceAPI = async () => {
+    const formData = new FormData();
+
+    const { name, description, file } = formik.values;
+
+    formData.append("image", file);
+    formData.append("name", name);
+    formData.append("description", description);
+
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+      "content-type": "multipart/form-data",
+    };
+
+    const data = await ApiContext.postData(API_URLS.CREATE_SERVICE, formData, { headers });
+    return data;
+  };
+
   return (
     <div className="serviceForm">
       <Modal.Header closeButton onClick={() => setShow(false)}>
         ADD NEW SERVICE
       </Modal.Header>
 
-      <Modal.Body>
+      <Modal.Body className="pt-0">
         <p className="intro-text">Hi Admin to add a new service please fill the below details</p>
 
-        <div className="row">
-          <div className="col-md-7">
-            <FormControl {...serviceNameAttributes} />
-            <FormControl {...descriptionAttributes} />
-          </div>
-          <div className="col-md-5">
-            <label htmlFor="serviceImage" className="formControl-label">
-              * Image
-            </label>
-            <div>
-              <CustomButton {...updateButtonAttributes} />
+        <form onSubmit={formik.handleSubmit}>
+          <div className="row">
+            <div className="col-md-7">
+              <FormControl {...serviceNameAttributes} />
+              <FormControl {...descriptionAttributes} />
             </div>
-            <input
-              type="file"
-              hidden
-              accept="image/png, image/jpeg, image/jpg"
-              id="file"
-              onChange={(e) => {
-                formik.setFieldValue("file", e.target.files[0]);
-                previewFile(e.target.files[0]);
-              }}
-            />
-            <small className="text-danger errorMsg">{formik.errors["file"]}</small>
-
-            {preview && (
-              <div className="mt-3">
-                <img src={preview} alt="Profile" className="serviceForm__img" />
+            <div className="col-md-5">
+              <label htmlFor="serviceImage" className="formControl-label">
+                * Image
+              </label>
+              <div>
+                <CustomButton {...updateButtonAttributes} />
               </div>
-            )}
-          </div>
+              <input
+                type="file"
+                hidden
+                accept="image/png, image/jpeg, image/jpg"
+                id="file"
+                onChange={(e) => {
+                  formik.setFieldValue("file", e.target.files[0]);
+                  previewFile(e.target.files[0]);
+                }}
+              />
+              <small className="text-danger errorMsg">{formik.errors["file"]}</small>
 
-          <div className="col-12 text-center">
-            <CustomButton {...submitButtonAttributes} />
+              {preview && (
+                <div className="mt-3">
+                  <img src={preview} alt="Profile" className="serviceForm__img" />
+                </div>
+              )}
+            </div>
+
+            <div className="col-12 text-center">
+              <CustomButton {...submitButtonAttributes} />
+            </div>
           </div>
-        </div>
+        </form>
       </Modal.Body>
     </div>
   );
 };
 
-export default ServiceForm;
+const mapStateToProps = createStructuredSelector({
+  userToken: selectToken,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setToasterCofig: (config) => dispatch(setToasterConfig(config)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServiceForm);

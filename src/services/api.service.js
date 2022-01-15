@@ -28,6 +28,8 @@ const ApiContext = ({ children }) => {
     return new Promise((resolve, reject) => {
       const path = `${env.BASE_URL}${url}`;
 
+      console.log(path)
+
       let data = postObj;
       if (env.ENVIRONMENT === "PROD") {
         data = {
@@ -45,6 +47,7 @@ const ApiContext = ({ children }) => {
           resolve(resData);
         })
         .catch((err) => {
+          console.log(err);
           const errorResponse = err.response.data;
           reject(errorResponse);
         });

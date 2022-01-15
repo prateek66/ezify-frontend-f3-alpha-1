@@ -7,6 +7,7 @@ import ApiContext from "./services/api.service";
 import "./App.scss";
 import Routes from "./routes/routes";
 import { useEffect, useState } from "react";
+import Toaster from "./components/atmoic/toaster";
 
 function App({ history }) {
   const [showHeader, setShowHeader] = useState(true);
@@ -35,6 +36,8 @@ function App({ history }) {
       {showHeader && <Header showVendorBtn={true} />}
       <Routes />
       {showFooter && <Footer />}
+
+      <Toaster />
     </ApiContext>
   );
 }
