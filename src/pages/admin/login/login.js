@@ -88,10 +88,18 @@ const Login = ({ setUser, setToken, history }) => {
 
   const verifyOtp = async () => {
     const response = await catchHandler(verifyOTPAPI);
-    if (response.user.roles !== "admin") {
+    console.log(response);
+    console.log(response?.user?.roles !== "admin");
+    if (response?.statusCode === "10001") {
+      formik.setFieldError("otp", "Invalid OTP");
+      return;
+    }
+
+    if (response?.user?.roles !== "admin") {
       formik.setFieldValue("otp", "", false);
       formik.setFieldValue("id", null, false);
       formik.setFieldError("email", "This email is not of admin");
+      return;
     }
 
     setUser(response.user);

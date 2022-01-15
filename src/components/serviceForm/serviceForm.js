@@ -90,7 +90,7 @@ const ServiceForm = ({ setShow }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <p>Hi Admin to add a new service please fill the below details</p>
+        <p className="intro-text">Hi Admin to add a new service please fill the below details</p>
 
         <div className="row">
           <div className="col-md-7">
