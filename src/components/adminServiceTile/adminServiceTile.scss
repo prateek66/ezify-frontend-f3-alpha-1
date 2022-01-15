@@ -24,6 +24,16 @@
 
   &__desc {
     color: $quaternary-color;
-    font-size: .9rem;
+    font-size: 0.9rem;
+  }
+
+  &__img {
+    height: 9rem;
+    width: 100%;
+
+    & img {
+      object-fit: cover;
+      border-radius: 5px;
+    }
   }
 }
