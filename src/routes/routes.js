@@ -7,6 +7,7 @@ import Profile from "../pages/profile/profile";
 import Services from "../pages/services/services";
 import Home from "./../pages/home/home";
 import Dashboard from "./../pages/dashboard/dashboard";
+import Vendor from "./../pages/vendor/homePage";
 
 const Routes = () => {
   return (
@@ -15,6 +16,7 @@ const Routes = () => {
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/services" component={Services} />
       <Route exact path="/admin" component={Login} />
+      <Route exact path="/vendorhome" component={Vendor} />
       <Route path="/dashboard" component={Dashboard} />
     </Switch>
   );
