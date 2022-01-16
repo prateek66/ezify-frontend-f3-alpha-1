@@ -30,7 +30,7 @@ const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices, data, u
     },
     validationSchema: Yup.object({
       name: Yup.string().min(3).max(20).required("Required"),
-      description: Yup.string().min(15).max(250).required("Required"),
+      description: Yup.string().min(15).max(300).required("Required"),
       file: Yup.mixed().when("imgValidation", {
         is: false,
         then: Yup.mixed()
