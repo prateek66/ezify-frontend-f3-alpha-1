@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { setCurrentUser, setCurrentUserToken } from "../../redux/user/user.actions";
 import { selectToken, selectUserDetails } from "../../redux/user/user.selectors";
@@ -13,12 +13,15 @@ import ProfileOptions from "../profileOptions/profileOptions";
 import UserSignup from "../signup/user/userSignup";
 
 import "./Header.scss";
+import VendorSignup from "../signup/vendor/vendorSignup";
 
 const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
   const history = useHistory();
+  const location = useLocation();
 
   const [show, setShow] = useState(false);
   const [size, setSize] = useState("md");
+  const [popupType, setPopupType] = useState("user");
 
   const handleClose = () => {
     setSize("md");
@@ -33,6 +36,9 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
       setUser(null);
       history.push("/");
     } else {
+      console.log(location.pathname);
+
+      location.pathname === "/vendorhome" ? setPopupType("vendor") : setPopupType("user");
       handleShow();
     }
   };
@@ -48,9 +54,9 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
             <div className="col-7 offset-4">
               <div className="button-group d-flex align-items-center justify-content-end">
                 {showVendorBtn && (
-                  <a href="#" className="button-vendor mr-3">
+                  <Link to="/vendorhome" className="button-vendor mr-3">
                     Become a Vendor
-                  </a>
+                  </Link>
                 )}
                 <CustomButton type="button" text={token ? "Sign Out" : "Sign In"} onClick={handleSignupSignIn}></CustomButton>
                 {token && <ProfileOptions {...userDetails} />}
@@ -62,7 +68,9 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
 
       <ModalBase show={show} handleClose={handleClose} handleShow={handleShow} dialogClassName="signup" size={size}>
         <>
-          <UserSignup setSize={setSize} handleClose={handleClose}></UserSignup>
+          {popupType === "user" && <UserSignup setSize={setSize} handleClose={handleClose}></UserSignup>}
+
+          {popupType === "vendor" && <VendorSignup />}
         </>
       </ModalBase>
     </>

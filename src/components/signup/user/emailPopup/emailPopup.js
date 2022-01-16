@@ -1,5 +1,7 @@
+import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import * as Yup from "yup";
 
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
@@ -7,18 +9,26 @@ import { API_URLS } from "../../../../utlis/constants";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
-const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
-  const sendOTPAPI = async () => {
-    const postObj = {
-      email: values.email,
-    };
+const EmailPopup = ({ values, updateState, nextStep }) => {
+  const ApiContext = useContext(ApiCallsContext);
 
-    const data = await ApiContext.postData(API_URLS.SEND_OTP, postObj);
-    return data;
-  };
+  const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+
+  const formik = useFormik({
+    initialValues: {
+      email: values.email,
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().min(3).required("Required").matches(emailRegex, "Enter a valid email"),
+    }),
+    onSubmit: () => {
+      sendOTP();
+    },
+  });
 
   const sendOTP = async () => {
-    if (values.email) {
+    if (formik.isValid) {
+      updateState("email", formik.values.email);
       const response = await catchHandler(sendOTPAPI);
       console.log("otpVerify", response.otpVerify);
       updateState("id", response._id);
@@ -26,58 +36,54 @@ const EmailPopup = ({ values, updateState, handleChange, nextStep }) => {
     }
   };
 
+  const sendOTPAPI = async () => {
+    const postObj = {
+      email: formik.values.email,
+    };
+
+    const data = await ApiContext.postData(API_URLS.SEND_OTP, postObj);
+    return data;
+  };
+
   const [buttonAttributes, setButtonAttributes] = useState({
     type: "submit",
     text: "SEND OTP",
     classes: "btn-block font-weight-bold",
     disabled: true,
-    onClick: sendOTP,
   });
 
-  const ApiContext = useContext(ApiCallsContext);
-
-  const emailFormControlAttributes = {
+  const emailAttributes = {
     id: "email",
-    label: "Enter Your Email Address",
+    label: "ENTER YOUR EMAIL ADDRESS",
     isMandatory: true,
-    type: "email",
-    onChange: handleChange("email"),
-    validators: {
-      required: true,
-    },
-    value: values.email,
+    type: "input-formik",
+    formik,
   };
 
   useEffect(() => {
-    const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
-    if (values.email.match(emailRegex) && values.email) {
-      setButtonAttributes({
-        type: "submit",
-        text: "SEND OTP",
-        classes: "btn-block font-weight-bold",
-        disabled: false,
-        onClick: sendOTP,
-      });
-    } else {
-      setButtonAttributes({
-        type: "submit",
-        text: "SEND OTP",
-        classes: "btn-block font-weight-bold",
-        disabled: true,
-        onClick: sendOTP,
-      });
-    }
-  }, [values.email]);
+    setButtonAttributes({
+      type: "submit",
+      text: "SEND OTP",
+      classes: "btn-block font-weight-bold",
+      disabled: !formik.isValid,
+    });
+  }, [formik.isValid]);
+
+  useEffect(() => {
+    formik.validateForm();
+  }, []);
 
   return (
     <div className="emailPopup">
       <Modal.Header closeButton>Login / Signup</Modal.Header>
       <Modal.Body>
-        <FormControl {...emailFormControlAttributes} />
-        <p className="emailPopup__text">
-          By signing up, you accept our <span>Terms of use</span> and <span>Privacy Policy</span>
-        </p>
-        <CustomButton {...buttonAttributes} />
+        <form onSubmit={formik.handleSubmit}>
+          <FormControl {...emailAttributes} />
+          <p className="emailPopup__text">
+            By signing up, you accept our <span>Terms of use</span> and <span>Privacy Policy</span>
+          </p>
+          <CustomButton {...buttonAttributes} />
+        </form>
       </Modal.Body>
     </div>
   );

@@ -9,7 +9,7 @@ const middlewares = [];
 
 console.log(env);
 
-if (env.ENVIRONMENT === "DEV") {
+if (window.env.ENVIRONMENT === "DEV") {
   middlewares.push(logger);
 }
 
