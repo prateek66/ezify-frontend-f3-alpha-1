@@ -3,6 +3,7 @@ import EmailPopup from "../user/emailPopup/emailPopup";
 import OtpPopup from "../user/otpPopup/otpPopup";
 import PersonalDetails from "../user/personalDetails/personalDetails";
 import Success from "../user/success/success";
+import DocumentsPopup from "./documentsPopup";
 
 export class VendorSignup extends Component {
   state = {
@@ -82,6 +83,9 @@ export class VendorSignup extends Component {
         );
 
       case 4:
+        return <DocumentsPopup prevStep={this.prevStep} />;
+
+      case 5:
         return <Success />;
 
       default:

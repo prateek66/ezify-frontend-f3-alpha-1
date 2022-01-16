@@ -17,15 +17,21 @@ import "./personalDetails.scss";
 const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState, setUser, usertype }) => {
   const ApiContext = useContext(ApiCallsContext);
 
+  const stateOptions = State.getStatesOfCountry("IN").map((state) => {
+    return { value: state.isoCode, label: state.name };
+  });
+
+  const selectedStateCode = stateOptions.find((option) => option.label === values.state)?.value;
+
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      state: "",
-      stateCode: "",
-      city: "",
-      address: "",
-      mobileNumber: "",
+      firstName: values.firstName,
+      lastName: values.lastName,
+      state: values.state,
+      stateCode: selectedStateCode,
+      city: values.city,
+      address: values.address,
+      mobileNumber: values.mobileNumber,
       roles: usertype,
     },
     validationSchema: Yup.object({
@@ -46,12 +52,27 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
       roles: Yup.string().required(),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      const { firstName, lastName, state, stateCode, city, address, mobileNumber } = formik.values;
+
+      updateState("firstName", firstName);
+      updateState("lastName", lastName);
+      updateState("state", state);
+      updateState("stateCode", stateCode);
+      updateState("city", city);
+      updateState("address", address);
+      updateState("mobileNumber", mobileNumber);
+
+      if (usertype === "user") {
+        handleUserRegistration();
+        return;
+      }
+
+      nextStep();
     },
   });
 
-  const stateOptions = State.getStatesOfCountry("IN").map((state) => {
-    return { value: state.isoCode, label: state.name };
+  let cityOptions = City.getCitiesOfState("IN", selectedStateCode).map((city) => {
+    return { value: city.name, label: city.name };
   });
 
   const [citiesConfig, setCitiesConfig] = useState({
@@ -59,9 +80,9 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
     label: "City",
     isMandatory: true,
     type: "select-formik",
-    options: [],
+    options: cityOptions,
+    defaultValue: cityOptions.find((option) => option.label === values.city),
     onChange: (cityValue) => {
-      console.log(cityValue);
       formik.setFieldValue("city", cityValue.value);
     },
     formik,
@@ -90,11 +111,12 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
     type: "select-formik",
     options: stateOptions,
     formik,
+    defaultValue: stateOptions.find((option) => option.label === values.state),
     onChange: (value) => {
       formik.setFieldValue("state", value.label);
       formik.setFieldValue("stateCode", value.value);
 
-      let cityOptions = City.getCitiesOfState("IN", value.value).map((city) => {
+      cityOptions = City.getCitiesOfState("IN", value.value).map((city) => {
         return { value: city.name, label: city.name };
       });
 
@@ -157,12 +179,6 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
     setToken(values.token);
     setUser(response);
     nextStep();
-  };
-
-  const buttonAttributes = {
-    type: "submit",
-    text: "Submit",
-    classes: "font-weight-bold cp-2",
   };
 
   const [btnAttribute, setBtnAttribute] = useState({
