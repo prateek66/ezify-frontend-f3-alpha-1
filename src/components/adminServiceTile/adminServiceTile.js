@@ -14,12 +14,14 @@ import { createStructuredSelector } from "reselect";
 import { selectToken } from "../../redux/user/user.selectors";
 import { connect } from "react-redux";
 import { setToasterConfig } from "../../redux/toaster/toaster.actions";
+import ServiceForm from "../serviceForm/serviceForm";
 
 const moment = require("moment");
 
-const AdminServiceTile = ({ _id, image, name, updatedAt, description, userToken, setToasterCofig, removeService }) => {
+const AdminServiceTile = ({ _id, image, name, updatedAt, description, userToken, setToasterCofig, removeService, setServices, updateServices }) => {
   const ApiContext = useContext(ApiCallsContext);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
 
   const handleServiceDelete = async () => {
     const response = await catchHandler(deleteServiceAPI);
@@ -63,7 +65,7 @@ const AdminServiceTile = ({ _id, image, name, updatedAt, description, userToken,
               <div className="adminServiceTile__heading--date">{moment(updatedAt).format("Do MMMM, YYYY")}</div>
             </div>
             <div className="d-flex align-items-center justify-content-between adminServiceTile__icons">
-              <img src={editIcon} alt="editIcon" className="mr-2" />
+              <img src={editIcon} alt="editIcon" className="mr-2" onClick={() => setShowEditPopup(true)} />
               <img src={deleteIcon} alt="deleteIcon" onClick={() => setShowDeletePopup(true)} />
             </div>
           </div>
@@ -77,6 +79,10 @@ const AdminServiceTile = ({ _id, image, name, updatedAt, description, userToken,
           handleClose={() => setShowDeletePopup(false)}
           handleYes={handleServiceDelete}
         />
+      </ModalBase>
+
+      <ModalBase show={showEditPopup} size="lg" handleClose={() => setShowEditPopup(false)}>
+        <ServiceForm setShow={setShowEditPopup} setServices={setServices} data={{ _id, image, name, description }} updateServices={updateServices} />
       </ModalBase>
     </>
   );

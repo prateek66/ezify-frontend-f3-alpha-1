@@ -14,28 +14,38 @@ import { API_URLS } from "../../utlis/constants";
 import { ApiCallsContext } from "../../services/api.service";
 import { setToasterConfig } from "../../redux/toaster/toaster.actions";
 
-const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices }) => {
+const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices, data, updateServices }) => {
   const ApiContext = useContext(ApiCallsContext);
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(data?.image ? data.image : null);
 
   const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/jpg"];
 
   const formik = useFormik({
     initialValues: {
-      id: "",
-      name: "",
-      description: "",
+      id: data?._id ? data._id : "",
+      imgValidation: data?._id ? true : false,
+      name: data?.name ? data.name : "",
+      description: data?.description ? data.description : "",
       file: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().min(3).max(20).required("Required"),
       description: Yup.string().min(15).max(250).required("Required"),
-      file: Yup.mixed()
-        .required()
-        .test("FILE_SIZE", "File should be less than 3mb", (value) => !value || (value && value.size > 1024 * 3))
-        .test("FILE_FORMAT", "File should be in png/jpg/jpeg format", (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type))),
+      file: Yup.mixed().when("imgValidation", {
+        is: false,
+        then: Yup.mixed()
+          .required()
+          .test("FILE_SIZE", "File should be less than 3mb", (value) => !value || (value && value.size > 1024 * 3))
+          .test("FILE_FORMAT", "File should be in png/jpg/jpeg format", (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type))),
+        otherwise: Yup.mixed().nullable(),
+      }),
     }),
     onSubmit: (values) => {
+      if (data) {
+        updateService();
+        return;
+      }
+
       createService();
     },
   });
@@ -97,8 +107,6 @@ const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices }) => {
   const createService = async () => {
     const response = await catchHandler(createServiceAPI);
 
-    console.log(response);
-
     if (response?.message?.includes("duplicate key error collection")) {
       formik.setFieldError("name", "Service with this name already create.");
       return;
@@ -132,11 +140,52 @@ const ServiceForm = ({ setShow, userToken, setToasterCofig, setServices }) => {
     return data;
   };
 
+  const updateService = async () => {
+    const response = await catchHandler(updateServiceAPI);
+
+    if (response?.message?.includes("duplicate key error collection")) {
+      formik.setFieldError("name", "Service with this name already create.");
+      return;
+    }
+
+    setShow(false);
+    setToasterCofig({
+      show: true,
+      message: "Service updated successfully",
+      className: "success",
+    });
+
+    updateServices(response);
+
+    // setServices((prevValues) => [...prevValues, { ...response }]);
+  };
+
+  const updateServiceAPI = async () => {
+    const formData = new FormData();
+
+    const { id, name, description, file } = formik.values;
+
+    if (file) {
+      formData.append("file", file);
+    }
+
+    formData.append("name", name);
+    formData.append("description", description);
+
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+      "content-type": "multipart/form-data",
+    };
+
+    const path = `${API_URLS.UPDATE_SERVICE}/${id}`;
+
+    const data = await ApiContext.patchData(path, formData, { headers });
+    return data;
+  };
+
   return (
     <div className="serviceForm">
-      <Modal.Header closeButton onClick={() => setShow(false)}>
-        ADD NEW SERVICE
-      </Modal.Header>
+      <Modal.Header closeButton>ADD NEW SERVICE</Modal.Header>
 
       <Modal.Body className="pt-0">
         <p className="intro-text">Hi Admin to add a new service please fill the below details</p>

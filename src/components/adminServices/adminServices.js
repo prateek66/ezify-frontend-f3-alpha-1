@@ -34,7 +34,23 @@ const AdminServices = () => {
   const removeService = (id) => {
     const updatedService = services.filter((service) => service._id !== id);
 
+    setServices(updatedService);
+  };
+
+  const updateServices = (data) => {
+    console.log(data);
+    const updatedService = services.map((service) => {
+      if (service._id === data._id) {
+        console.log(service);
+        service = { ...data };
+        console.log(service);
+      }
+
+      return service;
+    });
+
     console.log(updatedService);
+
     setServices(updatedService);
   };
 
@@ -50,7 +66,9 @@ const AdminServices = () => {
             services.length > 0 &&
             services
               .slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize)
-              .map((service, index) => <AdminServiceTile key={index} {...service} removeService={removeService} />)}
+              .map((service, index) => (
+                <AdminServiceTile key={index} {...service} removeService={removeService} setServices={setServices} updateServices={updateServices} />
+              ))}
         </div>
 
         <div className="d-flex align-items-center justify-content-end mt-4">
@@ -58,7 +76,7 @@ const AdminServices = () => {
         </div>
       </div>
 
-      <ModalBase show={show} size="lg">
+      <ModalBase show={show} size="lg" handleClose={() => setShow(false)}>
         <ServiceForm setShow={setShow} setServices={setServices} />
       </ModalBase>
     </>
