@@ -6,6 +6,9 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "aws-cli": "0.0.2",
+    "aws-cli-js": "^2.2.3",
+    "aws-s3": "^2.0.5",
     "axios": "^0.24.0",
     "bootstrap": "^4.6.0",
     "country-state-city": "^3.0.1",
@@ -31,6 +34,8 @@
   "scripts": {
     "start": "react-dotenv && react-scripts start",
     "build": "react-dotenv && react-scripts build",
+    "deploy": "aws s3 sync build/ s3://ezzify-deploy-frontend",
+    "test-deplpoy": "npm run build && npm run deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

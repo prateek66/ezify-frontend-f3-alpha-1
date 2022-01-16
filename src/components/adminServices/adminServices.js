@@ -15,7 +15,7 @@ const AdminServices = () => {
   const [show, setShow] = useState(false);
   const [services, setServices] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(4);
+  const [pageSize] = useState(4);
 
   useEffect(() => {
     fetchServices();
