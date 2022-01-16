@@ -19,6 +19,9 @@ export class VendorSignup extends Component {
     address: "",
     mobileNumber: "",
     token: "",
+    aadharCard: "",
+    panCard: "",
+    profilePhoto: "",
   };
 
   // Proceed to next step

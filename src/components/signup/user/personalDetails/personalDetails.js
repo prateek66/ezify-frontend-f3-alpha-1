@@ -152,10 +152,9 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
   };
 
   const userRegistrationAPI = async () => {
-    const { email, otp, firstName, lastName, state, city, address, mobileNumber } = values;
+    const { email, firstName, lastName, state, city, address, mobileNumber } = formik.values;
     const postObj = {
       email,
-      otp,
       firstName,
       lastName,
       state,
