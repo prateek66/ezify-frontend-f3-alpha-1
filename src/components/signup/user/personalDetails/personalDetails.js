@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { State, City } from "country-state-city";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 import { setCurrentUser, setCurrentUserToken } from "../../../../redux/user/user.actions";
 import { ApiCallsContext } from "../../../../services/api.service";
@@ -12,67 +14,119 @@ import FormControl from "../../../atmoic/formControl/formControl";
 
 import "./personalDetails.scss";
 
-const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState, setUser }) => {
+const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState, setUser, usertype }) => {
   const ApiContext = useContext(ApiCallsContext);
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      state: "",
+      stateCode: "",
+      city: "",
+      address: "",
+      mobileNumber: "",
+      roles: usertype,
+    },
+    validationSchema: Yup.object({
+      firstName: Yup.string().min(3).max(15, "Must be 15 characters or less").required("Required"),
+      lastName: Yup.string().min(3).max(20, "Must be 20 characters or less").required("Required"),
+      state: Yup.string("Invalid state").required("Required"),
+      stateCode: Yup.string("Invalid state").required("Required"),
+      city: Yup.string("Invalid city").required("Required"),
+      address: Yup.mixed().when("roles", {
+        is: "user",
+        then: Yup.string("Invalid address").min(10).max(200).required("Required"),
+        otherwise: Yup.mixed().nullable(),
+      }),
+      mobileNumber: Yup.string("Invalid mobile number")
+        .min(10, "Must be a valid 10 digit number")
+        .max(10, "Must be a valid 10 digit number")
+        .required("Required"),
+      roles: Yup.string().required(),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
   const stateOptions = State.getStatesOfCountry("IN").map((state) => {
     return { value: state.isoCode, label: state.name };
   });
 
   const [citiesConfig, setCitiesConfig] = useState({
-    id: "cityField",
+    id: "city",
     label: "City",
     isMandatory: true,
-    type: "select",
-    onChange: (e) => updateState("city", e.value),
+    type: "select-formik",
     options: [],
-    bindValue: "name",
-    bindLabel: "name",
+    onChange: (cityValue) => {
+      console.log(cityValue);
+      formik.setFieldValue("city", cityValue.value);
+    },
+    formik,
   });
 
   const fNameFormControlAttributes = {
-    id: "fname",
-    label: "First Name",
+    id: "firstName",
+    label: "first Name",
     isMandatory: true,
-    type: "input",
-    onChange: handleChange("firstName"),
+    type: "input-formik",
+    formik,
   };
 
   const lNameFormControlAttributes = {
-    id: "lname",
+    id: "lastName",
     label: "Last Name",
     isMandatory: true,
-    type: "input",
-    onChange: handleChange("lastName"),
+    type: "input-formik",
+    formik,
   };
 
   const stateFormControlAttributes = {
     id: "state",
     label: "State",
     isMandatory: true,
-    type: "select",
-    onChange: (e) => {
-      console.log(e);
-      updateState("state", e.label);
-      updateState("stateCode", e.value);
-    },
+    type: "select-formik",
     options: stateOptions,
+    formik,
+    onChange: (value) => {
+      formik.setFieldValue("state", value.label);
+      formik.setFieldValue("stateCode", value.value);
+
+      let cityOptions = City.getCitiesOfState("IN", value.value).map((city) => {
+        return { value: city.name, label: city.name };
+      });
+
+      setCitiesConfig({
+        id: "city",
+        label: "City",
+        isMandatory: true,
+        type: "select-formik",
+        options: cityOptions,
+        defaultValue: cityOptions[0],
+        onChange: (cityValue) => {
+          formik.setFieldValue("city", cityValue.value);
+        },
+        formik,
+      });
+    },
   };
 
   const addressFormControlAttributes = {
     id: "address",
     label: "Address",
     isMandatory: true,
-    type: "textarea",
-    onChange: handleChange("address"),
+    type: "textarea-formik",
+    formik,
   };
 
   const mobileFormControlAttributes = {
-    id: "mobile",
-    label: "Mobile Number",
+    id: "mobileNumber",
+    label: "Mobile",
     isMandatory: true,
-    type: "input",
-    onChange: handleChange("mobileNumber"),
+    type: "input-formik",
+    formik,
   };
 
   const userRegistrationAPI = async () => {
@@ -109,60 +163,64 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
     type: "submit",
     text: "Submit",
     classes: "font-weight-bold cp-2",
-    onClick: handleUserRegistration,
   };
 
+  const [btnAttribute, setBtnAttribute] = useState({
+    type: "submit",
+    text: usertype === "user" ? "Submit" : "Next",
+    classes: "font-weight-bold cp-2",
+    disabled: !formik.isValid,
+  });
+
   useEffect(() => {
-    let citiesOptions = City.getCitiesOfState("IN", values.stateCode).map((city) => {
-      return { value: city.name, label: city.name };
+    setBtnAttribute({
+      type: "submit",
+      text: usertype === "user" ? "Submit" : "Next",
+      classes: "font-weight-bold cp-2",
+      disabled: !formik.isValid,
     });
+  }, [formik.isValid]);
 
-    console.log(citiesOptions);
-
-    setCitiesConfig({
-      id: "cityField",
-      label: "City",
-      isMandatory: true,
-      type: "select",
-      onChange: (e) => updateState("city", e.value),
-      options: citiesOptions,
-      bindValue: "name",
-      bindLabel: "name",
-    });
-  }, [values.stateCode]);
+  useEffect(() => {
+    formik.validateForm();
+  }, []);
 
   return (
     <div className="personalDetails">
-      <Modal.Header closeButton>📃 USER PROFILE</Modal.Header>
+      <Modal.Header closeButton>📃 {usertype === "user" ? "USER" : "VENDOR"} PROFILE</Modal.Header>
       <Modal.Body>
         <div className="container">
           <p>
             Welcome to Ezzify! Please fill the <br /> details below to register.
           </p>
 
-          <div className="row">
-            <div className="col-md-6">
-              <FormControl {...fNameFormControlAttributes} />
+          <form onSubmit={formik.handleSubmit}>
+            <div className="row">
+              <div className="col-md-6">
+                <FormControl {...fNameFormControlAttributes} />
+              </div>
+              <div className="col-md-6">
+                <FormControl {...lNameFormControlAttributes} />
+              </div>
+              <div className="col-md-6">
+                <FormControl {...stateFormControlAttributes} />
+              </div>
+              <div className="col-md-6">
+                <FormControl {...citiesConfig} />
+              </div>
+              {usertype === "user" && (
+                <div className="col-12">
+                  <FormControl {...addressFormControlAttributes} />
+                </div>
+              )}
+              <div className="col-md-6">
+                <FormControl {...mobileFormControlAttributes} />
+              </div>
+              <div className="col-12 text-right">
+                <CustomButton {...btnAttribute} />
+              </div>
             </div>
-            <div className="col-md-6">
-              <FormControl {...lNameFormControlAttributes} />
-            </div>
-            <div className="col-md-6">
-              <FormControl {...stateFormControlAttributes} />
-            </div>
-            <div className="col-md-6">
-              <FormControl {...citiesConfig} />
-            </div>
-            <div className="col-12">
-              <FormControl {...addressFormControlAttributes} />
-            </div>
-            <div className="col-md-6">
-              <FormControl {...mobileFormControlAttributes} />
-            </div>
-            <div className="col-12 text-right">
-              <CustomButton {...buttonAttributes} />
-            </div>
-          </div>
+          </form>
         </div>
       </Modal.Body>
     </div>

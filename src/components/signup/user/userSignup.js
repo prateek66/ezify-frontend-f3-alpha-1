@@ -71,7 +71,9 @@ export class UserSignup extends Component {
         );
 
       case 3:
-        return <PersonalDetails nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} />;
+        return (
+          <PersonalDetails nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} usertype="user" />
+        );
 
       case 4:
         return <Success />;

@@ -36,8 +36,6 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
       setUser(null);
       history.push("/");
     } else {
-      console.log(location.pathname);
-
       location.pathname === "/vendorhome" ? setPopupType("vendor") : setPopupType("user");
       handleShow();
     }
@@ -70,7 +68,7 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
         <>
           {popupType === "user" && <UserSignup setSize={setSize} handleClose={handleClose}></UserSignup>}
 
-          {popupType === "vendor" && <VendorSignup />}
+          {popupType === "vendor" && <VendorSignup setSize={setSize} handleClose={handleClose} />}
         </>
       </ModalBase>
     </>

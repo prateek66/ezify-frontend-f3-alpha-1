@@ -1,6 +1,7 @@
 import { Component } from "react";
 import EmailPopup from "../user/emailPopup/emailPopup";
 import OtpPopup from "../user/otpPopup/otpPopup";
+import PersonalDetails from "../user/personalDetails/personalDetails";
 import Success from "../user/success/success";
 
 export class VendorSignup extends Component {
@@ -49,7 +50,6 @@ export class VendorSignup extends Component {
   };
 
   render() {
-    console.log("vendor");
     const { step } = this.state;
     const { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token, stateCode } = this.state;
     const values = { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token, stateCode };
@@ -71,7 +71,15 @@ export class VendorSignup extends Component {
         );
 
       case 3:
-        return;
+        return (
+          <PersonalDetails
+            nextStep={this.nextStep}
+            handleChange={this.handleChange}
+            updateState={this.updateState}
+            values={values}
+            usertype="vendor"
+          />
+        );
 
       case 4:
         return <Success />;

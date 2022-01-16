@@ -7,7 +7,6 @@ import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../../../utlis/constants";
 
-import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
 import "./otpPopup.scss";
@@ -22,14 +21,6 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
     type: "email",
     disabled: true,
     value: values.email,
-  };
-
-  const buttonAttributes = {
-    type: "button",
-    text: "NEXT",
-    classes: "btn-block font-weight-bold",
-
-    onClick: () => handleOTPChange(),
   };
 
   const sendOTPAPI = async () => {
@@ -84,7 +75,6 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
           <p className="emailPopup__change-email">
             <span onClick={sendOTPAPI}>Resend OTP</span>
           </p>
-          {/* <CustomButton {...buttonAttributes} /> */}
         </form>
       </Modal.Body>
     </div>
