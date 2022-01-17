@@ -99,7 +99,7 @@ function Homepage() {
           </div>
         </div>
 
-        <div className= "container-fluid">
+        <div className="container-fluid">
           <BannerCarousel />
         </div>
       </div>

@@ -22,6 +22,9 @@ export class VendorSignup extends Component {
     aadharCard: "",
     panCard: "",
     profilePhoto: "",
+    aadharCardPreview: "",
+    panCardPreview: "",
+    profilePhotoPreview: "",
   };
 
   // Proceed to next step
@@ -55,8 +58,44 @@ export class VendorSignup extends Component {
 
   render() {
     const { step } = this.state;
-    const { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token, stateCode } = this.state;
-    const values = { email, id, otp, firstName, lastName, state, city, address, mobileNumber, token, stateCode };
+    const {
+      email,
+      id,
+      otp,
+      firstName,
+      lastName,
+      state,
+      city,
+      address,
+      mobileNumber,
+      token,
+      stateCode,
+      aadharCard,
+      panCard,
+      profilePhoto,
+      profilePhotoPreview,
+      panCardPreview,
+      aadharCardPreview,
+    } = this.state;
+    const values = {
+      email,
+      id,
+      otp,
+      firstName,
+      lastName,
+      state,
+      city,
+      address,
+      mobileNumber,
+      token,
+      stateCode,
+      aadharCard,
+      panCard,
+      profilePhoto,
+      profilePhotoPreview,
+      panCardPreview,
+      aadharCardPreview,
+    };
 
     switch (step) {
       case 1:
@@ -86,7 +125,7 @@ export class VendorSignup extends Component {
         );
 
       case 4:
-        return <DocumentsPopup prevStep={this.prevStep} />;
+        return <DocumentsPopup prevStep={this.prevStep} updateState={this.updateState} values={values} />;
 
       case 5:
         return <Success />;
