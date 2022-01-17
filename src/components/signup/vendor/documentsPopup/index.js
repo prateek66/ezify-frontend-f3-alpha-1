@@ -11,14 +11,15 @@ import checkedIcon from "./../../../../assets/signup/checked.svg";
 import chevronDownIcon from "./../../../../assets/signup/chevron-down.svg";
 import { useFormik } from "formik";
 
-const DocumentsPopup = ({ prevStep }) => {
+const DocumentsPopup = ({ prevStep, updateState, values }) => {
+  console.log(values);
   const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/jpg"];
 
   const formik = useFormik({
     initialValues: {
-      profileImg: "",
-      aadharCard: "",
-      panCard: "",
+      profileImg: values?.profilePhoto ? values.profilePhoto : "",
+      aadharCard: values?.aadharCard ? values.aadharCard : "",
+      panCard: values?.panCard ? values.panCard : "",
     },
     validationSchema: Yup.object({
       profileImg: Yup.mixed()
@@ -40,9 +41,9 @@ const DocumentsPopup = ({ prevStep }) => {
   const [showAadharForm, setShowAadharForm] = useState(false);
   const [showPanForm, setShowPanForm] = useState(false);
 
-  const [profilePreview, setProfilePreview] = useState(null);
-  const [aadharPreview, setAadharPreview] = useState(null);
-  const [panPreview, setPanPreview] = useState(null);
+  const [profilePreview, setProfilePreview] = useState(values?.profilePhotoPreview ? values.profilePhotoPreview : null);
+  const [aadharPreview, setAadharPreview] = useState(values?.aadharCardPreview ? values.aadharCardPreview : null);
+  const [panPreview, setPanPreview] = useState(values?.panCardPreview ? values.panCardPreview : null);
 
   const [nextBtnAttributes, setNextBtnAttributes] = useState({
     type: "submit",
@@ -107,10 +108,16 @@ const DocumentsPopup = ({ prevStep }) => {
       reader.onload = () => {
         if (fileName === "profile") {
           setProfilePreview(reader.result);
+          updateState("profilePhoto", file);
+          updateState("profilePhotoPreview", reader.result);
         } else if (fileName === "aadhar") {
           setAadharPreview(reader.result);
+          updateState("aadharCard", file);
+          updateState("aadharCardPreview", reader.result);
         } else if (fileName === "pan") {
+          updateState("panCard", file);
           setPanPreview(reader.result);
+          updateState("panCardPreview", reader.result);
         }
       };
     }
