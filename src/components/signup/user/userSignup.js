@@ -56,7 +56,7 @@ export class UserSignup extends Component {
 
     switch (step) {
       case 1:
-        return <EmailPopup nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} />;
+        return <EmailPopup type="user" nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} />;
 
       case 2:
         return (

@@ -8,6 +8,8 @@ export const API_URLS = {
   DELETE_SERVICE: "4003/v1/delete_service",
   UPDATE_SERVICE: "4003/v1/update_service",
 
+  UPDATE_VENDOR: "4002/v1/vendor/update_vendor",
+
   // SEND_OTP: "/v1/users/signup",
   // VERIFY_OTP: "/v1/users/verify",
   // UPDATE_USER: "/v1/users/update_user",

@@ -1,9 +1,16 @@
-import { Component } from "react";
+import { Component, useContext } from "react";
 import EmailPopup from "../user/emailPopup/emailPopup";
 import OtpPopup from "../user/otpPopup/otpPopup";
 import PersonalDetails from "../user/personalDetails/personalDetails";
 import Success from "../user/success/success";
 import DocumentsPopup from "./documentsPopup";
+import ServicesPopup from "./servicesPopup";
+import { API_URLS } from "../../../utlis/constants";
+import { setSpinner } from "../../../redux/spinner/spinner.actions";
+import { connect } from "react-redux";
+import env from "react-dotenv";
+import axios from "axios";
+import { decryption, encyption } from "../../../utlis/security.utlis";
 
 export class VendorSignup extends Component {
   state = {
@@ -25,6 +32,7 @@ export class VendorSignup extends Component {
     aadharCardPreview: "",
     panCardPreview: "",
     profilePhotoPreview: "",
+    services: [],
   };
 
   // Proceed to next step
@@ -56,6 +64,73 @@ export class VendorSignup extends Component {
     this.setState({ [field]: value });
   };
 
+  patchData = (url, postObj, options) => {
+    setSpinner(true);
+    return new Promise((resolve, reject) => {
+      const path = `${env.BASE_URL}${url}`;
+
+      let data = postObj;
+      if (env.ENVIRONMENT === "PROD") {
+        data = {
+          data: encyption(postObj),
+        };
+      }
+
+      axios
+        .patch(path, data, options)
+        .then((response) => {
+          let resData = response.data.data;
+          if (env.ENVIRONMENT === "PROD") {
+            resData = decryption(resData);
+          }
+          setSpinner(false);
+          resolve(resData);
+        })
+        .catch((err) => {
+          setSpinner(false);
+          const errorResponse = err.response.data;
+          reject(errorResponse);
+        });
+    });
+  };
+
+  onFinalSubmit = async () => {
+    const { firstName, lastName, state, city, mobileNumber, token, aadharCard, panCard, profilePhoto, services } = this.state;
+
+    const updatedServices = [];
+
+    services.forEach((service) => {
+      updatedServices.push({
+        id: service.value,
+        basePrice: service.basePrice,
+      });
+    });
+
+    let formData = new FormData();
+
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("state", state);
+    formData.append("city", city);
+    formData.append("mobileNumber", mobileNumber);
+    formData.append("profileImage", profilePhoto);
+    formData.append("adharCardImage", aadharCard);
+    formData.append("panCardImage", panCard);
+
+    updatedServices.forEach((service, index) => {
+      formData.append(`services[${index}][serviceID]`, service.id);
+      formData.append(`services[${index}][basePrice]`, service.basePrice);
+    });
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const data = await this.patchData(API_URLS.UPDATE_VENDOR, formData, { headers });
+
+    console.log(data);
+  };
+
   render() {
     const { step } = this.state;
     const {
@@ -76,6 +151,7 @@ export class VendorSignup extends Component {
       profilePhotoPreview,
       panCardPreview,
       aadharCardPreview,
+      services,
     } = this.state;
     const values = {
       email,
@@ -95,11 +171,12 @@ export class VendorSignup extends Component {
       profilePhotoPreview,
       panCardPreview,
       aadharCardPreview,
+      services,
     };
 
     switch (step) {
       case 1:
-        return <EmailPopup nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} />;
+        return <EmailPopup nextStep={this.nextStep} handleChange={this.handleChange} updateState={this.updateState} values={values} type="vendor" />;
 
       case 2:
         return (
@@ -125,9 +202,20 @@ export class VendorSignup extends Component {
         );
 
       case 4:
-        return <DocumentsPopup prevStep={this.prevStep} updateState={this.updateState} values={values} />;
+        return <DocumentsPopup prevStep={this.prevStep} updateState={this.updateState} values={values} nextStep={this.nextStep} />;
 
       case 5:
+        return (
+          <ServicesPopup
+            prevStep={this.prevStep}
+            updateState={this.updateState}
+            values={values}
+            nextStep={this.nextStep}
+            onFinalSubmit={this.onFinalSubmit}
+          />
+        );
+
+      case 6:
         return <Success />;
 
       default:
@@ -136,4 +224,8 @@ export class VendorSignup extends Component {
   }
 }
 
-export default VendorSignup;
+const mapDispatchToProps = (dispatch) => ({
+  setSpinner: (config) => dispatch(setSpinner(config)),
+});
+
+export default connect(null, mapDispatchToProps)(VendorSignup);

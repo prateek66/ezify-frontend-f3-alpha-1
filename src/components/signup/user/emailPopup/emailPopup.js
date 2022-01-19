@@ -9,7 +9,7 @@ import { API_URLS } from "../../../../utlis/constants";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
-const EmailPopup = ({ values, updateState, nextStep }) => {
+const EmailPopup = ({ values, updateState, nextStep, type }) => {
   const ApiContext = useContext(ApiCallsContext);
 
   const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
@@ -39,6 +39,7 @@ const EmailPopup = ({ values, updateState, nextStep }) => {
   const sendOTPAPI = async () => {
     const postObj = {
       email: formik.values.email,
+      role: type,
     };
 
     const data = await ApiContext.postData(API_URLS.SEND_OTP, postObj);

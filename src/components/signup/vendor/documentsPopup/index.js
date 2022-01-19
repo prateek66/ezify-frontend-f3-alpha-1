@@ -11,8 +11,7 @@ import checkedIcon from "./../../../../assets/signup/checked.svg";
 import chevronDownIcon from "./../../../../assets/signup/chevron-down.svg";
 import { useFormik } from "formik";
 
-const DocumentsPopup = ({ prevStep, updateState, values }) => {
-  console.log(values);
+const DocumentsPopup = ({ prevStep, updateState, values, nextStep }) => {
   const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "image/jpg"];
 
   const formik = useFormik({
@@ -35,6 +34,12 @@ const DocumentsPopup = ({ prevStep, updateState, values }) => {
         .test("FILE_SIZE", "File should be less than 3mb", (value) => !value || (value && value.size > 1024 * 3))
         .test("FILE_FORMAT", "File should be in png/jpg/jpeg format", (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type))),
     }),
+    onSubmit: (values) => {
+      console.log(formik.isValid);
+      if (formik.isValid) {
+        nextStep();
+      }
+    },
   });
 
   const [showProfileForm, setShowProfileForm] = useState(false);
@@ -247,14 +252,13 @@ const DocumentsPopup = ({ prevStep, updateState, values }) => {
                 </div>
               </div>
             )}
-          </form>
-
-          <div className="row">
-            <div className="col-12 d-flex align-items-center justify-content-between">
-              <CustomButton {...backBtnAttributes} />
-              {!showProfileForm && !showAadharForm && !showPanForm && <CustomButton {...nextBtnAttributes} />}
+            <div className="row">
+              <div className="col-12 d-flex align-items-center justify-content-between">
+                <CustomButton {...backBtnAttributes} />
+                {!showProfileForm && !showAadharForm && !showPanForm && <CustomButton {...nextBtnAttributes} />}
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </Modal.Body>
     </div>
