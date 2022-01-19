@@ -12,95 +12,93 @@ import "./homePage.scss";
 
 function Homepage() {
   return (
-    <div className="container homePage">
-      <div className="row">
-        <div className="col-lg-7 mb-5">
-          <b className="homePage__text">Earn More.Earn respect & Saftey ensured</b>
-          <p className="homePage__text--para">
-            Provide a network for all your needs with ease and fun using LaslesVPN discover interesting features from us.
-          </p>
+    <div className="homePage px-3 px-lg-0">
+      <div className="container">
+        <div className="row py-4">
+          <div className="col-lg-6 col-12 pt-lg-5">
+            <p className="homePage__text">Earn More. Earn respect & Saftey Ensured</p>
+            <p className="homePage__text--para text-color">
+              Provide a network for all your needs with ease and fun using <b>LaslesVPN</b> discover interesting features from us.
+            </p>
 
-          <div className="d-flex flex-wrap flex-row pt-4 mb-5">
-            <div className="col-md-2 px-5 pl-lg-5 d-flex justify-content-center homePage__box">
-              <div className="row pt-3 homePage__box--row">
+            <div className="row pt-3 pb-5 justify-content-between">
+              <div className="py-2 col-lg-2 col-3 homePage__box d-flex justify-content-center align-items-center flex-column">
                 <div className="">
                   <img src={user} alt="total user" />
                 </div>
-                <b className="pt-1 mb-0 pl-2 homePage__text--vendor_number"> 90+ </b>
-                <p className="homePage__text--vendor"> Vendors</p>
+                <b className="mb-0 pl-1 homePage__text--vendor_number"> 90+ </b>
+                <p className="homePage__text--vendor mb-0 text-color"> Vendors</p>
               </div>
-            </div>
-
-            <div className="col-md-2 px-5 pl-lg-5 d-flex justify-content-center homePage__box">
-              <div className="row pt-3 homePage__box--row">
+              <div className="py-2 col-lg-2 col-3 homePage__box d-flex justify-content-center align-items-center flex-column">
                 <div className="">
                   <img src={location} alt="total location" />
                 </div>
-                <b className="pt-1 mb-0 pl-2 homePage__text--vendor_number"> 30+ </b>
-                <p className="homePage__text--vendor"> Locations</p>
+                <b className="mb-0 pl-1 homePage__text--vendor_number"> 30+ </b>
+                <p className="homePage__text--vendor mb-0 text-color"> Locations</p>
               </div>
-            </div>
-
-            <div className="col-md-2 px-5 pl-lg-5 d-flex justify-content-center homePage__box">
-              <div className="row pt-3 homePage__box--row">
+              <div className="py-2 col-lg-2 col-3 homePage__box d-flex justify-content-center align-items-center flex-column">
                 <div className="">
                   <img src={server} alt="total server" />
                 </div>
-                <b className="pt-1 mb-0 pl-2 homePage__text--vendor_number"> 50+ </b>
-                <p className="homePage__text--vendor"> Servers</p>
+                <b className="mb-0 pl-1 homePage__text--vendor_number"> 50+ </b>
+                <p className="homePage__text--vendor mb-0 text-color"> Servers</p>
               </div>
+              <div className="col-lg-1 col-0"></div>
+              <div className="col-lg-1 col-0"></div>
+              <div className="col-lg-1 col-0"></div>
             </div>
+            <CustomButton type="button" text="GET IN TOUCH" classes="cp-2"></CustomButton>
           </div>
-          <CustomButton type="button" text="GET IN TOUCH"></CustomButton>
+          <div className="col-lg-6 col-12">
+            <img className="homePage__image" src={homeIllustration} />
+          </div>
         </div>
-        <div className="col-lg-5 text-right">
-          <img className="h-100 w-100" src={homeIllustration} />
-        </div>
-
-        <div className="container-fluid homePage__container_l1 pt-0 mb-5">
-          <div className="d-flex flex-row ">
-            <div className="col-lg-7">
+      </div>
+      <div className="container-fluid homePage__container-color">
+        <div className="container">
+          <div className="row py-4">
+            <div className="col-lg-6">
               <p className="homePage__text--l1_text">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
             </div>
-
-            <div className="col-lg-7 homePage__text--l2_text">
-              <p>
-                Provide a network for all your needs with ease and fun using LaslesVPN discover interesting features from us. Provide a network for
-                all your needs with ease and fun using LaslesVPN discover interesting features from us. discover
+            <div className="col-lg-6">
+              <p className="text-color homePage__text--l2_text">
+                Provide a network for all your needs with ease and fun using <b>LaslesVPN</b> discover interesting features from us.
+              </p>
+              <p className="text-color homePage__text--l2_text">
+                Provide a network for all your needs with ease and fun using <b>LaslesVPN</b> discover interesting features from us.
               </p>
             </div>
           </div>
         </div>
-
-        <div className="container-fluid homePage__container_l1--container_l2">
-          <div className="d-flex flex-row">
-            <div className="col-lg-7 pl-0 mr-5">
-              <img className="h-100 w-100" src={image1} alt="image 1" />
+      </div>
+      <div className="container">
+        <div className="row py-5">
+          <div className="col-lg-6">
+            <img className="homePage__image-lower-section" src={image1} alt="image 1" />
+          </div>
+          <div className="col-lg-6 pt-lg-0 pt-2">
+            <p className="homePage__text--l1_text">Trusted by Thousands of Happy Customer</p>
+            <div>
+              <p className="text-color homePage__text--l2_text">
+                Provide a network for all your needs with ease and fun using LaslesVPN discover interesting features from us.Provide a network for all
+                your needs with ease and fun using LaslesVPN discover interesting features from us. discover interesting features from us.
+              </p>
             </div>
-            <div className="col-lg-5 homePage__text--l1_text">
-              <b> Trusted by Thousands of Happy Customer </b>
-
-              <div className="d-flex flex-row homePage__text--l2_text mt-3">
-                <p>
-                  Provide a network for all your needs with ease and fun using LaslesVPN discover interesting features from us.Provide a network for
-                  all your needs with ease and fun using LaslesVPN discover interesting features from us. discover interesting features from us.
-                </p>
-              </div>
-              <div className="d-flex flex-row homePage__text--l2_text mt-3">
-                <CustomButton type="button" text="SIGN UP NOW"></CustomButton>
-              </div>
+            <div className="d-flex flex-row homePage__text--l2_text mt-3">
+              <CustomButton type="button" text="SIGN UP NOW" classes="cp-2"></CustomButton>
             </div>
           </div>
         </div>
-
-        <div className="container mt-5 mb-5">
-          <div className="d-flex justify-content-center homePage__text--l3_text">
-            <b> Our Customers Can Say Very Much About Us </b>
+      </div>
+      <div className="container">
+        <div className="row py-4">
+          <div className="container-fluid">
+            <p className="homePage__text--l3_text mb-1">Our Customers Can Say Very Much</p>
+            <p className="homePage__text--l3_text">About Us</p>
           </div>
-        </div>
-
-        <div className="container-fluid">
-          <BannerCarousel />
+          <div className="container-fluid">
+            <BannerCarousel />
+          </div>
         </div>
       </div>
     </div>
