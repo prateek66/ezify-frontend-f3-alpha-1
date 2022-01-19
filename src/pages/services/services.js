@@ -1,22 +1,51 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import "./services.scss";
 
 import bannerPic from "./../../assets/service_page/banner-1.png";
 import CustomButton from "../../components/atmoic/customButton/customButton";
 import VendorTile from "../../components/vendorTile/vendorTile";
+import { catchHandler } from "./../../utlis/catchHandler.utlis";
+import { ApiCallsContext } from "../../services/api.service";
+import { API_URLS } from "../../utlis/constants";
 
 const Services = () => {
+  const ApiContext = useContext(ApiCallsContext);
+  const { name, serviceId, city } = useParams();
+
+  const [vendors, setVendors] = useState([]);
+
+  console.log(serviceId);
   const buttonAttributes = {
     type: "button",
     text: "APPLY",
+  };
+
+  useEffect(() => {
+    fetchVendors();
+  }, [serviceId]);
+
+  const fetchVendors = async () => {
+    const response = await catchHandler(fetchServicesAPI);
+    setVendors(response);
+  };
+
+  const fetchServicesAPI = async () => {
+    const postObj = {
+      serviceID: serviceId,
+      city,
+    };
+
+    const data = await ApiContext.postData(API_URLS.FETCH_VENDORS, postObj);
+    return data;
   };
 
   return (
     <div className="services">
       <div className="services__banner">
         <img src={bannerPic} alt="Banner" />
-        <h2 className="services__banner--text">Laundry Services</h2>
+        <h2 className="services__banner--text">{name} Services</h2>
       </div>
       <div className="services__listing-container container">
         <div className="row">
