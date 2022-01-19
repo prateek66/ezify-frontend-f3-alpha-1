@@ -1,0 +1,85 @@
+@import "./../../sass/variables";
+
+.booking-page {
+  &__heading-text {
+    font-family: $montserrat-font-family;
+    font-weight: 600;
+    font-size: 1.55rem;
+    text-align: center;
+    color: $quaternary-color;
+  }
+
+  &__toggle-tab {
+    background-color: #f0f0f0;
+    border-radius: 0.5rem;
+    padding: 0.6rem;
+
+    &_tabs {
+      font-size: 1.4rem;
+      color: $grey-shade-1;
+      font-weight: 600;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &-active {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        color: $primary-color;
+        box-shadow: $box-shadow-darker;
+      }
+    }
+  }
+
+  &__custom-table {
+    box-shadow: $box-shadow-darker;
+    border-radius: 0.5rem;
+
+    &_table-margin {
+      margin: 1rem;
+    }
+
+    &_header-elements {
+      background-color: #fff !important;
+      border: unset !important;
+      font-weight: 600 !important;
+      color: #3f3d56 !important;
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+      color: #7f7f7f !important;
+      font-weight: 500 !important;
+      border-top: 1px solid #09b44d40 !important;
+    }
+
+    .table td,
+    .table th {
+      padding: 1.2rem 0.75rem;
+      vertical-align: middle;
+    }
+
+    .status-color-in-process {
+      color: #ffc200 !important;
+    }
+
+    .status-color-done {
+      color: #36a2eb !important;
+    }
+
+    .status-color-active {
+      color: #09b162 !important;
+    }
+
+    &__icons {
+      img {
+        height: 2rem;
+        width: 2rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
