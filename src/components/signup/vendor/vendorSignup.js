@@ -65,7 +65,7 @@ export class VendorSignup extends Component {
   };
 
   patchData = (url, postObj, options) => {
-    setSpinner(true);
+    this.props.setSpinner(true);
     return new Promise((resolve, reject) => {
       const path = `${env.BASE_URL}${url}`;
 
@@ -83,11 +83,11 @@ export class VendorSignup extends Component {
           if (env.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
           }
-          setSpinner(false);
+          this.props.setSpinner(false);
           resolve(resData);
         })
         .catch((err) => {
-          setSpinner(false);
+          this.props.setSpinner(false);
           const errorResponse = err.response.data;
           reject(errorResponse);
         });
@@ -116,6 +116,8 @@ export class VendorSignup extends Component {
     formData.append("profileImage", profilePhoto);
     formData.append("adharCardImage", aadharCard);
     formData.append("panCardImage", panCard);
+    formData.append("isActive", true);
+    formData.append("isEmaiVerified", true);
 
     updatedServices.forEach((service, index) => {
       formData.append(`services[${index}][serviceID]`, service.id);
@@ -128,6 +130,7 @@ export class VendorSignup extends Component {
 
     const data = await this.patchData(API_URLS.UPDATE_VENDOR, formData, { headers });
 
+    this.nextStep();
     console.log(data);
   };
 
@@ -216,7 +219,7 @@ export class VendorSignup extends Component {
         );
 
       case 6:
-        return <Success />;
+        return <Success type="vendor" />;
 
       default:
         console.log("This is a multi-step form built with React.");
