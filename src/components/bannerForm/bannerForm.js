@@ -103,8 +103,8 @@ const BannerForm = ({ history }) => {
     isMandatory: true,
     type: "select-formik",
     options: cities,
+    noOptionsMessage: "No vendor available in this city",
     onChange: (value) => {
-      console.log(value);
       formik.setFieldValue("city", value.value);
     },
     formik,
@@ -117,7 +117,6 @@ const BannerForm = ({ history }) => {
     type: "select-formik",
     options: services,
     onChange: async (value) => {
-      console.log(value);
       await formik.setFieldValue("serviceId", value.value);
       await formik.setFieldValue("serviceName", value.label);
     },
