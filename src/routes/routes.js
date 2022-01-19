@@ -8,6 +8,7 @@ import Services from "../pages/services/services";
 import Home from "./../pages/home/home";
 import Dashboard from "./../pages/dashboard/dashboard";
 import Vendor from "./../pages/vendor/homePage";
+import Bookings from "../pages/bookings";
 
 const Routes = () => {
   return (
@@ -18,6 +19,7 @@ const Routes = () => {
       <Route exact path="/admin" component={Login} />
       <Route exact path="/vendorhome" component={Vendor} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route exact path="/bookings" component={Bookings} />
     </Switch>
   );
 };

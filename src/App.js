@@ -14,7 +14,7 @@ function App({ history }) {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
 
-  const HEADER_TO_INCLUDE = ["/", "/services", "/profile", "/bookings", "/vendorhome"];
+  const HEADER_TO_INCLUDE = ["/", "/services", "/profile", "/bookings", "/vendorhome", "/bookings"];
   const FOOTER_TO_INCLUDE = ["/", "/services", "/vendorhome"];
 
   const toggleHeaderFooter = (path) => {
