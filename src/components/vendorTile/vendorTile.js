@@ -3,24 +3,27 @@ import "./vendorTile.scss";
 
 import CustomButton from "../atmoic/customButton/customButton";
 
-import vendorProfile from "./../../assets/service_page/vendor.svg";
 import ratingStar from "./../../assets/service_page/star.svg";
 import rupee from "./../../assets/service_page/rupee.svg";
 
-const VendorTile = () => {
+const VendorTile = ({ profileImage, firstName, lastName, serviceId, services }) => {
   const buttonAttributes = {
     type: "button",
     text: "BOOK NOW",
   };
 
+  const selectedService = services.find((service) => service.serviceID === serviceId);
+
   return (
-    <div className="row vendorTile">
+    <div className="row vendorTile mb-2">
       <div className="col-2 d-flex align-items-center justify-content-center">
-        <img src={vendorProfile} alt="Vendor Profile" />
+        <img src={profileImage} alt="Vendor Profile" className="h-100 w-100 vendorTile__profile" />
       </div>
-      <div className="col-4">
+      <div className="col-5">
         <div className="d-flex align-items-center justify-content-between vendorTile__nameRatings">
-          <div className="vendorTile__name">Anmol Laundry</div>
+          <div className="vendorTile__name">
+            {firstName} {lastName}
+          </div>
           <div className="d-flex align-items-center justify-content-between vendorTile__ratings">
             <img src={ratingStar} alt="Rating" />
             <span>4.99</span>
@@ -32,10 +35,10 @@ const VendorTile = () => {
         </div>
         <div className="d-flex align-items-center justify-content-between vendorTile__pricing">
           <img src={rupee} alt="Rupee Symbol" />
-          <span>140 Rs.</span>
+          <span>{selectedService.basePrice} Rs.</span>
         </div>
       </div>
-      <div className="col-3 offset-3 d-flex align-items-center justify-content-center">
+      <div className="col-3 offset-2 d-flex align-items-center justify-content-center">
         <CustomButton {...buttonAttributes} />
       </div>
     </div>

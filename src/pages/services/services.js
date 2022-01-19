@@ -16,7 +16,6 @@ const Services = () => {
 
   const [vendors, setVendors] = useState([]);
 
-  console.log(serviceId);
   const buttonAttributes = {
     type: "button",
     text: "APPLY",
@@ -28,6 +27,7 @@ const Services = () => {
 
   const fetchVendors = async () => {
     const response = await catchHandler(fetchServicesAPI);
+    console.log(response);
     setVendors(response);
   };
 
@@ -71,12 +71,8 @@ const Services = () => {
             </div>
           </div>
           <div className="col-8">
-            <VendorTile />
-            <VendorTile />
-            <VendorTile />
-            <VendorTile />
-            <VendorTile />
-            <VendorTile />
+            {vendors.length > 0 && vendors.map((vendor, index) => <VendorTile key={index} {...vendor} serviceId={serviceId} />)}
+            {vendors.length <= 0 && <h2 className="text-center">Sorry, No vendor found</h2>}
           </div>
         </div>
       </div>
