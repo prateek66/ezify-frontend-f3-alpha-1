@@ -1,0 +1,119 @@
+@import "./../../sass/variables";
+
+.payment-page {
+  color: #30334f;
+
+  &__heading-text {
+    font-family: $montserrat-font-family;
+    font-weight: 600;
+    font-size: 1.55rem;
+    text-align: center;
+    color: $quaternary-color;
+  }
+
+  &__custom-container {
+    box-shadow: $box-shadow-darker;
+    border-radius: 0.5rem;
+    padding: 2.5rem;
+  }
+
+  &__vendorTile {
+    box-shadow: $box-shadow;
+    border-radius: 0.5rem;
+    padding: 1rem 0.5rem;
+
+    &__nameRatings {
+      width: 12rem;
+    }
+
+    &__name {
+      font-family: $poppins-font-family;
+      font-weight: 500;
+      font-size: 1.2rem;
+    }
+
+    &__ratings {
+      font-size: 0.9rem;
+      color: $secondary-color;
+
+      img {
+        transform: scale(1.2);
+        margin-top: -4px;
+        margin-right: 0.5rem;
+      }
+    }
+
+    &__timing {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    &__pricing {
+      span {
+        color: $primary-color;
+        font-weight: bold;
+      }
+
+      img {
+        height: 1.45rem;
+        width: 1.45rem;
+        cursor: pointer;
+      }
+    }
+
+    &__icons {
+      img {
+        height: 1.5rem;
+        width: 1.5rem;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__final-pricing {
+    font-size: 1.65rem;
+  }
+}
+
+/* toggle Switch CSS */
+
+input[type="checkbox"].custom-toggle-btn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 3rem;
+  height: 1.3rem;
+  background: #a5a5a59c;
+  border-radius: 3em;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="checkbox"].custom-toggle-btn:checked {
+  background: #09b16247;
+}
+
+input[type="checkbox"].custom-toggle-btn:after {
+  position: absolute;
+  content: "";
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: $primary-color;
+  -webkit-box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.3);
+  -webkit-transform: scale(0.7);
+  transform: scale(0.7);
+  left: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="checkbox"].custom-toggle-btn:checked:after {
+  left: calc(100% - 1.3rem);
+}
+
+/* toggle Switch CSS */

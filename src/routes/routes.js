@@ -9,6 +9,7 @@ import Home from "./../pages/home/home";
 import Dashboard from "./../pages/dashboard/dashboard";
 import Vendor from "./../pages/vendor/homePage";
 import Bookings from "../pages/bookings";
+import Payment from "../pages/payment";
 
 const Routes = () => {
   return (
@@ -20,6 +21,7 @@ const Routes = () => {
       <Route exact path="/vendorhome" component={Vendor} />
       <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/bookings" component={Bookings} />
+      <Route exact path="/payment" component={Payment} />
     </Switch>
   );
 };
