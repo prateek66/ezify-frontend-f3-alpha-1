@@ -18,11 +18,11 @@ const Payment = () => {
     <div className="payment-page px-3 px-lg-0">
       <div className="container">
         <div className="row py-4">
-          <div className="col-12 payment-page__heading-text py-2">PAYMENT</div>
+          <div className="col-9 mx-auto payment-page__heading-text py-2">PAYMENT</div>
           <div className="col-lg-9 col-md-11 payment-page__custom-container mx-auto">
-            {paymentData.map((value, index) => (
-              <div key={index} className="col-12 py-4">
-                <div className="row payment-page__vendorTile">
+            <div className="payment-page__custom-container-1">
+              {paymentData.map((value, index) => (
+                <div className="row payment-page__vendorTile mb-2 mr-2" key={index}>
                   <div className="col-2 d-flex align-items-center justify-content-center">
                     <img src={vendorProfile} alt="Vendor Profile" />
                   </div>
@@ -49,8 +49,8 @@ const Payment = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
 
             <div className="col-12 d-flex align-items-end justify-content-between flex-column mb-3">
               <div className="payment-page__final-pricing">

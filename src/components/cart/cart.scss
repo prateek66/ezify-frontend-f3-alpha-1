@@ -13,4 +13,9 @@
   bottom: 5px;
   margin-left: auto;
   margin-right: 4rem;
+
+  &:hover {
+    text-decoration: none;
+    color: #fff;
+  }
 }

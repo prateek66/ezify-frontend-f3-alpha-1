@@ -6,7 +6,7 @@ import CustomButton from "../atmoic/customButton/customButton";
 import ratingStar from "./../../assets/service_page/star.svg";
 import rupee from "./../../assets/service_page/rupee.svg";
 import { createStructuredSelector } from "reselect";
-import { selectCartItems, selectCartItemsVendors } from "../../redux/cart/cart.selectors";
+import { selectCartItems, selectCartItemsServices, selectCartItemsVendors } from "../../redux/cart/cart.selectors";
 import { connect } from "react-redux";
 import { removeFromCart, setItemToCart } from "../../redux/cart/cart.actions";
 import ModalBase from "../atmoic/modal/modal";
@@ -22,6 +22,7 @@ const VendorTile = ({
   cartItems,
   addItemToCart,
   cartItemsVendors,
+  cartItemsService,
   removeItemFromCart,
 }) => {
   const [show, setShow] = useState(false);
@@ -38,28 +39,29 @@ const VendorTile = ({
   };
 
   const handleCancel = () => {
+    setbtnAttributes({
+      type: "button",
+      text: "BOOK NOW",
+      onClick: handleBookNow,
+    });
     removeItemFromCart(serviceId);
   };
 
   useEffect(() => {
-    if (cartItemsVendors.includes(_id)) {
-      setbtnAttributes({
-        type: "button",
-        text: "CANCEL",
-        onClick: handleCancel,
-      });
+    cartItems.forEach((item, index) => {
+      if (item.serviceID === serviceId && item.vendorID === _id) {
+        setbtnAttributes({
+          type: "button",
+          text: "CANCEL",
+          onClick: handleCancel,
+        });
 
-      if (btnAttributes.text === "CANCEL") {
-        setShow(true);
+        if (btnAttributes.text === "CANCEL") {
+          setShow(true);
+        }
       }
-    } else {
-      setbtnAttributes({
-        type: "button",
-        text: "BOOK NOW",
-        onClick: handleBookNow,
-      });
-    }
-  }, [cartItemsVendors]);
+    });
+  }, [cartItems]);
 
   const [btnAttributes, setbtnAttributes] = useState({
     type: "button",
@@ -112,6 +114,7 @@ const VendorTile = ({
 const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
   cartItemsVendors: selectCartItemsVendors,
+  cartItemsService: selectCartItemsServices,
 });
 
 const mapDispatchToProps = (dispatch) => ({
