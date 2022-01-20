@@ -76,7 +76,7 @@ export class UserSignup extends Component {
         );
 
       case 4:
-        return <Success />;
+        return <Success type="user" />;
 
       default:
         console.log("This is a multi-step form built with React.");

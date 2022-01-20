@@ -2,4 +2,8 @@
 
 .success-msg {
   font-family: $montserrat-font-family;
+
+  span {
+    color: $primary-color;
+  }
 }

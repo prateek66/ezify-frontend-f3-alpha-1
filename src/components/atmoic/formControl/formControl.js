@@ -4,7 +4,7 @@ import Select from "react-select";
 import "./formControl.scss";
 
 const FormControl = (props) => {
-  const { id, type, label, isMandatory, onChange, validators, disabled, value, options, formik, defaultValue, rows } = props;
+  const { id, type, label, isMandatory, onChange, validators, disabled, value, options, formik, defaultValue, rows, noOptionsMessage } = props;
 
   const onFocus = () => {
     const inputLabel = document.getElementById(`label-${id}`);
@@ -67,7 +67,13 @@ const FormControl = (props) => {
 
         {type === "select-formik" && (
           <>
-            <Select id={id} options={options} defaultValue={defaultValue} onChange={(el) => onChange(el)} />
+            <Select
+              id={id}
+              options={options}
+              defaultValue={defaultValue}
+              noOptionsMessage={({ inputValue }) => (!inputValue ? "No results found" : noOptionsMessage)}
+              onChange={(el) => onChange(el)}
+            />
             <small className="text-danger errorMsg">{formik.touched[id] && formik.errors[id] ? formik.errors[id] : ""}</small>
           </>
         )}

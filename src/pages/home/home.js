@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import BannerCarousel from "../../components/bannerCarousel/bannerCarousel";
@@ -17,18 +17,22 @@ const Home = () => {
     {
       name: "cleaning",
       icon: cleaningIcon,
+      id: "61e3ac2221da22a311ca328b",
     },
     {
       name: "laundry",
       icon: laundryIcon,
+      id: "61e3ac5d21da22a311ca32a9",
     },
     {
       name: "repairing",
       icon: repairingIcon,
+      id: "61e3acb821da22a311ca32c7",
     },
     {
       name: "painting",
       icon: paintingIcon,
+      id: "61e3ad0c21da22a311ca32e4",
     },
   ];
 
@@ -48,7 +52,7 @@ const Home = () => {
             {homePageServices.map((service, index) => {
               return (
                 <div className="col-6 col-lg-3 mt-4 mt-lg-0" key={index}>
-                  <Link to="/services">
+                  <Link to={`/services/${service.name}/${service.id}`}>
                     <div className="service-container">
                       <div className="service-container__name">
                         <span className="service-container__name--formatted">{service.name}</span> services

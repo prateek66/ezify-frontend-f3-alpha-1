@@ -34,8 +34,6 @@ const ApiContext = ({ children, setSpinner }) => {
     return new Promise((resolve, reject) => {
       const path = `${env.BASE_URL}${url}`;
 
-      console.log(path);
-
       let data = postObj;
       if (env.ENVIRONMENT === "PROD") {
         data = {
