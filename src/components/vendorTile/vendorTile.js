@@ -12,29 +12,24 @@ import { removeFromCart, setItemToCart } from "../../redux/cart/cart.actions";
 import ModalBase from "../atmoic/modal/modal";
 import { Modal } from "react-bootstrap";
 
-const VendorTile = ({
-  profileImage,
-  firstName,
-  lastName,
-  serviceId,
-  services,
-  _id,
-  cartItems,
-  addItemToCart,
-  cartItemsVendors,
-  cartItemsService,
-  removeItemFromCart,
-}) => {
+const VendorTile = ({ profileImage, firstName, lastName, serviceId, services, _id, cartItems, addItemToCart, removeItemFromCart, serviceName }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const selectedService = services.find((service) => service.serviceID === serviceId);
 
   const handleBookNow = () => {
     addItemToCart({
       vendorID: _id,
       serviceID: serviceId,
       active: true,
+      profileImage,
+      firstName,
+      lastName,
+      serviceName,
+      basePrice: selectedService.basePrice
     });
   };
 
@@ -69,7 +64,7 @@ const VendorTile = ({
     onClick: handleBookNow,
   });
 
-  const selectedService = services.find((service) => service.serviceID === serviceId);
+  
 
   return (
     <>

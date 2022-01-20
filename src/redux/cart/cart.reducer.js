@@ -1,5 +1,5 @@
 import { CartActionTypes } from "./cart.types";
-import { addItemToCart, removeItemFromCart } from "./cart.utlis";
+import { addItemToCart, disabledItemFromCart, removeItemFromCart } from "./cart.utlis";
 
 const INITIAL_STATE = {
   items: [],
@@ -18,6 +18,13 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         ...state,
         items: removeItemFromCart(state.items, action.payload),
       };
+
+    case CartActionTypes.DISABLE_ITEM_FROM_CART:
+      let newState = JSON.parse(JSON.stringify(state));
+      let selectedItem = newState.items.filter((item) => item.serviceID === action.payload)[0];
+      let index = newState.items.indexOf(selectedItem);
+      newState.items[index]["active"] = !newState.items[index]["active"];
+      return newState;
 
     default:
       return state;

@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./payment.scss";
 
 import CustomButton from "../../components/atmoic/customButton/customButton";
 
-import vendorProfile from "./../../assets/service_page/vendor.svg";
 import ratingStar from "./../../assets/service_page/star.svg";
 import rupee from "./../../assets/service_page/rupee.svg";
+import { createStructuredSelector } from "reselect";
+import { selectCartItems, selectCartTotal } from "../../redux/cart/cart.selectors";
+import { connect } from "react-redux";
+import { disableFromCart, removeFromCart } from "../../redux/cart/cart.actions";
 
-const Payment = () => {
-  const [paymentData] = useState([
-    { service_name: "Laundary", vendor_name: "Anmol Laundry", rating: "4.99", amount: "230" },
-    { service_name: "Laundary", vendor_name: "Anmol Laundry", rating: "4.99", amount: "230" },
-    { service_name: "Laundary", vendor_name: "Anmol Laundry", rating: "4.99", amount: "230" },
-  ]);
+const Payment = ({ cartItems, totalAmount, disabledItemFromCart }) => {
+  const [btnAttributes, setbtnAttributes] = useState({
+    type: "submit",
+    text: "PAY NOW",
+    classes: "cp-3 btn-block",
+  });
+
+  useEffect(() => {
+    if (totalAmount <= 0) {
+      setbtnAttributes({
+        type: "submit",
+        text: "PAY NOW",
+        classes: "cp-3 btn-block",
+        disabled: true,
+      });
+    } else {
+      setbtnAttributes({
+        type: "submit",
+        text: "PAY NOW",
+        classes: "cp-3 btn-block",
+        disabled: false,
+      });
+    }
+  }, [totalAmount]);
 
   return (
     <div className="payment-page px-3 px-lg-0">
@@ -20,32 +41,36 @@ const Payment = () => {
         <div className="row py-4">
           <div className="col-9 mx-auto payment-page__heading-text py-2">PAYMENT</div>
           <div className="col-lg-9 col-md-11 payment-page__custom-container mx-auto">
-            <div className="payment-page__custom-container-1">
-              {paymentData.map((value, index) => (
+            <div className="payment-page__custom-container-1 customScroll">
+              {cartItems.map((item, index) => (
                 <div className="row payment-page__vendorTile mb-2 mr-2" key={index}>
-                  <div className="col-2 d-flex align-items-center justify-content-center">
-                    <img src={vendorProfile} alt="Vendor Profile" />
+                  <div className={`col-2 d-flex align-items-center justify-content-center ${item.active ? null : "custom-blur"}`}>
+                    <img src={item.profileImage} alt="Vendor Profile" className="h-100 w-100 rounded-circle" />
                   </div>
-                  <div className="col-4">
-                    <div className="mb-2 d-flex align-items-center justify-content-start payment-page__vendorTile__icons">
-                      <img src={vendorProfile} alt="avatarIcon" className="mr-2" />
-                      {value.service_name}
-                    </div>
+                  <div className={`col-4 ${item.active ? null : "custom-blur"}`}>
+                    <div className="mb-2 d-flex align-items-center justify-content-start payment-page__vendorTile__icons">{item.serviceName}</div>
                     <div className="d-flex align-items-center justify-content-between payment-page__vendorTile__nameRatings">
-                      <div className="payment-page__vendorTile__name">{value.vendor_name}</div>
+                      <div className="payment-page__vendorTile__name">
+                        {item.firstName} {item.lastName}
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-start payment-page__vendorTile__ratings">
                       <img src={ratingStar} alt="Rating" />
-                      <span>{value.rating}</span>
+                      <span>4.5</span>
                     </div>
                   </div>
                   <div className="col-3 offset-3 d-flex align-items-end justify-content-between flex-column">
                     <div className="">
-                      <input type="checkbox" className="custom-toggle-btn" />
+                      <input
+                        type="checkbox"
+                        className="custom-toggle-btn"
+                        checked={item.active}
+                        onChange={() => disabledItemFromCart(item.serviceID)}
+                      />
                     </div>
                     <div className="d-flex align-items-center justify-content-between payment-page__vendorTile__pricing">
                       <img src={rupee} alt="Rupee Symbol" />
-                      <span className="ml-2">{value.amount} Rs.</span>
+                      <span className="ml-2">{item.basePrice}</span>
                     </div>
                   </div>
                 </div>
@@ -60,11 +85,11 @@ const Payment = () => {
               </div>
               <div className="d-flex align-items-center justify-content-between payment-page__vendorTile__pricing payment-page__final-pricing">
                 <img src={rupee} alt="Rupee Symbol" />
-                <span className="ml-2">420 Rs.</span>
+                <span className="ml-2">{totalAmount}</span>
               </div>
             </div>
             <div className="col-12 d-flex align-items-center justify-content-center">
-              <CustomButton type="submit" text="PAY NOW" classes="cp-3 btn-block"></CustomButton>
+              <CustomButton {...btnAttributes} />
             </div>
           </div>
         </div>
@@ -73,4 +98,14 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+const mapStateToProps = createStructuredSelector({
+  cartItems: selectCartItems,
+  totalAmount: selectCartTotal,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  removeItemFromCart: (serviceID) => dispatch(removeFromCart(serviceID)),
+  disabledItemFromCart: (serviceID) => dispatch(disableFromCart(serviceID)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);

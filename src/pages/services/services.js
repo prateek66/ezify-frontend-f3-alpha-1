@@ -76,7 +76,7 @@ const Services = ({ cartItems }) => {
             </div>
             <div className="col-8">
               {vendors.length > 0 &&
-                vendors.map((vendor, index) => <VendorTile key={index} {...vendor} serviceId={serviceId} cartItems={cartItems} />)}
+                vendors.map((vendor, index) => <VendorTile key={index} {...vendor} serviceId={serviceId} serviceName={name} cartItems={cartItems} />)}
               {vendors.length <= 0 && <h2 className="text-center">Sorry, No vendor found</h2>}
             </div>
           </div>

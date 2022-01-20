@@ -3,6 +3,10 @@
 .payment-page {
   color: #30334f;
 
+  & .custom-blur {
+    filter: blur(10px);
+  }
+
   &__heading-text {
     font-family: $montserrat-font-family;
     font-weight: 600;
@@ -17,7 +21,7 @@
     padding: 2.5rem;
 
     &-1 {
-      height: 15rem;
+      height: 17rem;
       overflow-y: scroll;
       overflow-x: hidden;
     }
@@ -68,6 +72,7 @@
     }
 
     &__icons {
+      text-transform: capitalize;
       img {
         height: 1.5rem;
         width: 1.5rem;
