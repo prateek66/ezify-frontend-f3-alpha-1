@@ -56,12 +56,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "react-dotenv": {
-    "whitelist": [
-      "ENCRYPTION_KEY",
-      "ENVIRONMENT",
-      "BASE_URL"
-    ]
   }
 }

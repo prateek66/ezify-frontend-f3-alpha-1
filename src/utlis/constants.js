@@ -21,3 +21,9 @@ export const API_URLS = {
   // DELETE_SERVICE: "admin/v1/delete_service",
   // UPDATE_SERVICE: "admin/v1/update_service",
 };
+
+export const config = {
+  ENCRYPTION_KEY: "EZZIFY-PESTO",
+  ENVIRONMENT: "DEV",
+  BASE_URL: "http://localhost:",
+};

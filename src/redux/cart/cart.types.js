@@ -1,0 +1,4 @@
+export const CartActionTypes = {
+  SET_ITEM_TO_CART: "SET_ITEM_TO_CART",
+  REMOVE_ITEM_FROM_CART: "REMOVE_ITEM_FROM_CART",
+};

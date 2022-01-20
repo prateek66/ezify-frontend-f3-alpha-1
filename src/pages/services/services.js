@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 
 import "./services.scss";
 
@@ -10,8 +11,10 @@ import { catchHandler } from "./../../utlis/catchHandler.utlis";
 import { ApiCallsContext } from "../../services/api.service";
 import { API_URLS } from "../../utlis/constants";
 import Cart from "../../components/cart";
+import { selectCartItems } from "../../redux/cart/cart.selectors";
+import { connect } from "react-redux";
 
-const Services = () => {
+const Services = ({ cartItems }) => {
   const ApiContext = useContext(ApiCallsContext);
   const { name, serviceId, city } = useParams();
 
@@ -28,7 +31,6 @@ const Services = () => {
 
   const fetchVendors = async () => {
     const response = await catchHandler(fetchServicesAPI);
-    console.log(response);
     setVendors(response);
   };
 
@@ -73,15 +75,20 @@ const Services = () => {
               </div>
             </div>
             <div className="col-8">
-              {vendors.length > 0 && vendors.map((vendor, index) => <VendorTile key={index} {...vendor} serviceId={serviceId} />)}
+              {vendors.length > 0 &&
+                vendors.map((vendor, index) => <VendorTile key={index} {...vendor} serviceId={serviceId} cartItems={cartItems} />)}
               {vendors.length <= 0 && <h2 className="text-center">Sorry, No vendor found</h2>}
             </div>
           </div>
         </div>
       </div>
-      <Cart />
+      {cartItems.length > 0 && <Cart />}
     </>
   );
 };
 
-export default Services;
+const mapStateToProps = createStructuredSelector({
+  cartItems: selectCartItems,
+});
+
+export default connect(mapStateToProps)(Services);

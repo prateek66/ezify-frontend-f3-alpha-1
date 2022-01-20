@@ -5,10 +5,9 @@ import PersonalDetails from "../user/personalDetails/personalDetails";
 import Success from "../user/success/success";
 import DocumentsPopup from "./documentsPopup";
 import ServicesPopup from "./servicesPopup";
-import { API_URLS } from "../../../utlis/constants";
+import { API_URLS, config } from "../../../utlis/constants";
 import { setSpinner } from "../../../redux/spinner/spinner.actions";
 import { connect } from "react-redux";
-import env from "react-dotenv";
 import axios from "axios";
 import { decryption, encyption } from "../../../utlis/security.utlis";
 
@@ -67,10 +66,10 @@ export class VendorSignup extends Component {
   patchData = (url, postObj, options) => {
     this.props.setSpinner(true);
     return new Promise((resolve, reject) => {
-      const path = `${env.BASE_URL}${url}`;
+      const path = `${config.BASE_URL}${url}`;
 
       let data = postObj;
-      if (env.ENVIRONMENT === "PROD") {
+      if (config.ENVIRONMENT === "PROD") {
         data = {
           data: encyption(postObj),
         };
@@ -80,7 +79,7 @@ export class VendorSignup extends Component {
         .patch(path, data, options)
         .then((response) => {
           let resData = response.data.data;
-          if (env.ENVIRONMENT === "PROD") {
+          if (config.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
           }
           this.props.setSpinner(false);

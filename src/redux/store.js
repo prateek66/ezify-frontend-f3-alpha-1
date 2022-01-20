@@ -1,15 +1,13 @@
-import env from "react-dotenv";
 import { createStore, applyMiddleware } from "redux";
 import { persistStore } from "redux-persist";
 import logger from "redux-logger";
 
 import rootReducer from "./rootReducer";
+import { config } from "../utlis/constants";
 
 const middlewares = [];
 
-console.log(env);
-
-if (window.env.ENVIRONMENT === "DEV") {
+if (config.ENVIRONMENT === "DEV") {
   middlewares.push(logger);
 }
 

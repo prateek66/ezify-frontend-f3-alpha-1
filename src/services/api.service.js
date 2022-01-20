@@ -1,9 +1,9 @@
-import env from "react-dotenv";
 import React from "react";
 import axios from "axios";
 import { decryption, encyption } from "../utlis/security.utlis";
 import { setSpinner } from "../redux/spinner/spinner.actions";
 import { connect } from "react-redux";
+import { config } from "../utlis/constants";
 
 export const ApiCallsContext = React.createContext();
 
@@ -11,12 +11,12 @@ const ApiContext = ({ children, setSpinner }) => {
   const getData = (url, options) => {
     setSpinner(true);
     return new Promise((resolve, reject) => {
-      const path = `${env.BASE_URL}${url}`;
+      const path = `${config.BASE_URL}${url}`;
       axios
         .get(path, options)
         .then((response) => {
           let resData = response.data.data;
-          if (env.ENVIRONMENT === "PROD") {
+          if (config.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
           }
           setSpinner(false);
@@ -32,10 +32,10 @@ const ApiContext = ({ children, setSpinner }) => {
   const postData = (url, postObj, options) => {
     setSpinner(true);
     return new Promise((resolve, reject) => {
-      const path = `${env.BASE_URL}${url}`;
+      const path = `${config.BASE_URL}${url}`;
 
       let data = postObj;
-      if (env.ENVIRONMENT === "PROD") {
+      if (config.ENVIRONMENT === "PROD") {
         data = {
           data: encyption(postObj),
         };
@@ -45,7 +45,7 @@ const ApiContext = ({ children, setSpinner }) => {
         .post(path, data, options)
         .then((response) => {
           let resData = response.data.data;
-          if (env.ENVIRONMENT === "PROD") {
+          if (config.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
           }
 
@@ -64,10 +64,10 @@ const ApiContext = ({ children, setSpinner }) => {
   const patchData = (url, postObj, options) => {
     setSpinner(true);
     return new Promise((resolve, reject) => {
-      const path = `${env.BASE_URL}${url}`;
+      const path = `${config.BASE_URL}${url}`;
 
       let data = postObj;
-      if (env.ENVIRONMENT === "PROD") {
+      if (config.ENVIRONMENT === "PROD") {
         data = {
           data: encyption(postObj),
         };
@@ -77,7 +77,7 @@ const ApiContext = ({ children, setSpinner }) => {
         .patch(path, data, options)
         .then((response) => {
           let resData = response.data.data;
-          if (env.ENVIRONMENT === "PROD") {
+          if (config.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
           }
           setSpinner(false);
@@ -94,13 +94,13 @@ const ApiContext = ({ children, setSpinner }) => {
   const deleteData = (url, options) => {
     setSpinner(true);
     return new Promise((resolve, reject) => {
-      const path = `${env.BASE_URL}${url}`;
+      const path = `${config.BASE_URL}${url}`;
 
       axios
         .delete(path, options)
         .then((response) => {
           let resData = response.data.data;
-          if (env.ENVIRONMENT === "PROD") {
+          if (config.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
           }
           setSpinner(false);
