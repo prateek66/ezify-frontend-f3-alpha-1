@@ -23,8 +23,12 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, setT
 
   const [show, setShow] = useState(false);
   const [callAPI, setCallAPI] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const handleClose = () => {
+    if (message.message === "Payment Successfully Done") {
+      history.push("/bookings");
+    }
     setShow(false);
     setCallAPI(false);
   };
@@ -34,15 +38,11 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, setT
     const response = await catchHandler(paymentSubmitAPI);
     console.log(response);
     if (response) {
-      setToasterCofig({
-        show: true,
-        message: "Payment done successfully",
-        className: "success",
+      setMessage({
+        title: "",
+        message: "Payment Successfully Done",
       });
-
-      setTimeout(() => {
-        history.push("/bookings");
-      }, 3000);
+      setShow(true);
     }
 
     console.log(userToken);
@@ -104,6 +104,10 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, setT
       if (userToken) {
         handlePaymentSubmit();
       } else {
+        setMessage({
+          title: "💥 Warning",
+          message: "Please Login",
+        });
         setShow(true);
       }
     }
@@ -172,9 +176,9 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, setT
       </div>
 
       <ModalBase show={show} handleClose={handleClose} handleShow={handleShow} size="md">
-        <Modal.Header closeButton>💥 Warning</Modal.Header>
+        <Modal.Header closeButton>{message?.title} </Modal.Header>
         <Modal.Body>
-          <p className="mb-0 text-center font-weight-bold">Please Login</p>
+          <p className="mb-0 text-center font-weight-bold">{message?.message}</p>
         </Modal.Body>
       </ModalBase>
     </>
