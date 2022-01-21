@@ -1,25 +1,78 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./bookings.scss";
 
 import avatarIcon from "./../../assets/profile/avatar-1.svg";
 import rupeeIcon from "./../../assets/service_page/rupee.svg";
+import { ApiCallsContext } from "../../services/api.service";
+import { catchHandler } from "../../utlis/catchHandler.utlis";
+import { createStructuredSelector } from "reselect";
+import { selectToken } from "../../redux/user/user.selectors";
+import { connect } from "react-redux";
+import { API_URLS } from "../../utlis/constants";
 
-const Bookings = () => {
-  const [active, setactive] = useState(false);
+const Bookings = ({ userToken }) => {
+  const ApiContext = useContext(ApiCallsContext);
+
+  const [active, setactive] = useState(true);
   const [bookingData, setbookingData] = useState([]);
+  const [activeBookngs, setActiveBookngs] = useState([]);
+  const [historyBookings, setHistoryBookings] = useState([]);
 
   const changeActiveState = () => {
-    setactive(!active);
-    if (!active) {
-      setbookingData([{ service: "LAUNDARY", vendor_name: "Harshit", number: "7202087545", amount: "230", status: "ACTIVE" }]);
+    if (active) {
+      setbookingData(activeBookngs);
     } else {
-      setbookingData([
-        { service: "LAUNDARY", vendor_name: "CP", number: "7202087545", amount: "230", status: "ACTIVE" },
-        { service: "LAUNDARY", vendor_name: "CP", number: "7202087545", amount: "230", status: "IN-PROCESS" },
-        { service: "LAUNDARY", vendor_name: "CP", number: "7202087545", amount: "230", status: "DONE" },
-      ]);
+      setbookingData(historyBookings);
     }
   };
+
+  const fetchActiveBookings = async () => {
+    const response = await catchHandler(fetchActiveBookingAPI);
+
+    if (response) {
+      let activeBookingRecords = [];
+      let historyBookingRecords = [];
+
+      if (Array.isArray(response) && response.length > 0) {
+        response.forEach((booking) => {
+          booking.bookings.forEach((bookingObj) => {
+            if (bookingObj.status === "completed") {
+              historyBookingRecords.push(bookingObj);
+            } else if (bookingObj.status === "active") {
+              activeBookingRecords.push(bookingObj);
+            }
+          });
+        });
+
+        console.log(activeBookingRecords);
+        console.log(historyBookingRecords);
+
+        setActiveBookngs(activeBookingRecords);
+        setHistoryBookings(historyBookingRecords);
+
+        changeActiveState();
+      }
+    }
+  };
+
+  const fetchActiveBookingAPI = async () => {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    const data = await ApiContext.getData(API_URLS.GET_ALL_BOOKINGS, { headers });
+    return data;
+  };
+
+  useEffect(() => {
+    fetchActiveBookings();
+  }, []);
+
+  useEffect(() => {
+    changeActiveState();
+
+    console.log(bookingData);
+  }, [active, activeBookngs, historyBookings]);
 
   return (
     <div className="booking-page px-3 px-lg-0">
@@ -29,14 +82,14 @@ const Bookings = () => {
         </div>
         <div className="row booking-page__toggle-tab">
           <div
-            onClick={changeActiveState}
-            className={`col-6 text-center booking-page__toggle-tab_tabs ${!active ? "booking-page__toggle-tab_tabs-active" : ""}`}
+            onClick={() => setactive(!active)}
+            className={`col-6 text-center booking-page__toggle-tab_tabs ${active ? "booking-page__toggle-tab_tabs-active" : ""}`}
           >
             ACTIVE
           </div>
           <div
-            onClick={changeActiveState}
-            className={`col-6 text-center booking-page__toggle-tab_tabs ${active ? "booking-page__toggle-tab_tabs-active" : ""}`}
+            onClick={() => setactive(!active)}
+            className={`col-6 text-center booking-page__toggle-tab_tabs ${!active ? "booking-page__toggle-tab_tabs-active" : ""}`}
           >
             HISTORY
           </div>
@@ -69,28 +122,20 @@ const Bookings = () => {
                     <td>
                       <div className="d-flex align-items-center justify-content-center booking-page__custom-table__icons">
                         <img src={avatarIcon} alt="avatarIcon" className="mr-3" />
-                        {value.service}
+                        {value.serviceID.name}
                       </div>
                     </td>
-                    <td>{value.vendor_name}</td>
-                    <td>+91 {value.number}</td>
+                    <td>
+                      {value.vendorID.firstName} {value.vendorID.lastName}
+                    </td>
+                    <td>+91 {value.vendorID.mobileNumber}</td>
                     <td>
                       <div className="d-flex align-items-center justify-content-center booking-page__custom-table__icons">
                         <img src={rupeeIcon} alt="rupeeIcon" className="mr-3" />
-                        {value.amount}
+                        {value.baseprice}
                       </div>
                     </td>
-                    <td
-                      className={`${
-                        value.status === "ACTIVE"
-                          ? "status-color-active"
-                          : value.status === "IN-PROCESS"
-                          ? "status-color-in-process"
-                          : "status-color-done"
-                      }`}
-                    >
-                      {value.status}
-                    </td>
+                    <td className={`text-uppercase ${value.status === "active" ? "status-color-active" : "status-color-done"}`}>{value.status}</td>
                   </tr>
                 ))}
               </tbody>
@@ -109,4 +154,8 @@ const Bookings = () => {
   );
 };
 
-export default Bookings;
+const mapStateToProps = createStructuredSelector({
+  userToken: selectToken,
+});
+
+export default connect(mapStateToProps)(Bookings);

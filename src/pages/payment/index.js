@@ -55,11 +55,13 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, setT
     };
 
     cartItems.forEach((item) => {
-      postObj.bookings.push({
-        serviceID: item.serviceID,
-        vendorID: item.vendorID,
-        basePrice: item.basePrice,
-      });
+      if (item.active) {
+        postObj.bookings.push({
+          serviceID: item.serviceID,
+          vendorID: item.vendorID,
+          baseprice: item.basePrice,
+        });
+      }
     });
 
     const headers = {
