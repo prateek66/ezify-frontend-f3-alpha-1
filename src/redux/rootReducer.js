@@ -10,7 +10,7 @@ import userReducer from "./user/user.reducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user", "toaster", "spinner"],
+  whitelist: ["user", "toaster", "spinner", "cart"],
 };
 
 const rootReducer = combineReducers({

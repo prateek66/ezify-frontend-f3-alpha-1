@@ -4,6 +4,7 @@ export const API_URLS = {
   UPDATE_USER: "4001/v1/users/update_user",
   FETCH_VENDORS: "4001/v1/users/filterVendors",
   FETCH_CITIES: "4001/v1/users/findCities",
+  CREATE_PAYMENT: "4001/v1/users/book_service",
 
   CREATE_SERVICE: "4003/v1/create_service",
   VIEW_SERVICES: "4003/v1/view_service",

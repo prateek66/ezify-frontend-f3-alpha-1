@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./payment.scss";
 
 import CustomButton from "../../components/atmoic/customButton/customButton";
@@ -9,12 +9,63 @@ import { createStructuredSelector } from "reselect";
 import { selectCartItems, selectCartTotal } from "../../redux/cart/cart.selectors";
 import { connect } from "react-redux";
 import { disableFromCart, removeFromCart } from "../../redux/cart/cart.actions";
+import { selectToken, selectUserDetails } from "../../redux/user/user.selectors";
+import { ApiCallsContext } from "../../services/api.service";
+import { catchHandler } from "../../utlis/catchHandler.utlis";
+import { API_URLS } from "../../utlis/constants";
+import { setToasterConfig } from "../../redux/toaster/toaster.actions";
+import { withRouter } from "react-router-dom";
 
-const Payment = ({ cartItems, totalAmount, disabledItemFromCart }) => {
+const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, userDetails, setToasterCofig, history }) => {
+  const ApiContext = useContext(ApiCallsContext);
+
+  const handlePaymentSubmit = async () => {
+    if (userToken) {
+      const response = await catchHandler(paymentSubmitAPI);
+      console.log(response);
+      if (response) {
+        setToasterCofig({
+          show: true,
+          message: "Payment done successfully",
+          className: "success",
+        });
+
+        setTimeout(() => {
+          history.push("/bookings");
+        }, 3000);
+      }
+    }
+  };
+
+  const paymentSubmitAPI = async () => {
+    let postObj = {
+      total_amount: totalAmount,
+      bookings: [],
+    };
+
+    cartItems.forEach((item) => {
+      postObj.bookings.push({
+        serviceID: item.serviceID,
+        vendorID: item.vendorID,
+        basePrice: item.basePrice,
+      });
+    });
+
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+    };
+
+    console.log(postObj);
+
+    const data = await ApiContext.postData(API_URLS.CREATE_PAYMENT, postObj, { headers });
+    return data;
+  };
+
   const [btnAttributes, setbtnAttributes] = useState({
     type: "submit",
     text: "PAY NOW",
     classes: "cp-3 btn-block",
+    onClick: handlePaymentSubmit,
   });
 
   useEffect(() => {
@@ -24,6 +75,7 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart }) => {
         text: "PAY NOW",
         classes: "cp-3 btn-block",
         disabled: true,
+        onClick: handlePaymentSubmit,
       });
     } else {
       setbtnAttributes({
@@ -31,6 +83,7 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart }) => {
         text: "PAY NOW",
         classes: "cp-3 btn-block",
         disabled: false,
+        onClick: handlePaymentSubmit,
       });
     }
   }, [totalAmount]);
@@ -101,11 +154,14 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart }) => {
 const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
   totalAmount: selectCartTotal,
+  userDetails: selectUserDetails,
+  userToken: selectToken,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   removeItemFromCart: (serviceID) => dispatch(removeFromCart(serviceID)),
   disabledItemFromCart: (serviceID) => dispatch(disableFromCart(serviceID)),
+  setToasterCofig: (config) => dispatch(setToasterConfig(config)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Payment);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Payment));
