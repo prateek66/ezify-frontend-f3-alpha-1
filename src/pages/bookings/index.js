@@ -18,10 +18,10 @@ const Bookings = ({ userToken }) => {
   const [activeBookngs, setActiveBookngs] = useState([]);
   const [historyBookings, setHistoryBookings] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(2);
+  const [pageSize] = useState(10);
 
   const changeActiveState = () => {
-    setPage(1)
+    
     if (active) {
       setbookingData(activeBookngs);
     } else {
@@ -70,7 +70,7 @@ const Bookings = ({ userToken }) => {
 
   useEffect(() => {
     changeActiveState();
-
+    setPage(1)
     console.log(bookingData);
   }, [active, activeBookngs, historyBookings]);
 

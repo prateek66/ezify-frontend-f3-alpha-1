@@ -1,10 +1,30 @@
 import React from "react";
 import Select from "react-select";
+import "rc-time-picker/assets/index.css";
+import TimePicker from "rc-time-picker";
 
 import "./formControl.scss";
 
 const FormControl = (props) => {
-  const { id, type, label, isMandatory, onChange, validators, disabled, value, options, formik, defaultValue, rows, noOptionsMessage } = props;
+  const {
+    id,
+    type,
+    label,
+    isMandatory,
+    onChange,
+    validators,
+    disabled,
+    value,
+    options,
+    formik,
+    defaultValue,
+    rows,
+    noOptionsMessage,
+    isMulti,
+    format,
+    showMinute,
+    disabledHours,
+  } = props;
 
   const onFocus = () => {
     const inputLabel = document.getElementById(`label-${id}`);
@@ -71,6 +91,7 @@ const FormControl = (props) => {
               id={id}
               options={options}
               defaultValue={defaultValue}
+              isMulti={isMulti}
               noOptionsMessage={({ inputValue }) => (!inputValue ? "No results found" : noOptionsMessage)}
               onChange={(el) => onChange(el)}
             />
@@ -83,6 +104,21 @@ const FormControl = (props) => {
             <textarea className="form-control formControl-input" rows={rows} id={id} {...formik.getFieldProps(id)}></textarea>
             <small className="text-danger errorMsg">{formik.touched[id] && formik.errors[id] ? formik.errors[id] : ""}</small>
           </>
+        )}
+
+        {type === "time-picker" && (
+          <TimePicker
+            id={id}
+            showSecond={false}
+            allowEmpty={false}
+            disabled={disabled}
+            defaultValue={defaultValue}
+            onChange={onChange}
+            format={format}
+            showMinute={showMinute}
+            disabledHours={disabledHours}
+            inputReadOnly
+          />
         )}
       </div>
     </div>

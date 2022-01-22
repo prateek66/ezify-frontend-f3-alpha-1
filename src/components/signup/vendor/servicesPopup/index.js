@@ -1,8 +1,7 @@
-import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Select from "react-select";
-import * as Yup from "yup";
+
 
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
@@ -12,7 +11,7 @@ import CustomButton from "../../../atmoic/customButton/customButton";
 
 import "./servicesPopup.scss";
 
-const ServicesPopup = ({ values, prevStep, updateState, onFinalSubmit }) => {
+const ServicesPopup = ({ values, prevStep, updateState, nextStep }) => {
   const ApiContext = useContext(ApiCallsContext);
 
   const [services, setServices] = useState([]);
@@ -21,7 +20,7 @@ const ServicesPopup = ({ values, prevStep, updateState, onFinalSubmit }) => {
 
   const [submitBtnAttributes, setSubmitBtnAttributes] = useState({
     type: "button",
-    text: "Submit",
+    text: "Next",
     classes: "font-weight-bold cp-2",
     disabled: true,
   });
@@ -92,18 +91,17 @@ const ServicesPopup = ({ values, prevStep, updateState, onFinalSubmit }) => {
       if (service.basePrice <= 0) {
         setSubmitBtnAttributes({
           type: "button",
-          text: "Submit",
+          text: "Next",
           classes: "font-weight-bold cp-2",
           disabled: true,
-          onClick: onFinalSubmit,
         });
       } else {
         setSubmitBtnAttributes({
           type: "button",
-          text: "Submit",
+          text: "Next",
           classes: "font-weight-bold cp-2",
           disabled: false,
-          onClick: onFinalSubmit,
+          onClick: nextStep,
         });
       }
     });

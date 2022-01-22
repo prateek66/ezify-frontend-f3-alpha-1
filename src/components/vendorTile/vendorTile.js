@@ -12,7 +12,20 @@ import { removeFromCart, setItemToCart } from "../../redux/cart/cart.actions";
 import ModalBase from "../atmoic/modal/modal";
 import { Modal } from "react-bootstrap";
 
-const VendorTile = ({ profileImage, firstName, lastName, serviceId, services, _id, cartItems, addItemToCart, removeItemFromCart, serviceName }) => {
+const VendorTile = ({
+  profileImage,
+  firstName,
+  lastName,
+  serviceId,
+  services,
+  _id,
+  cartItems,
+  addItemToCart,
+  removeItemFromCart,
+  serviceName,
+  availabaleDate,
+  availableTime,
+}) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -29,7 +42,7 @@ const VendorTile = ({ profileImage, firstName, lastName, serviceId, services, _i
       firstName,
       lastName,
       serviceName,
-      basePrice: selectedService.basePrice
+      basePrice: selectedService.basePrice,
     });
   };
 
@@ -64,8 +77,6 @@ const VendorTile = ({ profileImage, firstName, lastName, serviceId, services, _i
     onClick: handleBookNow,
   });
 
-  
-
   return (
     <>
       <div className="row vendorTile mb-2">
@@ -83,8 +94,8 @@ const VendorTile = ({ profileImage, firstName, lastName, serviceId, services, _i
             </div>
           </div>
           <div className="vendorTile__timing">
-            <div>Monday-Friday</div>
-            <div>10AM-8PM</div>
+            <div>{availabaleDate}</div>
+            <div>{availableTime}</div>
           </div>
           <div className="d-flex align-items-center justify-content-between vendorTile__pricing">
             <img src={rupee} alt="Rupee Symbol" />

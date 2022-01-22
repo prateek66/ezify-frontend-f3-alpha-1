@@ -1,4 +1,6 @@
 import { Component, useContext } from "react";
+import moment from "moment";
+
 import EmailPopup from "../user/emailPopup/emailPopup";
 import OtpPopup from "../user/otpPopup/otpPopup";
 import PersonalDetails from "../user/personalDetails/personalDetails";
@@ -10,6 +12,7 @@ import { setSpinner } from "../../../redux/spinner/spinner.actions";
 import { connect } from "react-redux";
 import axios from "axios";
 import { decryption, encyption } from "../../../utlis/security.utlis";
+import AvailibilityPopup from "./availibilityPopup";
 
 export class VendorSignup extends Component {
   state = {
@@ -32,6 +35,10 @@ export class VendorSignup extends Component {
     panCardPreview: "",
     profilePhotoPreview: "",
     services: [],
+    availableDays: [],
+    availableTime: "",
+    availableStartTime: moment().hour(0).minute(0),
+    availableEndTime: null,
   };
 
   // Proceed to next step
@@ -60,7 +67,9 @@ export class VendorSignup extends Component {
   };
 
   updateState = (field, value) => {
-    this.setState({ [field]: value });
+    this.setState({ [field]: value }, () => {
+      console.log(this.state);
+    });
   };
 
   patchData = (url, postObj, options) => {
@@ -94,7 +103,17 @@ export class VendorSignup extends Component {
   };
 
   onFinalSubmit = async () => {
-    const { firstName, lastName, state, city, mobileNumber, token, aadharCard, panCard, profilePhoto, services } = this.state;
+    const { firstName, lastName, state, city, mobileNumber, token, aadharCard, panCard, profilePhoto, services, availableTime, availableDays } =
+      this.state;
+
+    const updatedAvailableDate = [];
+
+    availableDays.forEach((day) => {
+      updatedAvailableDate.push(day.value);
+    });
+
+    console.log(updatedAvailableDate.toString());
+    console.log(availableTime);
 
     const updatedServices = [];
 
@@ -117,6 +136,8 @@ export class VendorSignup extends Component {
     formData.append("panCardImage", panCard);
     formData.append("isActive", true);
     formData.append("isEmaiVerified", true);
+    formData.append("availabaleDate", updatedAvailableDate.toString());
+    formData.append("availableTime", availableTime);
 
     updatedServices.forEach((service, index) => {
       formData.append(`services[${index}][serviceID]`, service.id);
@@ -154,6 +175,10 @@ export class VendorSignup extends Component {
       panCardPreview,
       aadharCardPreview,
       services,
+      availableDays,
+      availableStartTime,
+      availableEndTime,
+      availableTime,
     } = this.state;
     const values = {
       email,
@@ -174,6 +199,10 @@ export class VendorSignup extends Component {
       panCardPreview,
       aadharCardPreview,
       services,
+      availableDays,
+      availableStartTime,
+      availableEndTime,
+      availableTime,
     };
 
     switch (step) {
@@ -218,6 +247,17 @@ export class VendorSignup extends Component {
         );
 
       case 6:
+        return (
+          <AvailibilityPopup
+            prevStep={this.prevStep}
+            updateState={this.updateState}
+            values={values}
+            nextStep={this.nextStep}
+            onFinalSubmit={this.onFinalSubmit}
+          />
+        );
+
+      case 7:
         return <Success type="vendor" />;
 
       default:

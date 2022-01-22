@@ -48,3 +48,12 @@ body {
 .customScroll::-webkit-scrollbar-thumb {
   background-color: #555;
 }
+
+.rc-time-picker-panel-select {
+  width: 100% !important;
+}
+
+.rc-time-picker-panel,
+.rc-time-picker-panel-narrow {
+  width: 170px !important;
+}
