@@ -2,55 +2,22 @@ import React, { useState } from "react";
 import "./vendorBooking.scss";
 
 import serviceIcon from "./../../assets/dashboard/serviceIconGreen.svg";
+import rupeeIcon from "./../../assets/service_page/rupee.svg";
+import CustomPagination from "../../components/atmoic/customPagination";
 
-const VendorBooking = () => {
-  // VENDOR-BOOKING
-  const bookingforYou = [
-    {
-      table_title: "Booking For You,",
-      filter_data: [
-        { title: "All Bookings", value: "104", active: true },
-        { title: "Pending Status", value: "10", active: false },
-        { title: "Pending Status", value: "94", active: false },
-      ],
-      table_data: [
-        {
-          headers: ["No.", "Name", "Place", "Services", "Date", "Status"],
-          data: [
-            { Name: "Harish Ramu", Place: "Chennai, Tamilnadu", Services: "7202087545", Date: "20 Dec, 2021", Status: "Pending" },
-            { Name: "Harish Ramu", Place: "Chennai, Tamilnadu", Services: "7202087545", Date: "20 Dec, 2021", Status: "Success" },
-            { Name: "Harish Ramu", Place: "Chennai, Tamilnadu", Services: "7202087545", Date: "20 Dec, 2021", Status: "Success" },
-          ],
-        },
-        // {
-        //   headers: ["No.", "Name", "Place", "Services", "Date", "Amount"],
-        //   data: [
-        //     { Name: "Harish Ramu", Place: "Chennai, Tamilnadu", Services: "7202087545", Date: "20 Dec, 2021", Amount: "₹ 500.00" },
-        //     { Name: "Harish Ramu", Place: "Chennai, Tamilnadu", Services: "7202087545", Date: "20 Dec, 2021", Amount: "₹ 500.00" },
-        //     { Name: "Harish Ramu", Place: "Chennai, Tamilnadu", Services: "7202087545", Date: "20 Dec, 2021", Amount: "₹ 500.00" },
-        //   ],
-        // },
-      ],
-    },
-  ];
-
-  // VENDOR-EARNINGS
-  const EarningforYou = [];
-
-  // ADMIN-VENDOR-LIST
-  const VendorsforYou = [];
-
-  const [bookingData, setbookingData] = useState([]);
+const VendorBooking = ({ tableData }) => {
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(10);
 
   return (
-    <div className="custom-dynamic-page px-3 px-lg-0">
-      {bookingforYou.map((mainOuterData, index) => (
-        <div key={index} className="container">
-          <div className="row py-4">
-            <div className="col-12 custom-dynamic-page__heading-text">{mainOuterData.table_title}</div>
-          </div>
+    <>
+      <div className="container">
+        <div className="row py-4">
+          <div className="col-12 custom-dynamic-page__heading-text">{tableData.tableTitle}</div>
+        </div>
+        {tableData.filters.length > 0 && (
           <div className="row">
-            {mainOuterData.filter_data.map((filterData, index) => (
+            {tableData.filters.map((filterData, index) => (
               <div key={index} className="col-3">
                 <div className={`custom-dynamic-page__filter-box ${filterData.active ? "custom-dynamic-page__filter-box_filter-active" : ""}`}>
                   <div className="d-flex align-items-center justify-content-center custom-dynamic-page__filter-box_icon">
@@ -68,56 +35,52 @@ const VendorBooking = () => {
               </div>
             ))}
           </div>
-          <div className="custom-dynamic-page__custom-table row my-3">
-            {mainOuterData.table_data.map((value, index) => (
-              <table key={index} className="table custom-dynamic-page__custom-table_table-margin mt-0 mb-0">
-                <thead>
-                  <tr>
-                    {value.headers.map((value, index) => (
-                      <th key={index} className="custom-dynamic-page__custom-table_header-elements">
-                        {value}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                {value.data.length > 0 && (
-                  <tbody>
-                    {value.data.map((tableValues, tableValuesindex) => (
-                      <tr key={tableValuesindex}>
-                        {value.headers.map((tableHeaders, tableHeadersindex) => (
-                          <td
-                            className={`${tableValuesindex % 2 !== 0 ? "even-row" : ""} 
-                            ${
-                              tableHeaders === "Status"
-                                ? tableValues["Status"] === "Pending"
-                                  ? "status-color-pending"
-                                  : tableValues["Status"] === "Success"
-                                  ? "status-color-success"
-                                  : ""
-                                : ""
-                            } ${tableHeaders === "Amount" ? "status-color-success" : ""} `}
-                            key={tableHeadersindex}
-                          >
-                            {tableValues[tableHeaders] ? tableValues[tableHeaders] : tableValuesindex + 1}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                )}
-                {value.data.length === 0 && (
-                  <tbody>
-                    <tr>
-                      <td colSpan={`${value.headers.length}`}>No Data Found</td>
+        )}
+        <div className="custom-dynamic-page__custom-table row my-3">
+          <table className="table custom-dynamic-page__custom-table_table-margin mt-0 mb-0">
+            <thead>
+              <tr>
+                {tableData.records.headers.map((header, index) => (
+                  <th key={index} className="custom-dynamic-page__custom-table_header-elements">
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.records.data.length === 0 && (
+                <tr >
+                  <td colSpan={tableData.records.headers.length} className="text-center">No Records Found</td>
+                </tr>
+              )}
+              {tableData.tableName === "orders" && (
+                <>
+                  {tableData.records.data.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize).map((record, index) => (
+                    <tr key={index} className={`${index % 2 !== 0 ? "even-row" : null}`}>
+                      <td>{index + 1}</td>
+                      <td>{record.name}</td>
+                      <td>{record.service}</td>
+                      <td>
+                        <div className="d-flex align-items-center justify-content-start booking-page__custom-table__icons">
+                          <img src={rupeeIcon} alt="rupeeIcon" className="mr-2" />
+                          {record.amount}
+                        </div>
+                      </td>
+                      <td>{record.date}</td>
                     </tr>
-                  </tbody>
-                )}
-              </table>
-            ))}
-          </div>
+                  ))}
+                </>
+              )}
+            </tbody>
+          </table>
         </div>
-      ))}
-    </div>
+        <div className="d-flex align-items-center justify-content-end mt-4">
+          <CustomPagination records={tableData.records.data} pageSize={pageSize} page={page} setPage={setPage} />
+        </div>
+      </div>
+      {/* <div className="custom-dynamic-page px-3 px-lg-0">
+      </div> */}
+    </>
   );
 };
 

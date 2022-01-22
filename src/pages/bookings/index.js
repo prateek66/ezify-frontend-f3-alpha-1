@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./bookings.scss";
 
-import avatarIcon from "./../../assets/profile/avatar-1.svg";
 import rupeeIcon from "./../../assets/service_page/rupee.svg";
 import { ApiCallsContext } from "../../services/api.service";
 import { catchHandler } from "../../utlis/catchHandler.utlis";
@@ -9,6 +8,7 @@ import { createStructuredSelector } from "reselect";
 import { selectToken } from "../../redux/user/user.selectors";
 import { connect } from "react-redux";
 import { API_URLS } from "../../utlis/constants";
+import CustomPagination from "../../components/atmoic/customPagination";
 
 const Bookings = ({ userToken }) => {
   const ApiContext = useContext(ApiCallsContext);
@@ -17,8 +17,11 @@ const Bookings = ({ userToken }) => {
   const [bookingData, setbookingData] = useState([]);
   const [activeBookngs, setActiveBookngs] = useState([]);
   const [historyBookings, setHistoryBookings] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(2);
 
   const changeActiveState = () => {
+    setPage(1)
     if (active) {
       setbookingData(activeBookngs);
     } else {
@@ -114,7 +117,7 @@ const Bookings = ({ userToken }) => {
             </thead>
             {bookingData.length > 0 && (
               <tbody>
-                {bookingData.map((value, index) => (
+                {bookingData.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize).map((value, index) => (
                   <tr key={index}>
                     <td>
                       <div className="d-flex align-items-center justify-content-center booking-page__custom-table__icons">
@@ -145,7 +148,11 @@ const Bookings = ({ userToken }) => {
               </tbody>
             )}
           </table>
+
         </div>
+          <div className="d-flex align-items-center justify-content-end mt-4">
+            <CustomPagination records={bookingData} pageSize={pageSize} page={page} setPage={setPage} />
+          </div>
       </div>
     </div>
   );
