@@ -10,7 +10,6 @@ import Dashboard from "./../pages/dashboard/dashboard";
 import Vendor from "./../pages/vendor/homePage";
 import Bookings from "../pages/bookings";
 import Payment from "../pages/payment";
-import VendorBooking from "../pages/vendorBooking";
 import Orders from "../pages/orders";
 
 const Routes = () => {
@@ -25,7 +24,6 @@ const Routes = () => {
       <Route exact path="/bookings" component={Bookings} />
       <Route exact path="/payment" component={Payment} />
       <Route exact path="/orders" component={Orders} />
-      <Route exact path="/vendor-booking" component={VendorBooking} />
     </Switch>
   );
 };

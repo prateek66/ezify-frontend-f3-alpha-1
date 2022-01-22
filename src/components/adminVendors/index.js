@@ -9,8 +9,8 @@ import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../utlis/constants";
 
 import "./adminVendors.scss";
-import VendorBooking from "../../pages/vendorBooking";
 import { setToasterConfig } from "../../redux/toaster/toaster.actions";
+import Table from "../atmoic/table";
 
 const AdminVendors = ({ userToken, setToasterCofig }) => {
   const ApiContext = useContext(ApiCallsContext);
@@ -106,7 +106,7 @@ const AdminVendors = ({ userToken, setToasterCofig }) => {
 
   return (
     <>
-      <VendorBooking tableData={tableData} />
+      <Table tableData={tableData} />
     </>
   );
 };

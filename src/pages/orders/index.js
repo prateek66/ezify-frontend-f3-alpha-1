@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import Table from "../../components/atmoic/table";
 
 import { selectToken } from "../../redux/user/user.selectors";
 import { ApiCallsContext } from "../../services/api.service";
 import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../utlis/constants";
-import VendorBooking from "../vendorBooking";
 
 import "./orders.scss";
 
@@ -67,7 +67,7 @@ const Orders = ({ userToken }) => {
 
   return (
     <>
-      <VendorBooking tableData={tableData} />
+      <Table tableData={tableData} />
     </>
   );
 };
