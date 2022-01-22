@@ -31,7 +31,7 @@ const Sidebar = ({ userDetails }) => {
         },
         {
           label: "Vendors",
-          path: "/dashboard",
+          path: "/dashboard/vendors",
           icon: personIcon,
         },
       ];

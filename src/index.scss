@@ -5,6 +5,10 @@ body {
   font-family: $montserrat-font-family;
 }
 
+.custom-overflow {
+  overflow-y: hidden;
+}
+
 .custom-modal {
   .modal-header {
     border-bottom: none;

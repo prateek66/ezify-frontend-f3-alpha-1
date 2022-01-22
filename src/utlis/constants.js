@@ -12,6 +12,8 @@ export const API_URLS = {
   VIEW_SERVICES: "4003/v1/view_service",
   DELETE_SERVICE: "4003/v1/delete_service",
   UPDATE_SERVICE: "4003/v1/update_service",
+  FETCH_ALL_VENDORS: "4003/v1/list_all_vendors",
+  TOGGLE_VENDOR_APPROVE_STATUS: "4003/v1/approve_vendor",
 
   UPDATE_VENDOR: "4002/v1/vendor/update_vendor",
 

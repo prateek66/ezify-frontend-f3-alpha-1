@@ -4,6 +4,7 @@ import "./vendorBooking.scss";
 import serviceIcon from "./../../assets/dashboard/serviceIconGreen.svg";
 import rupeeIcon from "./../../assets/service_page/rupee.svg";
 import CustomPagination from "../../components/atmoic/customPagination";
+import Select from "react-select";
 
 const VendorBooking = ({ tableData }) => {
   const [page, setPage] = useState(1);
@@ -49,8 +50,10 @@ const VendorBooking = ({ tableData }) => {
             </thead>
             <tbody>
               {tableData.records.data.length === 0 && (
-                <tr >
-                  <td colSpan={tableData.records.headers.length} className="text-center">No Records Found</td>
+                <tr>
+                  <td colSpan={tableData.records.headers.length} className="text-center">
+                    No Records Found
+                  </td>
                 </tr>
               )}
               {tableData.tableName === "orders" && (
@@ -71,6 +74,24 @@ const VendorBooking = ({ tableData }) => {
                   ))}
                 </>
               )}
+
+              {tableData.tableName === "vendors" && (
+                <>
+                  {tableData.records.data.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize).map((record, index) => (
+                    <tr key={index} className={`${index % 2 !== 0 ? "even-row" : null}`}>
+                      <td>{index + 1}</td>
+                      <td>{record.name}</td>
+                      <td>{record.email}</td>
+                      <td>{record.status ? <span className="badge badge-success">Approved</span> : <span className="badge badge-danger">Rejected</span>}</td>
+                      <td>{record.date}</td>
+                      <td>{record.updatedDate}</td>
+                      <td>
+                        <Select options={tableData.actionsOptions} onChange={(e) => tableData.onActionoptionChange(record.id, e.value)} />
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
             </tbody>
           </table>
         </div>
@@ -78,8 +99,6 @@ const VendorBooking = ({ tableData }) => {
           <CustomPagination records={tableData.records.data} pageSize={pageSize} page={page} setPage={setPage} />
         </div>
       </div>
-      {/* <div className="custom-dynamic-page px-3 px-lg-0">
-      </div> */}
     </>
   );
 };

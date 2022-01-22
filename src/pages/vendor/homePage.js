@@ -90,7 +90,7 @@ function Homepage() {
           </div>
         </div>
       </div>
-      <div className="container">
+      {/* <div className="container">
         <div className="row py-4">
           <div className="container-fluid">
             <p className="homePage__text--l3_text mb-1">Our Customers Can Say Very Much</p>
@@ -100,7 +100,7 @@ function Homepage() {
             <BannerCarousel />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
