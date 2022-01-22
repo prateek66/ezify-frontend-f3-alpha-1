@@ -337,20 +337,22 @@ const Profile = ({ userDetails, userToken, setUser }) => {
                   </div>
                 </div>
 
-                <div className="row pb-3 mt-3">
-                  <div className="col-12">
-                    {!update && (
-                      <>
-                        <label htmlFor="firstName" className="profilePage__box--label">
-                          Address
-                        </label>
-                        <div className="profilePage__box--value">{userDetails.address}</div>
-                      </>
-                    )}
+                {userDetails.roles !== "vendor" && (
+                  <div className="row pb-3 mt-3">
+                    <div className="col-12">
+                      {!update && (
+                        <>
+                          <label htmlFor="firstName" className="profilePage__box--label">
+                            Address
+                          </label>
+                          <div className="profilePage__box--value">{userDetails.address}</div>
+                        </>
+                      )}
 
-                    {update && <FormControl {...addressAttributes} />}
+                      {update && <FormControl {...addressAttributes} />}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className="row mt-3">
                   <div className="col-12 d-flex align-items-center justify-content-end">

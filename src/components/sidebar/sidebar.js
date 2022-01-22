@@ -6,6 +6,8 @@ import "./sidebar.scss";
 import hamburgerMenu from "./../../assets/dashboard/hamburger-menu.svg";
 import personIcon from "./../../assets/dashboard/personIcon.svg";
 import serviceIcon from "./../../assets/dashboard/serviceIcon.svg";
+import reviewsIcon from "./../../assets/dashboard/reviewsIcon.svg";
+import earningsIcon from "./../../assets/dashboard/earningsIcon.svg";
 
 import { createStructuredSelector } from "reselect";
 import { selectUserDetails } from "../../redux/user/user.selectors";
@@ -38,6 +40,28 @@ const Sidebar = ({ userDetails }) => {
       break;
 
     case "vendor":
+      sidebarMenuOptions = [
+        {
+          label: "Dashboard",
+          path: "/dashboard",
+          icon: personIcon,
+        },
+        {
+          label: "Bookings",
+          path: "/dashboard/vendorBookings",
+          icon: serviceIcon,
+        },
+        {
+          label: "Earnings",
+          path: "/dashboard/vendorEarnings",
+          icon: earningsIcon,
+        },
+        {
+          label: "Reviews",
+          path: "/dashboard/vendorReviews",
+          icon: reviewsIcon,
+        },
+      ];
       break;
 
     default:

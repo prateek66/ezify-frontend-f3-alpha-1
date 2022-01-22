@@ -26,6 +26,16 @@ const ProfileOptions = ({ firstName, roles, profileImage }) => {
       ];
       break;
 
+    case "vendor":
+      menuOptions = [
+        { label: "Profile", link: "/profile" },
+        { label: "Dashboard", link: "/dashboard" },
+        { label: "Bookings", link: "/dashboard/vendorBookings" },
+        { label: "Earnings", link: "/dashboard/vendorEarnings" },
+        { label: "Reviews", link: "/dashboard/vendorReviews" },
+      ];
+      break;
+
     default:
       menuOptions = [];
       break;
