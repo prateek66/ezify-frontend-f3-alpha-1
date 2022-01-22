@@ -26,6 +26,12 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       newState.items[index]["active"] = !newState.items[index]["active"];
       return newState;
 
+    case CartActionTypes.EMPTY_CART:
+      return {
+        ...state,
+        items: [],
+      };
+
     default:
       return state;
   }

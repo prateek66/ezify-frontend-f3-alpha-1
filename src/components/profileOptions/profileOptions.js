@@ -13,6 +13,8 @@ const ProfileOptions = ({ firstName, roles, profileImage }) => {
       menuOptions = [
         { label: "Profile", link: "/profile" },
         { label: "Bookings", link: "/bookings" },
+        { label: "Orders", link: "/orders" },
+        { label: "Cart", link: "/payment" },
       ];
       break;
 

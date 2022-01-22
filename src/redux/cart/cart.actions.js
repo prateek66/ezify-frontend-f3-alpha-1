@@ -12,3 +12,6 @@ export const disableFromCart = (payload) => ({
   type: CartActionTypes.DISABLE_ITEM_FROM_CART,
   payload: payload,
 });
+export const emptyCart = () => ({
+  type: CartActionTypes.EMPTY_CART,
+});

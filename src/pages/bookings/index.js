@@ -44,9 +44,6 @@ const Bookings = ({ userToken }) => {
           });
         });
 
-        console.log(activeBookingRecords);
-        console.log(historyBookingRecords);
-
         setActiveBookngs(activeBookingRecords);
         setHistoryBookings(historyBookingRecords);
 
@@ -121,7 +118,7 @@ const Bookings = ({ userToken }) => {
                   <tr key={index}>
                     <td>
                       <div className="d-flex align-items-center justify-content-center booking-page__custom-table__icons">
-                        <img src={avatarIcon} alt="avatarIcon" className="mr-3" />
+                        {/* <img src={avatarIcon} alt="avatarIcon" className="mr-3" /> */}
                         {value.serviceID.name}
                       </div>
                     </td>
