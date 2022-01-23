@@ -21,7 +21,6 @@ const Bookings = ({ userToken }) => {
   const [pageSize] = useState(10);
 
   const changeActiveState = () => {
-    
     if (active) {
       setbookingData(activeBookngs);
     } else {
@@ -38,13 +37,18 @@ const Bookings = ({ userToken }) => {
 
       if (Array.isArray(response) && response.length > 0) {
         response.forEach((booking) => {
-          booking.bookings.forEach((bookingObj) => {
-            if (bookingObj.status === "completed") {
-              historyBookingRecords.push(bookingObj);
-            } else if (bookingObj.status === "active") {
-              activeBookingRecords.push(bookingObj);
-            }
-          });
+          if (booking.status === "completed") {
+            historyBookingRecords.push(booking);
+          } else if (booking.status === "active") {
+            activeBookingRecords.push(booking);
+          }
+          // booking.bookings.forEach((bookingObj) => {
+          //   if (bookingObj.status === "completed") {
+          //     historyBookingRecords.push(bookingObj);
+          //   } else if (bookingObj.status === "active") {
+          //     activeBookingRecords.push(bookingObj);
+          //   }
+          // });
         });
 
         setActiveBookngs(activeBookingRecords);
@@ -70,7 +74,7 @@ const Bookings = ({ userToken }) => {
 
   useEffect(() => {
     changeActiveState();
-    setPage(1)
+    setPage(1);
     console.log(bookingData);
   }, [active, activeBookngs, historyBookings]);
 
@@ -148,11 +152,10 @@ const Bookings = ({ userToken }) => {
               </tbody>
             )}
           </table>
-
         </div>
-          <div className="d-flex align-items-center justify-content-end mt-4">
-            <CustomPagination records={bookingData} pageSize={pageSize} page={page} setPage={setPage} />
-          </div>
+        <div className="d-flex align-items-center justify-content-end mt-4">
+          <CustomPagination records={bookingData} pageSize={pageSize} page={page} setPage={setPage} />
+        </div>
       </div>
     </div>
   );

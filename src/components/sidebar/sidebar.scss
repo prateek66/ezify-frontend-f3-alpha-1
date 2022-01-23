@@ -37,11 +37,22 @@
       padding: 1rem 1.5rem;
       cursor: pointer;
 
-      a {
+      color: #a7a7a7;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &-selected {
         color: #a7a7a7;
 
         &:hover {
           text-decoration: none;
+        }
+
+        li {
+          background-color: rgba($primary-color, 0.2);
+          color: $primary-color;
         }
       }
 

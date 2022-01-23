@@ -11,7 +11,7 @@ import earningsIcon from "./../../assets/dashboard/earningsIcon.svg";
 
 import { createStructuredSelector } from "reselect";
 import { selectUserDetails } from "../../redux/user/user.selectors";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = ({ userDetails }) => {
   const [toggle, setToggle] = useState(true);
@@ -93,16 +93,16 @@ const Sidebar = ({ userDetails }) => {
 
       <ul className="sidebar__menuList">
         {sidebarMenuOptions.map((option, index) => (
-          <li className="sidebar__menuList--item" key={index}>
-            <Link to={option.path}>
+          <NavLink key={index} to={option.path} exact activeClassName="sidebar__menuList--item-selected" className="sidebar__menuList--item">
+            <li className="sidebar__menuList--item">
               <div className="row">
                 <div className="col-3">
                   <img src={option.icon} alt="Icon" className={toggle ? "" : "mr-0"} />
                 </div>
                 <div className="col-9">{toggle && <span>{option.label}</span>}</div>
               </div>
-            </Link>
-          </li>
+            </li>
+          </NavLink>
         ))}
       </ul>
     </div>

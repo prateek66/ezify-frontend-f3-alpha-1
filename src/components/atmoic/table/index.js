@@ -82,11 +82,57 @@ const Table = ({ tableData }) => {
                       <td>{index + 1}</td>
                       <td>{record.name}</td>
                       <td>{record.email}</td>
-                      <td>{record.status ? <span className="badge badge-success">Approved</span> : <span className="badge badge-danger">Rejected</span>}</td>
+                      <td>
+                        {record.status ? <span className="badge badge-success">Approved</span> : <span className="badge badge-danger">Rejected</span>}
+                      </td>
                       <td>{record.date}</td>
                       <td>{record.updatedDate}</td>
                       <td>
                         <Select options={tableData.actionsOptions} onChange={(e) => tableData.onActionoptionChange(record.id, e.value)} />
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
+
+              {tableData.tableName === "vendorsBookings" && (
+                <>
+                  {tableData.records.data.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize).map((record, index) => (
+                    <tr key={index} className={`${index % 2 !== 0 ? "even-row" : null}`}>
+                      <td>{index + 1}</td>
+                      <td>{record.name}</td>
+                      <td>{record.place}</td>
+                      <td>{record.service}</td>
+                      <td>{record.date}</td>
+                      <td>
+                        {record.status === "completed" ? (
+                          <span className="badge badge-success">Completed</span>
+                        ) : (
+                          <span className="badge badge-warning">Active</span>
+                        )}
+                      </td>
+                      <td>
+                        <Select options={tableData.actionsOptions} onChange={(e) => tableData.onActionoptionChange(record.id, e.value)} />
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              )}
+
+              {tableData.tableName === "vendorsEarnings" && (
+                <>
+                  {tableData.records.data.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize).map((record, index) => (
+                    <tr key={index} className={`${index % 2 !== 0 ? "even-row" : null}`}>
+                      <td>{index + 1}</td>
+                      <td>{record.name}</td>
+                      <td>{record.place}</td>
+                      <td>{record.service}</td>
+                      <td>{record.date}</td>
+                      <td>
+                        <div className="d-flex align-items-center justify-content-start booking-page__custom-table__icons">
+                          <img src={rupeeIcon} alt="rupeeIcon" className="mr-2" />
+                          {record.amount}
+                        </div>
                       </td>
                     </tr>
                   ))}

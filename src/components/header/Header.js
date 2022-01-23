@@ -14,8 +14,9 @@ import UserSignup from "../signup/user/userSignup";
 
 import "./Header.scss";
 import VendorSignup from "../signup/vendor/vendorSignup";
+import NotificationBell from "../notificationBell";
 
-const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
+const Header = ({ token, setToken, userDetails, setUser, showVendorBtn, showNotificationBtn }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -51,6 +52,7 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
             </div>
             <div className="col-7 offset-4">
               <div className="button-group d-flex align-items-center justify-content-end">
+                {userDetails && <NotificationBell userDetails={userDetails} />}
                 {showVendorBtn && (
                   <Link to="/vendorhome" className="button-vendor mr-3">
                     Become a Vendor

@@ -16,6 +16,11 @@ export const API_URLS = {
   TOGGLE_VENDOR_APPROVE_STATUS: "4003/v1/approve_vendor",
 
   UPDATE_VENDOR: "4002/v1/vendor/update_vendor",
+  FETCH_VENDOR_BOOKINGS: "4002/v1/vendor/viewall_bookings",
+  VIEW_ALL_EARNINGS: "4002/v1/vendor/view_earnings",
+  TOGGLE_BOOKING_STATUS: "4002/v1/vendor/toggle_status",
+
+  SOCKET_END_POINT: "http://localhost:4005/"
 
   // SEND_OTP: "/v1/users/signup",
   // VERIFY_OTP: "/v1/users/verify",
