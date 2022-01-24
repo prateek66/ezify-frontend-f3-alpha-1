@@ -1,5 +1,7 @@
 import React from "react";
+import DashboardBarChart from "../dashboardBarChart";
 import DashboardCard from "../dashboardCard";
+import DashboardLineChart from "../dashboardLineChart";
 import "./dashboardContainer.scss";
 
 const DashboardContainer = () => {
@@ -12,6 +14,9 @@ const DashboardContainer = () => {
         <DashboardCard />
         <DashboardCard />
       </div>
+
+      <DashboardLineChart />
+      <DashboardBarChart />
     </div>
   );
 };
