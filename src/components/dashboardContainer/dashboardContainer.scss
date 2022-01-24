@@ -1,5 +1,11 @@
+@import "./../../sass/variables";
+
 .dashboardContainer {
-  width: 100%;
-  background-color: yellow;
-  height: calc(100% - 4rem);
+  padding: 2rem 0;
+  font-family: $poppins-font-family;
+
+  &__greetings {
+    padding: .5rem 1rem;
+    background-color: rgba($primary-color, 0.1);
+  }
 }

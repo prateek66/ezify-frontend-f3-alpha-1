@@ -52,7 +52,7 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn, showNoti
             </div>
             <div className="col-7 offset-4">
               <div className="button-group d-flex align-items-center justify-content-end">
-                {userDetails && <NotificationBell userDetails={userDetails} />}
+                {userDetails && <NotificationBell userDetails={userDetails} token={token} />}
                 {showVendorBtn && (
                   <Link to="/vendorhome" className="button-vendor mr-3">
                     Become a Vendor

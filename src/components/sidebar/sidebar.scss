@@ -33,12 +33,6 @@
     margin-top: 1rem;
 
     &--item {
-      list-style: none;
-      padding: 1rem 1.5rem;
-      cursor: pointer;
-
-      color: #a7a7a7;
-
       &:hover {
         text-decoration: none;
       }
@@ -50,7 +44,19 @@
           text-decoration: none;
         }
 
-        li {
+        & li {
+          background-color: rgba($primary-color, 0.2);
+          color: $primary-color;
+        }
+      }
+
+      &--li {
+        list-style: none;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        color: #a7a7a7;
+
+        &:hover {
           background-color: rgba($primary-color, 0.2);
           color: $primary-color;
         }
@@ -58,11 +64,6 @@
 
       img {
         margin-right: 1.5rem;
-      }
-
-      &:hover {
-        background-color: rgba($primary-color, 0.2);
-        color: $primary-color;
       }
     }
   }

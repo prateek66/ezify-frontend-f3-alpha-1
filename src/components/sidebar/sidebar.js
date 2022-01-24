@@ -94,7 +94,7 @@ const Sidebar = ({ userDetails }) => {
       <ul className="sidebar__menuList">
         {sidebarMenuOptions.map((option, index) => (
           <NavLink key={index} to={option.path} exact activeClassName="sidebar__menuList--item-selected" className="sidebar__menuList--item">
-            <li className="sidebar__menuList--item">
+            <li className="sidebar__menuList--item--li">
               <div className="row">
                 <div className="col-3">
                   <img src={option.icon} alt="Icon" className={toggle ? "" : "mr-0"} />
