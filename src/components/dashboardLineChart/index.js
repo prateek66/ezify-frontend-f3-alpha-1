@@ -1,15 +1,17 @@
 import React from "react";
 import Chart from "react-apexcharts";
+import { withRouter } from "react-router-dom";
 
 import CustomButton from "../atmoic/customButton/customButton";
 
 import "./dashboardLineChart.scss";
 
-const DashboardLineChart = () => {
+const DashboardLineChart = ({ title, xaxis, value, btnLink, btnText, series, history }) => {
   const btnAttribute = {
     type: "button",
-    text: "Open Earnings",
+    text: btnText,
     classes: "customButton-ghost cp-4",
+    onClick: () => history.push(btnLink),
   };
 
   const chart = {
@@ -17,28 +19,21 @@ const DashboardLineChart = () => {
       chart: {
         id: "line-chart",
       },
-      xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-      },
+      xaxis,
       markers: {
         size: 5,
       },
       colors: ["#09b162"],
     },
-    series: [
-      {
-        name: "series-1",
-        data: [30, 40, 45, 50, 49, 60, 70, 91],
-      },
-    ],
+    series,
   };
 
   return (
     <div className="dashboardLineChart mt-4">
       <div className="row">
         <div className="col-4">
-          <div className="dashboardLineChart__title">Earnings</div>
-          <div className="dashboardLineChart__value">INR 68,631</div>
+          <div className="dashboardLineChart__title">{title}</div>
+          <div className="dashboardLineChart__value">{value}</div>
           <CustomButton {...btnAttribute} />
         </div>
         <div className="col-8">
@@ -49,4 +44,4 @@ const DashboardLineChart = () => {
   );
 };
 
-export default DashboardLineChart;
+export default withRouter(DashboardLineChart);

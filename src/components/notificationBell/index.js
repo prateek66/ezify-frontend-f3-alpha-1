@@ -26,22 +26,22 @@ const NotificationBell = ({ userDetails, token }) => {
   //   return data;
   // };
 
-  const socket = io(API_URLS.SOCKET_END_POINT, {
-    transports: ["websocket", "polling"],
-    path: "/mysocket/",
-  });
+  // const socket = io(API_URLS.SOCKET_END_POINT, {
+  //   transports: ["websocket", "polling"],
+  //   path: "/mysocket/",
+  // });
 
-  useEffect(() => {
-    console.log(socket);
-    if (!userDetails._id) return;
+  // useEffect(() => {
+  //   console.log(socket);
+  //   if (!userDetails._id) return;
 
-    socket.emit("join", userDetails._id);
-    socket.on("NEW_ORDER", (data) => {
-      console.log("event triggerd");
-      console.log(data);
-      // fetchBookings();
-    });
-  }, [userDetails]);
+  //   socket.emit("join", userDetails._id);
+  //   socket.on("NEW_ORDER", (data) => {
+  //     console.log("event triggerd");
+  //     console.log(data);
+  //     // fetchBookings();
+  //   });
+  // }, [userDetails]);
 
   return (
     <div className="mr-3 notificationBell">
