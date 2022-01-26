@@ -85,7 +85,7 @@ const Sidebar = ({ userDetails }) => {
       <div className={`sidebar__logo-container d-flex align-items-center ${toggle ? "justify-content-between" : "justify-content-center"}`}>
         {toggle && (
           <Link to="/">
-            <div className="sidebar__logo-container--box">Logo</div>
+            <div className="sidebar__logo-container--box">Ezzify</div>
           </Link>
         )}
         <img src={hamburgerMenu} alt="hamburgerMenu" className="sidebar__logo-container--toogle-img" onClick={onToggle} />

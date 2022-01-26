@@ -61,3 +61,37 @@ body {
 .rc-time-picker-panel-narrow {
   width: 170px !important;
 }
+
+.notificationBell {
+  & .dropdown-toggle::after {
+    display: none;
+  }
+
+  & .dropdown-menu {
+    min-width: 25rem;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+
+  & .btn-primary {
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    padding-left: 0;
+  }
+
+  & .btn-primary:not(:disabled):not(.disabled).active:focus,
+  .btn-primary:not(:disabled):not(.disabled):active:focus,
+  .show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: none;
+  }
+
+  & .btn-primary:not(:disabled):not(.disabled).active,
+  .btn-primary:not(:disabled):not(.disabled):active,
+  .show > .btn-primary.dropdown-toggle {
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
