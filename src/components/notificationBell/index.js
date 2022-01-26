@@ -12,36 +12,34 @@ import { catchHandler } from "../../utlis/catchHandler.utlis";
 const NotificationBell = ({ userDetails, token }) => {
   const ApiContext = useContext(ApiCallsContext);
 
-  // const fetchBookings = async () => {
-  //   const response = await catchHandler(fetchBookingsAPI);
-  //   console.log(response);
-  // };
+  const socket = io(API_URLS.SOCKET_END_POINT, {
+    transports: ["websocket", "polling"],
+    path: "/mysocket/",
+  });
 
-  // const fetchBookingsAPI = async () => {
-  //   const headers = {
-  //     Authorization: `Bearer ${token}`,
-  //   };
+  const fetchNotifications = async () => {
+    const response = await catchHandler(fetchNotificationsAPI);
+    console.log(response);
+  };
 
-  //   const data = await ApiContext.getData(API_URLS.FETCH_VENDOR_BOOKINGS, { headers });
-  //   return data;
-  // };
+  const fetchNotificationsAPI = async () => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
 
-  // const socket = io(API_URLS.SOCKET_END_POINT, {
-  //   transports: ["websocket", "polling"],
-  //   path: "/mysocket/",
-  // });
+    const data = await ApiContext.getData(API_URLS.FETCH_NOTIFICATIONS, { headers });
+    return data;
+  };
 
-  // useEffect(() => {
-  //   console.log(socket);
-  //   if (!userDetails._id) return;
+  socket.emit("join", userDetails._id);
 
-  //   socket.emit("join", userDetails._id);
-  //   socket.on("NEW_ORDER", (data) => {
-  //     console.log("event triggerd");
-  //     console.log(data);
-  //     // fetchBookings();
-  //   });
-  // }, [userDetails]);
+  console.log(socket);
+
+  socket.on("NEW_ORDER", (data) => {
+    console.log("event triggerd");
+    console.log(data);
+    fetchNotifications();
+  });
 
   return (
     <div className="mr-3 notificationBell">

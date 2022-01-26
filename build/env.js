@@ -211,7 +211,7 @@ window.env = {
   "npm_package_description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "npm_package_eslintConfig_extends_0": "react-app",
   "npm_package_eslintConfig_extends_1": "react-app/jest",
-  "npm_package_gitHead": "5a540c3c12c5072fabb3e59f79bbee6bedc0b4ea",
+  "npm_package_gitHead": "bd487f6f2e3aec1bb3cfa92a9e6fac6238d8c0e0",
   "npm_package_name": "ezzify-pesto-frontend",
   "npm_package_private": "true",
   "npm_package_readmeFilename": "README.md",

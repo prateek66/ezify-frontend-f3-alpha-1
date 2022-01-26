@@ -7,6 +7,7 @@ export const API_URLS = {
   CREATE_PAYMENT: "4001/v1/users/book_service",
   GET_ALL_BOOKINGS: "4001/v1/users/get_all_bookings",
   GET_ALL_ORDERS: "4001/v1/users/viewAllOrders",
+  FETCH_NOTIFICATIONS: "4001/v1/users/view_notifiactions",
 
   CREATE_SERVICE: "4003/v1/create_service",
   VIEW_SERVICES: "4003/v1/view_service",
@@ -20,7 +21,7 @@ export const API_URLS = {
   VIEW_ALL_EARNINGS: "4002/v1/vendor/view_earnings",
   TOGGLE_BOOKING_STATUS: "4002/v1/vendor/toggle_status",
 
-  SOCKET_END_POINT: "http://localhost:4005/"
+  SOCKET_END_POINT: "http://localhost:4005/",
 
   // SEND_OTP: "/v1/users/signup",
   // VERIFY_OTP: "/v1/users/verify",
