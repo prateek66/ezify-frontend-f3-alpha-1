@@ -24,7 +24,6 @@ function App({ history }) {
 
   history.listen((location, action) => {
     const path = location.pathname;
-    console.log(path);
 
     if (path.includes("/services/") && path.length > 32) {
       setShowHeader(true);

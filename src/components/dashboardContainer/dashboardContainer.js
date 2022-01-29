@@ -135,8 +135,6 @@ const DashboardContainer = ({ userDetails, token }) => {
           const date = moment(series.createdAt).format("DD MMM, YYYY");
           const index = days.findIndex((val) => val === date);
 
-          console.log(date);
-
           if (obj.hasOwnProperty(date)) {
             obj[date] += 1;
           } else {
@@ -168,7 +166,6 @@ const DashboardContainer = ({ userDetails, token }) => {
   const fetchBarGraphData = async () => {
     const response = await catchHandler(fetchBarGraphDataAPI);
     generateBarGraphSeries(response);
-    console.log(response);
   };
 
   const fetchBarGraphDataAPI = async () => {

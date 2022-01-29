@@ -38,18 +38,13 @@ const AdminServices = () => {
   };
 
   const updateServices = (data) => {
-    console.log(data);
     const updatedService = services.map((service) => {
       if (service._id === data._id) {
-        console.log(service);
         service = { ...data };
-        console.log(service);
       }
 
       return service;
     });
-
-    console.log(updatedService);
 
     setServices(updatedService);
   };

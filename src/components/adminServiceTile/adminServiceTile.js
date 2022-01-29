@@ -36,7 +36,6 @@ const AdminServiceTile = ({ _id, image, name, updatedAt, description, userToken,
 
     setShowDeletePopup(false);
 
-    console.log(response);
   };
 
   const deleteServiceAPI = async () => {
