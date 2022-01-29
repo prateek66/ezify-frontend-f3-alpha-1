@@ -68,7 +68,6 @@ export class VendorSignup extends Component {
 
   updateState = (field, value) => {
     this.setState({ [field]: value }, () => {
-      console.log(this.state);
     });
   };
 
@@ -112,8 +111,7 @@ export class VendorSignup extends Component {
       updatedAvailableDate.push(day.value);
     });
 
-    console.log(updatedAvailableDate.toString());
-    console.log(availableTime);
+
 
     const updatedServices = [];
 

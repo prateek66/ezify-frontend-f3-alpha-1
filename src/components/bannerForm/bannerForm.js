@@ -28,7 +28,6 @@ const BannerForm = ({ history }) => {
       serviceName: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
       const { city, serviceId, serviceName } = values;
       history.push(`/services/${serviceName}/${serviceId}/${city}`);
     },

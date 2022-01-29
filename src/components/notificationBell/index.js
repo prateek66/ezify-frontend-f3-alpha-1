@@ -45,16 +45,12 @@ const NotificationBell = ({ userDetails, token, setToasterCofig }) => {
   };
 
   useEffect(() => {
-    console.log(userDetails._id);
     fetchNotifications();
     socket.emit("join", userDetails._id);
 
-    console.log(socket);
-
     socket.on("NEW_ORDER", (data) => {
       fetchNotifications();
-      console.log("event triggerd");
-      console.log(data);
+
     });
   }, []);
 

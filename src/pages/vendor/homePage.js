@@ -1,8 +1,6 @@
 import React from "react";
 
 import CustomButton from "../../components/atmoic/customButton/customButton";
-import BannerCarousel from "../../components/bannerCarousel/bannerCarousel";
-
 import homeIllustration from "../../assets/vendor_home/Illustration 6.svg";
 import user from "../../assets/vendor_home/user.svg";
 import location from "../../assets/vendor_home/location.svg";
@@ -50,7 +48,7 @@ function Homepage() {
             <CustomButton type="button" text="GET IN TOUCH" classes="cp-2"></CustomButton>
           </div>
           <div className="col-lg-6 col-12">
-            <img className="homePage__image" src={homeIllustration} />
+            <img className="homePage__image" src={homeIllustration} alt= "homePage_image" />
           </div>
         </div>
       </div>
@@ -74,7 +72,7 @@ function Homepage() {
       <div className="container">
         <div className="row py-5">
           <div className="col-lg-6">
-            <img className="homePage__image-lower-section" src={image1} alt="image 1" />
+            <img className="homePage__image-lower-section" src={image1} alt="lower_section" />
           </div>
           <div className="col-lg-6 pt-lg-0 pt-2">
             <p className="homePage__text--l1_text">Trusted by Thousands of Happy Customer</p>
@@ -90,17 +88,6 @@ function Homepage() {
           </div>
         </div>
       </div>
-      {/* <div className="container">
-        <div className="row py-4">
-          <div className="container-fluid">
-            <p className="homePage__text--l3_text mb-1">Our Customers Can Say Very Much</p>
-            <p className="homePage__text--l3_text">About Us</p>
-          </div>
-          <div className="container-fluid">
-            <BannerCarousel />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

@@ -6,10 +6,9 @@ import { Link } from "react-router-dom";
 import "./notificationList.scss";
 
 const NotificationList = ({ notifications }) => {
-  console.log(notifications);
 
   const markAsRead = (id) => {
-    console.log(id);
+    
   };
 
   return (

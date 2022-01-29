@@ -6,7 +6,6 @@ import "./sidebar.scss";
 import hamburgerMenu from "./../../assets/dashboard/hamburger-menu.svg";
 import personIcon from "./../../assets/dashboard/personIcon.svg";
 import serviceIcon from "./../../assets/dashboard/serviceIcon.svg";
-import reviewsIcon from "./../../assets/dashboard/reviewsIcon.svg";
 import earningsIcon from "./../../assets/dashboard/earningsIcon.svg";
 
 import { createStructuredSelector } from "reselect";
@@ -14,7 +13,6 @@ import { selectUserDetails } from "../../redux/user/user.selectors";
 import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = ({ userDetails }) => {
-  console.log('Sidebar');
   const [toggle, setToggle] = useState(true);
 
   let sidebarMenuOptions = [];
@@ -57,11 +55,6 @@ const Sidebar = ({ userDetails }) => {
           path: "/dashboard/vendorEarnings",
           icon: earningsIcon,
         },
-        // {
-        //   label: "Reviews",
-        //   path: "/dashboard/vendorReviews",
-        //   icon: reviewsIcon,
-        // },
       ];
       break;
 
