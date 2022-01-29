@@ -1,0 +1,45 @@
+@import "./../../sass/variables";
+
+.notificationBell {
+  border-right: 2px solid $primary-color;
+  position: relative;
+
+  &--bell {
+    cursor: pointer;
+  }
+
+  & .popover {
+    max-width: 25rem;
+    width: 100%;
+
+    & .popover-header {
+      background-color: #9bdfbf73;
+    }
+
+    & .popover-body {
+      max-height: 15rem;
+      overflow-y: auto;
+    }
+  }
+
+  & .bs-popover-auto[x-placement^="bottom"] > .arrow::after,
+  .bs-popover-bottom > .arrow::after {
+    border-bottom-color: #9bdfbf73;
+  }
+
+  &__count {
+    background-color: $secondary-color;
+    position: absolute;
+    height: 1.3rem;
+    width: 1.3rem;
+    border-radius: 50%;
+    top: 0;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $quaternary-color;
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+}

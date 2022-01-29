@@ -1,0 +1,102 @@
+@import "./../../../sass/variables";
+
+.custom-dynamic-page {
+  color: $quaternary-color;
+
+  &__heading-text {
+    font-family: $montserrat-font-family;
+    font-weight: 600;
+    font-size: 1.55rem;
+    text-align: left;
+  }
+
+  &__filter-box {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: $box-shadow-darker;
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    &_icon {
+      img {
+        height: 2rem;
+        width: 2rem;
+      }
+    }
+
+    &_filter-active {
+      border: 2px solid #09b162;
+    }
+
+    &_title {
+      font-weight: 500;
+    }
+
+    &_value {
+      font-weight: 500;
+      font-size: 1.4rem;
+    }
+  }
+
+  &__custom-table {
+    box-shadow: $box-shadow-darker;
+    border-radius: 0.5rem;
+
+    &_table-margin {
+      margin: 1rem;
+    }
+
+    &_header-elements {
+      background-color: #fff !important;
+      border: unset !important;
+      font-weight: 600 !important;
+      color: #3f3d56 !important;
+      text-align: left;
+      border-bottom: 1px solid #ebeaea !important;
+    }
+
+    td {
+      text-align: left;
+      font-weight: 500 !important;
+      border-top: unset !important;
+      color: $quaternary-color !important;
+      text-transform: capitalize;
+    }
+
+    .table td,
+    .table th {
+      padding: 1.2rem 0.75rem;
+      vertical-align: middle;
+    }
+
+    .even-row {
+      background-color: #f3fbf7;
+    }
+
+    .status-color-pending {
+      color: #ffc200 !important;
+      font-weight: 500;
+    }
+
+    .status-color-done {
+      color: #36a2eb !important;
+      font-weight: 500;
+    }
+
+    .status-color-success {
+      color: #09b162 !important;
+      font-weight: 500;
+    }
+
+    &__icons {
+      img {
+        height: 2rem;
+        width: 2rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

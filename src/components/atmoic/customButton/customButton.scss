@@ -1,0 +1,46 @@
+@import "./../../../sass/variables";
+
+.customButton {
+  color: #fff;
+  // padding: 0.375rem 1.25rem;
+  padding: 0.2rem 1rem;
+  background-color: $primary-color;
+  border-radius: 5px;
+  font-family: $montserrat-font-family;
+  font-size: 0.9rem;
+  transition: 0.3s;
+
+  &:hover {
+    color: white;
+    box-shadow: $box-shadow;
+    transform: translateY(-2px);
+  }
+
+  &-ghost {
+    background-color: white;
+    border-color: $primary-color;
+    color: $primary-color;
+
+    &:hover {
+      background-color: $primary-color;
+    }
+  }
+
+  &.cp-2 {
+    padding: 0.4rem 2rem;
+  }
+
+  &.cp-3 {
+    height: 2.7rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
+
+  &.cp-4 {
+    font-size: 1.5rem;
+  }
+
+  &.red-btn {
+    background-color: $red;
+  }
+}

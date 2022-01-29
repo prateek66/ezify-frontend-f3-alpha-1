@@ -1,0 +1,15 @@
+@import "./../../../sass/variables";
+
+.toaster {
+  position: sticky;
+  bottom: 25px;
+  right: 25px;
+  margin-left: auto;
+  width: fit-content;
+  z-index: 1051;
+
+  & .success {
+    background-color: $primary-color;
+    color: #fff;
+  }
+}

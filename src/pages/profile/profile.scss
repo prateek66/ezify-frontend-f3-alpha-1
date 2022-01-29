@@ -1,0 +1,58 @@
+@import "./../../sass/variables";
+
+.profilePage {
+  padding: 3rem;
+
+  &__title {
+    text-align: center;
+    color: $quaternary-color;
+    text-transform: uppercase;
+  }
+
+  &__box {
+    box-shadow: $box-shadow-darker;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    padding: 3rem 4rem 3rem 1rem;
+
+    &--label {
+      font-family: $poppins-font-family;
+      color: $quaternary-color;
+      font-weight: 400;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    &--value {
+      font-family: $poppins-font-family;
+      color: $quaternary-color;
+      font-weight: 500;
+      font-size: 1.2rem;
+      word-break: break-word;
+    }
+  }
+
+  &__image {
+    position: relative;
+    height: 9rem;
+    width: 9rem;
+    border-radius: 50%;
+
+    &--img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+    }
+
+    &--edit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+    }
+
+    & #profileImageFile {
+      display: none;
+    }
+  }
+}

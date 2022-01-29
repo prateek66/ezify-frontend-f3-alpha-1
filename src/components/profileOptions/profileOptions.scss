@@ -1,0 +1,51 @@
+@import "./../../sass/variables";
+
+.profileOptionsDropdown {
+  .dropdown-toggle {
+    background-color: transparent !important;
+    color: $primary-color !important;
+    border-color: transparent !important;
+
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      border-color: $primary-color !important;
+      background-color: transparent;
+      color: $primary-color;
+    }
+
+    &:focus,
+    &:active {
+      box-shadow: none !important;
+      outline: none !important;
+      background-color: transparent !important;
+      color: $primary-color !important;
+      border-color: $primary-color !important;
+    }
+  }
+
+  &__img {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .dropdown-item {
+    a {
+      color: $primary-color;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

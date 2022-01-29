@@ -1,0 +1,9 @@
+@import "./../../../../sass/variables";
+
+.success-msg {
+  font-family: $montserrat-font-family;
+
+  span {
+    color: $primary-color;
+  }
+}

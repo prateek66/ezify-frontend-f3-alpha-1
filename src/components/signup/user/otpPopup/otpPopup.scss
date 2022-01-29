@@ -1,0 +1,25 @@
+@import "./../../../../sass/variables";
+
+.emailPopup {
+  .otp-input {
+    width: 8rem;
+  }
+
+  &__text {
+    font-size: 0.8rem;
+    margin-bottom: 7rem;
+
+    span {
+      color: $primary-color;
+    }
+  }
+
+  &__change-email {
+    span {
+      font-size: 0.8rem;
+      text-align: right;
+      cursor: pointer;
+      color: $primary-color;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.serviceForm {
+  padding: 1rem;
+
+  &__img {
+    width: 88%;
+    height: 100%;
+  }
+
+  & .modal-header {
+    font-weight: bold;
+
+    button {
+      padding: 0;
+    }
+  }
+
+  & .intro-text {
+      font-weight: bold;
+      font-size: .8rem;
+  }
+}

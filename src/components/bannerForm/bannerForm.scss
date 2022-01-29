@@ -1,0 +1,30 @@
+@import "./../../sass/variables";
+
+.bannerForm {
+  &-heading {
+    font-family: $montserrat-font-family;
+    font-weight: 600;
+    position: relative;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: $grey-shade-1;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -12px;
+      width: 6px;
+      height: 100%;
+      background-color: $primary-color;
+      border-radius: 5px;
+    }
+  }
+
+  &-form {
+    box-shadow: $box-shadow-darker;
+    border-radius: 12px;
+    width: 95%;
+    padding: 1rem;
+  }
+}

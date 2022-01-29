@@ -1,0 +1,35 @@
+// COLORS
+$primary-color: #09b162;
+$primary-color-light: #9bdfbf;
+$primary-color-dark: #036235;
+$secondary-color: #ffc200;
+$tertiary-color: #3d2729;
+$quaternary-color: #30334f;
+$grey-shade-1: #696969;
+$red: #dc3545;
+$background-color: #E5E5E5;
+
+
+// BOX SHADOW
+$box-shadow: 0px 4px 4px rgba(103, 109, 109, 0.18);
+$box-shadow-darker: 0px 4px 8px rgba(103, 109, 109, 0.25);
+$box-shadow-darker-green: 0px 4px 95px rgba(9, 180, 77, .2);
+$box-shadow-modal: 0px 4px 95px rgba(0, 0, 0, 0.25);
+
+// FONT FAMILIES
+$montserrat-font-family: "Montserrat", sans-serif;
+$poppins-font-family: "Poppins", sans-serif;
+$rubik-font-family: "Rubik", sans-serif;
+
+:export {
+  primary-color: $primary-color;
+  primary-color-light: $primary-color-light;
+  primary-color-dark: $primary-color-dark;
+  secondary-color: $secondary-color;
+  tertiary-color: $tertiary-color;
+  quaternary-color: $quaternary-color;
+  grey-shade-1: $grey-shade-1;
+  box-shadow: $box-shadow;
+  box-shadow-darker: $box-shadow-darker;
+  montserrat-font-family: $montserrat-font-family;
+}

@@ -1,0 +1,17 @@
+@import "./../../sass/variables";
+
+.dashboardBarChart {
+  padding: 2rem;
+  box-shadow: $box-shadow-darker;
+  border-radius: 1rem;
+
+  &__title {
+    font-size: 1.5rem;
+    // font-weight: bold;
+    margin-bottom: 5rem;
+  }
+
+  &__value {
+    font-size: 3rem;
+  }
+}

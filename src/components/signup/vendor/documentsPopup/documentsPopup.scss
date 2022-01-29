@@ -1,0 +1,24 @@
+.documentsPopup {
+  &__row {
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: blanchedalmond;
+    }
+  }
+
+  &__backIcon {
+    transform: rotate(180deg);
+    cursor: pointer;
+  }
+
+  &__profilePhotoForm {
+    height: 15rem;
+
+    & img {
+      object-fit: contain;
+    }
+  }
+}

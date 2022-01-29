@@ -1,0 +1,132 @@
+@import "./../../sass/variables";
+
+.homePage {
+  &__text {
+    font-family: $rubik-font-family;
+    font-weight: bold;
+    font-size: 2.2rem;
+    line-height: 1.1;
+
+    &--para {
+      font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: Mixed;
+      font-size: 16px;
+    }
+
+    &--vendor_number {
+      font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    &--vendor {
+      font-family: $rubik-font-family;
+      margin-bottom: 1rem;
+      font-weight: regular;
+      font-size: 0.8rem;
+    }
+
+    &--l1_text {
+      font-family: $rubik-font-family;
+      font-weight: bold;
+      font-size: 2.2rem;
+    }
+
+    &--l2_text {
+      font-family: $rubik-font-family;
+      font-weight: mixed;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    &--l3_text {
+      font-family: $rubik-font-family;
+      font-weight: bold;
+      font-size: 1.6rem;
+      text-align: center;
+    }
+  }
+
+  &__container-color {
+    background-color: #f3f3f3;
+  }
+
+  &__image {
+    height: 100%;
+    width: 100%;
+  }
+
+  &__image-lower-section {
+    height: 100%;
+    width: 90%;
+  }
+
+  &__container_l1 {
+    padding: 1rem 0;
+    background-color: #fafafa;
+
+    &--container_l2 {
+      padding: 1rem 0;
+    }
+  }
+
+  &__box {
+    box-shadow: $box-shadow-darker;
+    border-radius: 1rem;
+  }
+}
+
+.text-color {
+  color: #4f5665;
+}
+
+@media (max-width: 992px) {
+  .homePage {
+    &__image-lower-section {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .homePage {
+    &__box {
+      margin-left: 0 !important;
+      &--row {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &__text {
+      font-size: 1.9rem;
+
+      &--l1_text {
+        font-size: 1.9rem;
+      }
+
+      &--l3_text {
+        font-size: 1.35rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 476px) {
+  .homePage {
+    &__text {
+      font-size: 1.6rem;
+
+      &--l1_text {
+        font-size: 1.6rem;
+      }
+
+      &--l3_text {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}

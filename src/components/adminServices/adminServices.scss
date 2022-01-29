@@ -1,0 +1,30 @@
+@import "./../../sass/variables";
+
+.adminServices {
+  padding: 2.5rem;
+
+  &__header {
+    span {
+      background-color: rgba($primary-color, 0.2);
+      padding: 0.3rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        box-shadow: $box-shadow;
+        transform: translateY(-2px);
+        background-color: rgba($primary-color, 0.5);
+      }
+    }
+  }
+
+  &__body {
+    box-shadow: $box-shadow-darker;
+    // height: 30rem;
+    width: 100%;
+    border-radius: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,63 @@
+@import "./../../sass/variables";
+
+.section {
+  &-hero {
+    padding: 2rem 0;
+    box-shadow: $box-shadow;
+
+    & .service-container {
+      text-align: center;
+      box-shadow: $box-shadow;
+      padding: 1.5rem;
+      height: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+      background: #9bdfbf73;
+      border-radius: 0.8rem;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $box-shadow-darker;
+      }
+
+      &__name {
+        text-transform: uppercase;
+        font-family: $montserrat-font-family;
+        margin-bottom: 1rem;
+        font-weight: 600;
+
+        & span {
+          color: $primary-color;
+        }
+      }
+    }
+
+    & a {
+      text-decoration: none;
+      color: $quaternary-color;
+    }
+  }
+
+  &-covid {
+    padding: 2rem 0;
+
+    &__container {
+      img {
+        width: 100%;
+      }
+    }
+
+    &__heading {
+      color: $primary-color;
+      font-family: $montserrat-font-family;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    &__text {
+      font-family: $montserrat-font-family;
+      font-weight: 400;
+      color: #323232;
+    }
+  }
+}
