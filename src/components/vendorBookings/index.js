@@ -83,6 +83,7 @@ const VendorBookings = ({ userToken, setToasterCofig }) => {
         actionsOptions: [
           { label: "Complete", value: "completed" },
           { label: "Active", value: "active" },
+          { label: "Received", value: "received" },
         ],
         onActionoptionChange,
       });

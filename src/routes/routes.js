@@ -1,24 +1,64 @@
-import React, { Suspense } from "react";
+import React, { useEffect } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-import { Switch, Route, Redirect } from "react-router-dom";
-import Profile from "../pages/profile/profile";
-import Login from "../pages/admin/login/login";
-import Services from "../pages/services/services";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+
 import Home from "./../pages/home/home";
-import Dashboard from "./../pages/dashboard/dashboard";
-import Vendor from "./../pages/vendor/homePage";
-import Bookings from "../pages/bookings";
-import Payment from "../pages/payment";
-import Orders from "../pages/orders";
 import { createStructuredSelector } from "reselect";
 import { selectUserDetails } from "../redux/user/user.selectors";
 import { connect } from "react-redux";
-import NotAuthPage from "../pages/notAuthPage";
-import NoMatchPage from "../pages/noMatchPage";
 
-// const Profile = React.lazy(() => import("../pages/profile/profile"));
+import loadable from "@loadable/component";
+
+import CustomSpinner from "./../components/atmoic/spinner";
+
+const LoadableProfile = loadable(() => import("../pages/profile/profile.js"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableServices = loadable(() => import("../pages/services/services"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableLogin = loadable(() => import("../pages/admin/login/login"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableVendor = loadable(() => import("./../pages/vendor/homePage"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableDashboard = loadable(() => import("./../pages/dashboard/dashboard.js"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableBookings = loadable(() => import("../pages/bookings"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadablePayment = loadable(() => import("../pages/payment"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableOrders = loadable(() => import("../pages/orders"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableNotAuthPage = loadable(() => import("../pages/notAuthPage"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableNoMatchPage = loadable(() => import("../pages/noMatchPage"), {
+  fallback: <CustomSpinner />,
+});
 
 const Routes = ({ userDetails }) => {
+  let location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const renderComponent = (component, userType) => {
     if (userDetails && userDetails?.isActive && userType.includes(userDetails?.roles)) {
       return component;
@@ -28,19 +68,23 @@ const Routes = ({ userDetails }) => {
   };
 
   return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/profile" render={() => renderComponent(<Profile />, ["user", "vendor"])}></Route>
-      <Route exact path="/services/:name/:serviceId/:city?" component={Services} />
-      <Route exact path="/admin" component={Login} />
-      <Route exact path="/vendorhome" component={Vendor} />
-      <Route path="/dashboard" render={() => renderComponent(<Dashboard />, ["admin", "vendor"])} />
-      <Route exact path="/bookings" render={() => renderComponent(<Bookings />, ["user"])} />
-      <Route exact path="/payment" component={Payment} />
-      <Route exact path="/orders" render={() => renderComponent(<Orders />, ["user"])} />
-      <Route exact path="/notAuthPage" component={NotAuthPage} />
-      <Route exact path="*" component={NoMatchPage} />
-    </Switch>
+    <TransitionGroup>
+      <CSSTransition key={location.pathname} classNames="fade" timeout={300}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/profile" render={() => renderComponent(<LoadableProfile />, ["user", "vendor"])}></Route>
+          <Route exact path="/services/:name/:serviceId/:city?" component={LoadableServices} />
+          <Route exact path="/admin" component={LoadableLogin} />
+          <Route exact path="/vendorhome" component={LoadableVendor} />
+          <Route path="/dashboard" render={() => renderComponent(<LoadableDashboard />, ["admin", "vendor"])} />
+          <Route exact path="/bookings" render={() => renderComponent(<LoadableBookings />, ["user"])} />
+          <Route exact path="/payment" component={LoadablePayment} />
+          <Route exact path="/orders" render={() => renderComponent(<LoadableOrders />, ["user"])} />
+          <Route exact path="/notAuthPage" component={LoadableNotAuthPage} />
+          <Route exact path="*" component={LoadableNoMatchPage} />
+        </Switch>
+      </CSSTransition>
+    </TransitionGroup>
   );
 };
 

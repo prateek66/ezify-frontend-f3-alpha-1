@@ -109,11 +109,9 @@ const Table = ({ tableData }) => {
                       <td>{record.service}</td>
                       <td>{record.date}</td>
                       <td>
-                        {record.status === "completed" ? (
-                          <span className="badge badge-success">Completed</span>
-                        ) : (
-                          <span className="badge badge-warning">Active</span>
-                        )}
+                        {record.status === "received" && <span className="badge badge-info">Received</span>}
+                        {record.status === "completed" && <span className="badge badge-success">Completed</span>}
+                        {record.status === "active" && <span className="badge badge-warning">Active</span>}
                       </td>
                       <td>
                         <Select options={tableData.actionsOptions} onChange={(e) => tableData.onActionoptionChange(record.id, e.value)} />

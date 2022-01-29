@@ -25,7 +25,7 @@ const NotificationList = ({ notifications }) => {
                 <div className="notificationTab" key={index}>
                   <Link to="/bookings" onClick={() => markAsRead(notification._id)}>
                     <small className="mb-0 text-right timestamp">{moment(notification.createdAt).format("DD MMM, YYYY hh:mm A")}</small>
-                    <p className="mb-0">Your booking's status has been changed</p>
+                    <p className="mb-0">Your booking's status has been changed to {notification.data[0].data.status}</p>
                   </Link>
                 </div>
               );
