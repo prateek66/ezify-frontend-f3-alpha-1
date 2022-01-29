@@ -161,8 +161,9 @@ const PersonalDetails = ({ values, handleChange, nextStep, setToken, updateState
       city,
       address,
       mobileNumber: +mobileNumber,
-      isEmaiVerified: true,
+      isEmailVerified: true,
       isActive: true,
+      isApproved: "approved",
     };
 
     const headers = {

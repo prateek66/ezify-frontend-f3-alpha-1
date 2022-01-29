@@ -24,8 +24,8 @@ const AdminVendors = ({ userToken, setToasterCofig }) => {
       data: [],
     },
     actionsOptions: [
-      { label: "Approve", value: true },
-      { label: "Reject", value: false },
+      { label: "Approve", value: "approved" },
+      { label: "Reject", value: "rejected" },
     ],
   });
 
@@ -54,8 +54,8 @@ const AdminVendors = ({ userToken, setToasterCofig }) => {
           data: records,
         },
         actionsOptions: [
-          { label: "Approve", value: true },
-          { label: "Reject", value: false },
+          { label: "Approve", value: "approved" },
+          { label: "Reject", value: "rejected" },
         ],
         onActionoptionChange,
       });

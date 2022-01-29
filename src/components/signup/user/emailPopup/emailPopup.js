@@ -30,6 +30,17 @@ const EmailPopup = ({ values, updateState, nextStep, type }) => {
     if (formik.isValid) {
       updateState("email", formik.values.email);
       const response = await catchHandler(sendOTPAPI);
+
+      if (response.isApproved === "rejected") {
+        formik.setFieldError("email", "Your profile was rejected. Please use different email.");
+        return;
+      }
+
+      if (response.isApproved === "pending" && response.isActive) {
+        formik.setFieldError("email", "Your profile is under verification. Please wait for sometime.");
+        return;
+      }
+
       console.log("otpVerify", response.otpVerify);
       updateState("id", response._id);
       nextStep();

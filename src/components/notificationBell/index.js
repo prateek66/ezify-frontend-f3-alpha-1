@@ -10,8 +10,10 @@ import { API_URLS } from "../../utlis/constants";
 import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { Dropdown } from "react-bootstrap";
 import NotificationList from "../notificationList";
+import { setToasterConfig } from "../../redux/toaster/toaster.actions";
+import { connect } from "react-redux";
 
-const NotificationBell = ({ userDetails, token }) => {
+const NotificationBell = ({ userDetails, token, setToasterCofig }) => {
   const [notifications, setNotifications] = useState([]);
 
   const ApiContext = useContext(ApiCallsContext);
@@ -23,8 +25,13 @@ const NotificationBell = ({ userDetails, token }) => {
 
   const fetchNotifications = async () => {
     const response = await catchHandler(fetchNotificationsAPI);
-    if (response) {
+    if (Array.isArray(response) && response.length > 0) {
       setNotifications(response);
+      setToasterCofig({
+        show: true,
+        message: "You have new notifications",
+        className: "success",
+      });
     }
   };
 
@@ -73,4 +80,8 @@ const NotificationBell = ({ userDetails, token }) => {
   );
 };
 
-export default NotificationBell;
+const mapDispatchToProps = (dispatch) => ({
+  setToasterCofig: (config) => dispatch(setToasterConfig(config)),
+});
+
+export default connect(null, mapDispatchToProps)(NotificationBell);

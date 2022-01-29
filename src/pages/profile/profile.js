@@ -53,6 +53,7 @@ const Profile = ({ userDetails, userToken, setUser }) => {
       address: userDetails.address,
       profileImage: userDetails.profileImage,
       profileImageFile: "",
+      roles: userDetails.roles,
     },
     validationSchema: Yup.object({
       firstName: Yup.string().min(3).max(15, "Must be 15 characters or less").required("Required"),
@@ -64,7 +65,12 @@ const Profile = ({ userDetails, userToken, setUser }) => {
       state: Yup.string("Invalid state").required("Required"),
       stateCode: Yup.string("Invalid state").required("Required"),
       city: Yup.string("Invalid city").required("Required"),
-      address: Yup.string("Invalid address").min(10).max(200).required("Required"),
+      // address: Yup.string("Invalid address").min(10).max(200).required("Required"),
+      address: Yup.mixed().when("roles", {
+        is: "user",
+        then: Yup.string("Invalid address").min(10).max(200).required("Required"),
+        otherwise: Yup.mixed().nullable(),
+      }),
       profileImageFile: Yup.mixed()
         .nullable()
         .test("FILE_SIZE", "File should be less than 3mb", (value) => !value || (value && value.size > 1024 * 3))
@@ -94,14 +100,22 @@ const Profile = ({ userDetails, userToken, setUser }) => {
     formData.append("state", state);
     formData.append("city", city);
     formData.append("address", address);
-    formData.append("file", profileImageFile);
 
     const headers = {
       Authorization: `Bearer ${userToken}`,
       "content-type": "multipart/form-data",
     };
 
-    const data = await ApiContext.patchData(API_URLS.UPDATE_USER, formData, { headers });
+    let path = API_URLS.UPDATE_USER;
+
+    if (userDetails.roles === "user") {
+      formData.append("file", profileImageFile);
+    } else if (userDetails.roles === "vendor") {
+      formData.append("profileImage", profileImageFile);
+      path = API_URLS.UPDATE_VENDOR;
+    }
+
+    const data = await ApiContext.patchData(path, formData, { headers });
     return data;
   };
 

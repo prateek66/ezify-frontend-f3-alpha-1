@@ -135,7 +135,7 @@ export class VendorSignup extends Component {
     formData.append("adharCardImage", aadharCard);
     formData.append("panCardImage", panCard);
     formData.append("isActive", true);
-    formData.append("isEmaiVerified", true);
+    formData.append("isEmailVerified", true);
     formData.append("availabaleDate", updatedAvailableDate.toString());
     formData.append("availableTime", availableTime);
 

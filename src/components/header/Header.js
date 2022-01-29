@@ -42,19 +42,28 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn, showNoti
     }
   };
 
+  const handleVendorHomePage = () => {
+    setToken(null);
+    setUser(null);
+  };
+
   return (
     <>
       <header className="header">
         <div className="container">
           <div className="row">
-            <div className="col-1">
-              <div className="logo-container"></div>
+            <div className="col-1 d-flex align-items-center justify-content-end">
+              {showVendorBtn && (
+                <Link to="/" className="logo-container">
+                  Ezzify
+                </Link>
+              )}
             </div>
-            <div className="col-7 offset-4">
+            <div className="col-7 offset-4 d-flex align-items-center justify-content-end">
               <div className="button-group d-flex align-items-center justify-content-end">
                 {userDetails && <NotificationBell userDetails={userDetails} token={token} />}
                 {showVendorBtn && (
-                  <Link to="/vendorhome" className="button-vendor mr-3">
+                  <Link to="/vendorhome" className="button-vendor mr-3" onClick={handleVendorHomePage}>
                     Become a Vendor
                   </Link>
                 )}

@@ -56,11 +56,11 @@ const Sidebar = ({ userDetails }) => {
           path: "/dashboard/vendorEarnings",
           icon: earningsIcon,
         },
-        {
-          label: "Reviews",
-          path: "/dashboard/vendorReviews",
-          icon: reviewsIcon,
-        },
+        // {
+        //   label: "Reviews",
+        //   path: "/dashboard/vendorReviews",
+        //   icon: reviewsIcon,
+        // },
       ];
       break;
 

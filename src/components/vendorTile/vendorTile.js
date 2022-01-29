@@ -88,10 +88,10 @@ const VendorTile = ({
             <div className="vendorTile__name">
               {firstName} {lastName}
             </div>
-            <div className="d-flex align-items-center justify-content-between vendorTile__ratings">
+            {/* <div className="d-flex align-items-center justify-content-between vendorTile__ratings">
               <img src={ratingStar} alt="Rating" />
               <span>4.99</span>
-            </div>
+            </div> */}
           </div>
           <div className="vendorTile__timing">
             <div>{availabaleDate}</div>

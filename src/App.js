@@ -14,7 +14,7 @@ function App({ history }) {
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
 
-  const HEADER_TO_INCLUDE = ["/", "/services", "/profile", "/bookings", "/vendorhome", "/bookings", "/payment", '/orders'];
+  const HEADER_TO_INCLUDE = ["/", "/services", "/profile", "/bookings", "/vendorhome", "/bookings", "/payment", "/orders"];
   const FOOTER_TO_INCLUDE = ["/", "/services", "/vendorhome"];
 
   const toggleHeaderFooter = (path) => {
@@ -24,11 +24,26 @@ function App({ history }) {
 
   history.listen((location, action) => {
     const path = location.pathname;
+    console.log(path);
+
+    if (path.includes("/services/") && path.length > 32) {
+      setShowHeader(true);
+      setShowFooter(true);
+      return;
+    }
+
     toggleHeaderFooter(path);
   });
 
   useEffect(() => {
     const path = window.location.pathname;
+
+    if (path.includes("/services/") && path.length > 32) {
+      setShowHeader(true);
+      setShowFooter(true);
+      return;
+    }
+
     toggleHeaderFooter(path);
   }, []);
 

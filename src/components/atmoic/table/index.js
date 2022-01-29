@@ -83,7 +83,11 @@ const Table = ({ tableData }) => {
                       <td>{record.name}</td>
                       <td>{record.email}</td>
                       <td>
-                        {record.status ? <span className="badge badge-success">Approved</span> : <span className="badge badge-danger">Rejected</span>}
+                        {/* {record.status ? <span className="badge badge-success">Approved</span> : <span className="badge badge-danger">Rejected</span>} */}
+
+                        {record.status === "pending" && <span className="badge badge-warning">Pending</span>}
+                        {record.status === "approved" && <span className="badge badge-success">Approved</span>}
+                        {record.status === "rejected" && <span className="badge badge-danger">Rejected</span>}
                       </td>
                       <td>{record.date}</td>
                       <td>{record.updatedDate}</td>

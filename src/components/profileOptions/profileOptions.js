@@ -32,7 +32,7 @@ const ProfileOptions = ({ firstName, roles, profileImage }) => {
         { label: "Dashboard", link: "/dashboard" },
         { label: "Bookings", link: "/dashboard/vendorBookings" },
         { label: "Earnings", link: "/dashboard/vendorEarnings" },
-        { label: "Reviews", link: "/dashboard/vendorReviews" },
+        // { label: "Reviews", link: "/dashboard/vendorReviews" },
       ];
       break;
 

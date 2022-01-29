@@ -30,6 +30,26 @@ const NotificationList = ({ notifications }) => {
                 </div>
               );
 
+            case "VENDOR_CREATED":
+              return (
+                <div className="notificationTab" key={index}>
+                  <Link to="/dashboard/vendors" onClick={() => markAsRead(notification._id)}>
+                    <small className="mb-0 text-right timestamp">{moment(notification.createdAt).format("DD MMM, YYYY hh:mm A")}</small>
+                    <p className="mb-0">A new vendor has registered on ezzify</p>
+                  </Link>
+                </div>
+              );
+
+            case "NEW_BOOKING_CREATED":
+              return (
+                <div className="notificationTab" key={index}>
+                  <Link to="/dashboard/vendorBookings" onClick={() => markAsRead(notification._id)}>
+                    <small className="mb-0 text-right timestamp">{moment(notification.createdAt).format("DD MMM, YYYY hh:mm A")}</small>
+                    <p className="mb-0">You have a new booking</p>
+                  </Link>
+                </div>
+              );
+
             default:
               return <p key={index}>"No status"</p>;
           }
