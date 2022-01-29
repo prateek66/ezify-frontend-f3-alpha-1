@@ -137,10 +137,10 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, setC
                             {item.firstName} {item.lastName}
                           </div>
                         </div>
-                        <div className="d-flex align-items-center justify-content-start payment-page__vendorTile__ratings">
+                        {/* <div className="d-flex align-items-center justify-content-start payment-page__vendorTile__ratings">
                           <img src={ratingStar} alt="Rating" />
                           <span>4.5</span>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="col-3 offset-3 d-flex align-items-end justify-content-between flex-column">
                         <div className="">

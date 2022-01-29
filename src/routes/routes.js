@@ -36,7 +36,7 @@ const Routes = ({ userDetails }) => {
       <Route exact path="/vendorhome" component={Vendor} />
       <Route path="/dashboard" render={() => renderComponent(<Dashboard />, ["admin", "vendor"])} />
       <Route exact path="/bookings" render={() => renderComponent(<Bookings />, ["user"])} />
-      <Route exact path="/payment" render={() => renderComponent(<Payment />, ["user"])} />
+      <Route exact path="/payment" component={Payment} />
       <Route exact path="/orders" render={() => renderComponent(<Orders />, ["user"])} />
       <Route exact path="/notAuthPage" component={NotAuthPage} />
       <Route exact path="*" component={NoMatchPage} />

@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { removeFromCart, setItemToCart } from "../../redux/cart/cart.actions";
 import ModalBase from "../atmoic/modal/modal";
 import { Modal } from "react-bootstrap";
+import { selectUserDetails } from "../../redux/user/user.selectors";
 
 const VendorTile = ({
   profileImage,
@@ -25,8 +26,10 @@ const VendorTile = ({
   serviceName,
   availabaleDate,
   availableTime,
+  userDetails,
 }) => {
   const [show, setShow] = useState(false);
+  const [message, setMessage] = useState("You can not add multiple vendors for the same service");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -34,6 +37,12 @@ const VendorTile = ({
   const selectedService = services.find((service) => service.serviceID === serviceId);
 
   const handleBookNow = () => {
+    if (userDetails?.roles === "vendor" || userDetails?.roles === "admin") {
+      setShow(true);
+      setMessage("Vendor can not add another vendor");
+      return;
+    }
+
     addItemToCart({
       vendorID: _id,
       serviceID: serviceId,
@@ -66,6 +75,7 @@ const VendorTile = ({
 
         if (btnAttributes.text === "CANCEL") {
           setShow(true);
+          setMessage("You can not add multiple vendors for the same service");
         }
       }
     });
@@ -110,7 +120,7 @@ const VendorTile = ({
       <ModalBase show={show} handleClose={handleClose} handleShow={handleShow} size="md">
         <Modal.Header closeButton>💥 Warning</Modal.Header>
         <Modal.Body>
-          <p className="mb-0 text-center font-weight-bold">You can not add multiple vendors for the same service</p>
+          <p className="mb-0 text-center font-weight-bold">{message}</p>
         </Modal.Body>
       </ModalBase>
     </>
@@ -121,6 +131,7 @@ const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
   cartItemsVendors: selectCartItemsVendors,
   cartItemsService: selectCartItemsServices,
+  userDetails: selectUserDetails,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -58,11 +58,11 @@ const Services = ({ cartItems }) => {
                 <div className="services__filter-box--title">Sort By</div>
                 <div className="services__filter-box--options">Price: High to Low</div>
                 <div className="services__filter-box--options">Price: Low to High</div>
-                <div className="services__filter-box--options">Rating: High to Low</div>
-                <div className="services__filter-box--options">Rating: Low to High</div>
+                {/* <div className="services__filter-box--options">Rating: High to Low</div>
+                <div className="services__filter-box--options">Rating: Low to High</div> */}
               </div>
 
-              <div className="services__filter-box services__filter-box--2 mt-4">
+              {/* <div className="services__filter-box services__filter-box--2 mt-4">
                 <div className="services__filter-box--title">Price Range</div>
                 <div className="d-flex align-items-center justify-content-between mt-3">
                   <div className="d-flex align-items-center justify-content-between flex-grow-1 mr-3">
@@ -72,7 +72,7 @@ const Services = ({ cartItems }) => {
                   </div>
                   <CustomButton {...buttonAttributes} />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="col-8">
               {vendors.length > 0 &&
