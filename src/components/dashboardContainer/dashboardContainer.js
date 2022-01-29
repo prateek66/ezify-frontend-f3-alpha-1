@@ -97,7 +97,7 @@ const DashboardContainer = ({ userDetails, token }) => {
         },
         series: [
           {
-            name: "earnings",
+            name: userDetails.roles === "vendor" ? "Earnings" : "Vendors",
             data: seriesData,
           },
         ],

@@ -14,6 +14,7 @@ import { createStructuredSelector } from "reselect";
 import { selectUserDetails } from "../redux/user/user.selectors";
 import { connect } from "react-redux";
 import NotAuthPage from "../pages/notAuthPage";
+import NoMatchPage from "../pages/noMatchPage";
 
 // const Profile = React.lazy(() => import("../pages/profile/profile"));
 
@@ -38,6 +39,7 @@ const Routes = ({ userDetails }) => {
       <Route exact path="/payment" render={() => renderComponent(<Payment />, ["user"])} />
       <Route exact path="/orders" render={() => renderComponent(<Orders />, ["user"])} />
       <Route exact path="/notAuthPage" component={NotAuthPage} />
+      <Route exact path="*" component={NoMatchPage} />
     </Switch>
   );
 };
