@@ -39,7 +39,7 @@
   "scripts": {
     "start": "react-dotenv && react-scripts start",
     "build": "react-dotenv && react-scripts build",
-    "deploy": "aws s3 sync build/ s3://ezzify-deploy-frontend",
+    "deploy": "npm run build && aws s3 sync build/ s3://ezzify-deploy-frontend",
     "test-deplpoy": "npm run build && npm run deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
