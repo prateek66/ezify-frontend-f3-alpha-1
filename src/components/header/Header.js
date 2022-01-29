@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -16,7 +16,7 @@ import "./Header.scss";
 import VendorSignup from "../signup/vendor/vendorSignup";
 import NotificationBell from "../notificationBell";
 
-const Header = ({ token, setToken, userDetails, setUser, showVendorBtn, showNotificationBtn }) => {
+const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -96,4 +96,4 @@ const mapDispatchToProps = (dispatch) => ({
   setUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default React.memo(connect(mapStateToProps, mapDispatchToProps)(Header));

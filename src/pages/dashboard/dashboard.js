@@ -7,6 +7,7 @@ import DashboardRoutes from "../../routes/dashboard.routes";
 import "./dashboard.scss";
 
 const Dashboard = () => {
+  console.log("Dashboard");
   return (
     <div className="d-flex">
       <Sidebar />
@@ -18,4 +19,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);

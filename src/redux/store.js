@@ -8,7 +8,7 @@ import { config } from "../utlis/constants";
 const middlewares = [];
 
 if (config.ENVIRONMENT === "DEV") {
-  middlewares.push(logger);
+  // middlewares.push(logger);
 }
 
 export const store = createStore(rootReducer, applyMiddleware(...middlewares));

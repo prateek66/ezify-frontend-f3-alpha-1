@@ -14,6 +14,7 @@ import { selectUserDetails } from "../../redux/user/user.selectors";
 import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = ({ userDetails }) => {
+  console.log('Sidebar');
   const [toggle, setToggle] = useState(true);
 
   let sidebarMenuOptions = [];

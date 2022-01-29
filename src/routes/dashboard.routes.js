@@ -2,12 +2,34 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import AdminServices from "../components/adminServices/adminServices";
-import AdminVendors from "../components/adminVendors";
-import DashboardContainer from "../components/dashboardContainer/dashboardContainer";
-import VendorBookings from "../components/vendorBookings";
-import VendorEarnings from "../components/vendorEarnings";
+
 import { selectUserDetails } from "../redux/user/user.selectors";
+
+import loadable from "@loadable/component";
+
+import CustomSpinner from "./../components/atmoic/spinner";
+import Sidebar from "../components/sidebar/sidebar";
+import Header from "../components/header/Header";
+
+const LoadableDashboardContainer = loadable(() => import("../components/dashboardContainer/dashboardContainer"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableAdminServices = loadable(() => import("../components/adminServices/adminServices"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableAdminVendors = loadable(() => import("../components/adminVendors"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableVendorBookings = loadable(() => import("../components/vendorBookings"), {
+  fallback: <CustomSpinner />,
+});
+
+const LoadableVendorEarnings = loadable(() => import("../components/vendorEarnings"), {
+  fallback: <CustomSpinner />,
+});
 
 const DashboardRoutes = ({ userDetails }) => {
   const renderComponent = (component, userType) => {
@@ -20,11 +42,11 @@ const DashboardRoutes = ({ userDetails }) => {
 
   return (
     <Switch>
-      <Route exact path="/dashboard" component={DashboardContainer} />
-      <Route exact path="/dashboard/services" render={() => renderComponent(<AdminServices />, ["admin"])} />
-      <Route exact path="/dashboard/vendors" render={() => renderComponent(<AdminVendors />, ["admin"])} />
-      <Route exact path="/dashboard/vendorBookings" render={() => renderComponent(<VendorBookings />, ["vendor"])} />
-      <Route exact path="/dashboard/vendorEarnings" render={() => renderComponent(<VendorEarnings />, ["vendor"])} />
+      <Route exact path="/dashboard" render={() => renderComponent(<LoadableDashboardContainer />, ["admin", "vendor"])} />
+      <Route exact path="/dashboard/services" render={() => renderComponent(<LoadableAdminServices />, ["admin"])} />
+      <Route exact path="/dashboard/vendors" render={() => renderComponent(<LoadableAdminVendors />, ["admin"])} />
+      <Route exact path="/dashboard/vendorBookings" render={() => renderComponent(<LoadableVendorBookings />, ["vendor"])} />
+      <Route exact path="/dashboard/vendorEarnings" render={() => renderComponent(<LoadableVendorEarnings />, ["vendor"])} />
     </Switch>
   );
 };

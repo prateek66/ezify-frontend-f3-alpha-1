@@ -45,6 +45,7 @@ const NotificationBell = ({ userDetails, token, setToasterCofig }) => {
   };
 
   useEffect(() => {
+    console.log(userDetails._id);
     fetchNotifications();
     socket.emit("join", userDetails._id);
 
@@ -55,7 +56,7 @@ const NotificationBell = ({ userDetails, token, setToasterCofig }) => {
       console.log("event triggerd");
       console.log(data);
     });
-  }, [userDetails._id]);
+  }, []);
 
   useEffect(() => {
     if (notifications.length > 0) {
