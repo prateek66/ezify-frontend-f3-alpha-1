@@ -2,14 +2,12 @@ import React, { useEffect, useContext, useState } from "react";
 
 import "./notificationBell.scss";
 
-import Bell from "./../../assets/header/bell.svg";
+import Bell from "./../../assets/header/bell.webp";
 import { Dropdown } from "react-bootstrap";
 import NotificationList from "../notificationList";
-import { setToasterConfig } from "../../redux/toaster/toaster.actions";
-import { connect } from "react-redux";
 import { NotificationServiceContext } from "../../services/notification.service";
 
-const NotificationBell = ({ userDetails, token, setToasterCofig }) => {
+const NotificationBell = () => {
   const [notifications, setNotifications] = useState([]);
 
   const NotificationsContext = useContext(NotificationServiceContext);
@@ -40,8 +38,4 @@ const NotificationBell = ({ userDetails, token, setToasterCofig }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setToasterCofig: (config) => dispatch(setToasterConfig(config)),
-});
-
-export default connect(null, mapDispatchToProps)(NotificationBell);
+export default NotificationBell;

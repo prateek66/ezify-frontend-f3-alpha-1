@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./table.scss";
 
-import serviceIcon from "./../../../assets/dashboard/serviceIconGreen.svg";
-import rupeeIcon from "./../../../assets/service_page/rupee.svg";
+import serviceIcon from "./../../../assets/dashboard/serviceIconGreen.webp";
+import rupeeIcon from "./../../../assets/service_page/rupee.webp";
 import CustomPagination from "./../customPagination";
 import Select from "react-select";
 

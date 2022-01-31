@@ -1,10 +1,10 @@
 import React from "react";
 import "./footer.scss";
 
-import facebookIcon from "./../../assets/footer/facebook.png";
-import instagramIcon from "./../../assets/footer/instagram.png";
-import twitterIcon from "./../../assets/footer/twitter.png";
-import linkedinIcon from "./../../assets/footer/linkedin.png";
+import facebookIcon from "./../../assets/footer/facebook.webp";
+import instagramIcon from "./../../assets/footer/instagram.webp";
+import twitterIcon from "./../../assets/footer/twitter.webp";
+import linkedinIcon from "./../../assets/footer/linkedin.webp";
 
 const socialLinks = [
   {

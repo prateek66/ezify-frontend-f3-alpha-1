@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./bookings.scss";
 
-import rupeeIcon from "./../../assets/service_page/rupee.svg";
+import rupeeIcon from "./../../assets/service_page/rupee.webp";
 import { ApiCallsContext } from "../../services/api.service";
 import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { createStructuredSelector } from "reselect";

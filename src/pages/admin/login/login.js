@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 
 import "./login.scss";
 
-import BannerImg from "./../../../assets/admin_page/banner.svg";
+import BannerImg from "./../../../assets/admin_page/banner.webp";
 import CustomButton from "../../../components/atmoic/customButton/customButton";
 import FormControl from "../../../components/atmoic/formControl/formControl";
 import { ApiCallsContext } from "../../../services/api.service";

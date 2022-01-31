@@ -6,9 +6,9 @@ import CustomButton from "../../../atmoic/customButton/customButton";
 
 import "./documentsPopup.scss";
 
-import documentIcon from "./../../../../assets/signup/document.svg";
-import checkedIcon from "./../../../../assets/signup/checked.svg";
-import chevronDownIcon from "./../../../../assets/signup/chevron-down.svg";
+import documentIcon from "./../../../../assets/signup/document.webp";
+import checkedIcon from "./../../../../assets/signup/checked.webp";
+import chevronDownIcon from "./../../../../assets/signup/chevron-down.webp";
 import { useFormik } from "formik";
 
 const DocumentsPopup = ({ prevStep, updateState, values, nextStep }) => {

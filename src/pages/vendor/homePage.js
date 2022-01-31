@@ -1,11 +1,11 @@
 import React from "react";
 
 import CustomButton from "../../components/atmoic/customButton/customButton";
-import homeIllustration from "../../assets/vendor_home/Illustration 6.svg";
-import user from "../../assets/vendor_home/user.svg";
-import location from "../../assets/vendor_home/location.svg";
-import server from "../../assets/vendor_home/Server.svg";
-import image1 from "../../assets/vendor_home/image1.svg";
+import homeIllustration from "../../assets/vendor_home/Illustration 6.webp";
+import user from "../../assets/vendor_home/user.webp";
+import location from "../../assets/vendor_home/location.webp";
+import server from "../../assets/vendor_home/Server.webp";
+import image1 from "../../assets/vendor_home/image1.webp";
 import "./homePage.scss";
 
 function Homepage() {

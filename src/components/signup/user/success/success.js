@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 
 import "./success.scss";
 
-import mailSent from "./../../../../assets/signup/mail_sent.svg";
+import mailSent from "./../../../../assets/signup/mail_sent.webp";
 
 const Success = ({ type }) => {
   return (

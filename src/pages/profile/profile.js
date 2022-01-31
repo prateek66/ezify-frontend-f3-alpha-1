@@ -6,7 +6,7 @@ import { State, City } from "country-state-city";
 
 import "./profile.scss";
 
-import editIcon from "./../../assets/profile/edit-icon.svg";
+import editIcon from "./../../assets/profile/edit-icon.webp";
 
 import CustomButton from "../../components/atmoic/customButton/customButton";
 import { connect } from "react-redux";

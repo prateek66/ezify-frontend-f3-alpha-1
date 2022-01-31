@@ -5,7 +5,7 @@ import ModalBase from "../atmoic/modal/modal";
 import "./adminServiceTile.scss";
 
 import deleteIcon from "./../../assets/profile/deleteIcon.svg";
-import editIcon from "./../../assets/profile/edit-icon.svg";
+import editIcon from "./../../assets/profile/edit-icon.webp";
 import ConfirmationPopup from "../atmoic/confirmationPopup";
 import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { ApiCallsContext } from "../../services/api.service";

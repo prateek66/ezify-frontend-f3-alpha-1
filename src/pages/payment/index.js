@@ -3,8 +3,7 @@ import "./payment.scss";
 
 import CustomButton from "../../components/atmoic/customButton/customButton";
 
-import ratingStar from "./../../assets/service_page/star.svg";
-import rupee from "./../../assets/service_page/rupee.svg";
+import rupee from "./../../assets/service_page/rupee.webp";
 import { createStructuredSelector } from "reselect";
 import { selectCartItems, selectCartTotal } from "../../redux/cart/cart.selectors";
 import { connect } from "react-redux";

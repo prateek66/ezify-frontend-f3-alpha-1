@@ -7,10 +7,10 @@ import BannerForm from "../../components/bannerForm/bannerForm";
 import "./home.scss";
 
 import cleaningIcon from "./../../assets/home_page/cleaning_service_icon.svg";
-import laundryIcon from "./../../assets/home_page/laundry_service_icon.svg";
+import laundryIcon from "./../../assets/home_page/laundry_service_icon.webp";
 import paintingIcon from "./../../assets/home_page/painting_service_icon.svg";
 import repairingIcon from "./../../assets/home_page/repairing_service_icon.svg";
-import covidFrame from "./../../assets/home_page/covid_frame.svg";
+import covidFrame from "./../../assets/home_page/covid_frame.webp";
 
 const Home = () => {
   const homePageServices = [

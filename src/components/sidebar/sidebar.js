@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import "./sidebar.scss";
 
-import hamburgerMenu from "./../../assets/dashboard/hamburger-menu.svg";
-import personIcon from "./../../assets/dashboard/personIcon.svg";
-import serviceIcon from "./../../assets/dashboard/serviceIcon.svg";
-import earningsIcon from "./../../assets/dashboard/earningsIcon.svg";
+import hamburgerMenu from "./../../assets/dashboard/hamburger-menu.webp";
+import personIcon from "./../../assets/dashboard/personIcon.webp";
+import serviceIcon from "./../../assets/dashboard/serviceIcon.webp";
+import earningsIcon from "./../../assets/dashboard/earningsIcon.webp";
 
 import { createStructuredSelector } from "reselect";
 import { selectUserDetails } from "../../redux/user/user.selectors";
