@@ -41,6 +41,21 @@ const NotificationContext = ({ children, userDetails, token, setToasterCofig }) 
     return data;
   };
 
+  const markAllAsRead = async () => {
+    const response = await catchHandler(markAllAsReadAPI);
+    setNotifications([]);
+    console.log(response);
+  };
+
+  const markAllAsReadAPI = async () => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const data = await ApiContext.getData(API_URLS.MARK_AS_READ_NOTIFICATION, { headers });
+    return data;
+  };
+
   useEffect(() => {
     if (!userDetails) return;
     fetchNotifications();
@@ -52,7 +67,7 @@ const NotificationContext = ({ children, userDetails, token, setToasterCofig }) 
     });
   }, [userDetails?._id]);
 
-  return <NotificationServiceContext.Provider value={{ notifications }}>{children}</NotificationServiceContext.Provider>;
+  return <NotificationServiceContext.Provider value={{ notifications, markAllAsRead }}>{children}</NotificationServiceContext.Provider>;
 };
 
 const mapStateToProps = createStructuredSelector({

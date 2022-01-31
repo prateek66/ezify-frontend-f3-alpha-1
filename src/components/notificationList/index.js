@@ -6,11 +6,6 @@ import { Link } from "react-router-dom";
 import "./notificationList.scss";
 
 const NotificationList = ({ notifications }) => {
-
-  const markAsRead = (id) => {
-    
-  };
-
   return (
     <Popover placement="bottom">
       <Popover.Title as="h3">You have {notifications.length} unread notifications</Popover.Title>
@@ -22,7 +17,7 @@ const NotificationList = ({ notifications }) => {
             case "BOOKING_STATUS_CHANGED":
               return (
                 <div className="notificationTab" key={index}>
-                  <Link to="/bookings" onClick={() => markAsRead(notification._id)}>
+                  <Link to="/bookings">
                     <small className="mb-0 text-right timestamp">{moment(notification.createdAt).format("DD MMM, YYYY hh:mm A")}</small>
                     <p className="mb-0">Your booking's status has been changed to {notification.data[0].data.status}</p>
                   </Link>
@@ -32,7 +27,7 @@ const NotificationList = ({ notifications }) => {
             case "VENDOR_CREATED":
               return (
                 <div className="notificationTab" key={index}>
-                  <Link to="/dashboard/vendors" onClick={() => markAsRead(notification._id)}>
+                  <Link to="/dashboard/vendors">
                     <small className="mb-0 text-right timestamp">{moment(notification.createdAt).format("DD MMM, YYYY hh:mm A")}</small>
                     <p className="mb-0">A new vendor has registered on ezzify</p>
                   </Link>
@@ -42,7 +37,7 @@ const NotificationList = ({ notifications }) => {
             case "NEW_BOOKING_CREATED":
               return (
                 <div className="notificationTab" key={index}>
-                  <Link to="/dashboard/vendorBookings" onClick={() => markAsRead(notification._id)}>
+                  <Link to="/dashboard/vendorBookings">
                     <small className="mb-0 text-right timestamp">{moment(notification.createdAt).format("DD MMM, YYYY hh:mm A")}</small>
                     <p className="mb-0">You have a new booking</p>
                   </Link>

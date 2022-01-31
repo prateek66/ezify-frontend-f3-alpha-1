@@ -13,7 +13,6 @@ const NotificationBell = () => {
   const NotificationsContext = useContext(NotificationServiceContext);
 
   useEffect(() => {
-    console.log(NotificationsContext.notifications);
     setNotifications(NotificationsContext.notifications);
 
     if (notifications.length > 0) {
@@ -22,9 +21,15 @@ const NotificationBell = () => {
     }
   }, [NotificationsContext.notifications]);
 
+  const onToggle = async (e) => {
+    if (!e && notifications.length > 0) {
+      await NotificationsContext.markAllAsRead();
+    }
+  };
+
   return (
     <div className="mr-3 notificationBell">
-      <Dropdown className="ml-3">
+      <Dropdown className="ml-3" onToggle={onToggle}>
         <Dropdown.Toggle>
           <img src={Bell} alt="Notification bell" id="notification--bell" className="notificationBell--bell" />
           {notifications.length > 0 && <div className="notificationBell__count">{notifications.length}</div>}
