@@ -9,6 +9,7 @@ import Routes from "./routes/routes";
 import { useEffect, useState } from "react";
 import Toaster from "./components/atmoic/toaster";
 import CustomSpinner from "./components/atmoic/spinner";
+import NotificationContext from "./services/notification.service";
 
 function App({ history }) {
   const [showHeader, setShowHeader] = useState(true);
@@ -48,12 +49,14 @@ function App({ history }) {
 
   return (
     <ApiContext>
-      {showHeader && <Header showVendorBtn={true} />}
-      <Routes />
-      {showFooter && <Footer />}
+      <NotificationContext>
+        {showHeader && <Header showVendorBtn={true} />}
+        <Routes />
+        {showFooter && <Footer />}
 
-      <Toaster />
-      <CustomSpinner />
+        <Toaster />
+        <CustomSpinner />
+      </NotificationContext>
     </ApiContext>
   );
 }

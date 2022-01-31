@@ -1,65 +1,28 @@
-import React, { useEffect, useContext, useRef, useState } from "react";
-import { io } from "socket.io-client";
-
-import { ApiCallsContext } from "../../services/api.service";
+import React, { useEffect, useContext, useState } from "react";
 
 import "./notificationBell.scss";
 
 import Bell from "./../../assets/header/bell.svg";
-import { API_URLS } from "../../utlis/constants";
-import { catchHandler } from "../../utlis/catchHandler.utlis";
 import { Dropdown } from "react-bootstrap";
 import NotificationList from "../notificationList";
 import { setToasterConfig } from "../../redux/toaster/toaster.actions";
 import { connect } from "react-redux";
+import { NotificationServiceContext } from "../../services/notification.service";
 
 const NotificationBell = ({ userDetails, token, setToasterCofig }) => {
   const [notifications, setNotifications] = useState([]);
 
-  const ApiContext = useContext(ApiCallsContext);
-
-  const socket = io(API_URLS.SOCKET_END_POINT, {
-    transports: ["websocket", "polling"],
-    path: "/mysocket/",
-  });
-
-  const fetchNotifications = async () => {
-    const response = await catchHandler(fetchNotificationsAPI);
-    if (Array.isArray(response) && response.length > 0) {
-      setNotifications(response);
-      setToasterCofig({
-        show: true,
-        message: "You have new notifications",
-        className: "success",
-      });
-    }
-  };
-
-  const fetchNotificationsAPI = async () => {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    const data = await ApiContext.getData(API_URLS.FETCH_NOTIFICATIONS, { headers });
-    return data;
-  };
+  const NotificationsContext = useContext(NotificationServiceContext);
 
   useEffect(() => {
-    fetchNotifications();
-    socket.emit("join", userDetails._id);
+    console.log(NotificationsContext.notifications);
+    setNotifications(NotificationsContext.notifications);
 
-    socket.on("NEW_ORDER", (data) => {
-      fetchNotifications();
-
-    });
-  }, []);
-
-  useEffect(() => {
     if (notifications.length > 0) {
       let audio = new Audio("/notificationSound.wav");
       audio.play();
     }
-  }, [notifications]);
+  }, [NotificationsContext.notifications]);
 
   return (
     <div className="mr-3 notificationBell">
