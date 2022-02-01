@@ -15,7 +15,7 @@ const NotificationBell = () => {
   useEffect(() => {
     setNotifications(NotificationsContext.notifications);
 
-    if (notifications.length > 0) {
+    if (NotificationsContext.notifications.length > 0) {
       let audio = new Audio("/notificationSound.wav");
       audio.play();
     }

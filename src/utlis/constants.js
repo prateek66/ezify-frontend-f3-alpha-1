@@ -47,7 +47,7 @@ export const API_URLS = {
   VIEW_ALL_EARNINGS: "v1/vendor/view_earnings",
   TOGGLE_BOOKING_STATUS: "v1/vendor/toggle_status",
 
-  SOCKET_END_POINT: "http://139.59.1.148/socket",
+  SOCKET_END_POINT: "http://139.59.1.148",
 };
 
 // export const config = {
