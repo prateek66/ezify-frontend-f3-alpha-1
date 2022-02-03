@@ -46,7 +46,6 @@ const ApiContext = ({ children, setSpinner }) => {
         .then((response) => {
           console.log(response.data);
           let resData = response.data.data;
-          // resData = typeof resData === "string" ? resData : JSON.stringify({ resData });
           if (config.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
 
@@ -69,6 +68,10 @@ const ApiContext = ({ children, setSpinner }) => {
     setSpinner(true);
     return new Promise((resolve, reject) => {
       const path = `${config.BASE_URL}${url}`;
+
+      console.log(url !== API_URLS.UPDATE_VENDOR);
+      console.log(url);
+      console.log(API_URLS.UPDATE_VENDOR);
 
       let data = postObj;
       if (config.ENVIRONMENT === "PROD" && url !== API_URLS.UPDATE_USER && url !== API_URLS.UPDATE_VENDOR) {

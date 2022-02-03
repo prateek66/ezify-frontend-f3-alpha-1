@@ -77,7 +77,7 @@ export class VendorSignup extends Component {
       const path = `${config.BASE_URL}${url}`;
 
       let data = postObj;
-      if (config.ENVIRONMENT === "PROD") {
+      if (config.ENVIRONMENT === "PROD" && url !== API_URLS.UPDATE_USER && url !== API_URLS.UPDATE_VENDOR) {
         data = {
           data: encyption(postObj),
         };
