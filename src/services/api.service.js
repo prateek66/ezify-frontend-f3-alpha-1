@@ -3,7 +3,7 @@ import axios from "axios";
 import { decryption, encyption } from "../utlis/security.utlis";
 import { setSpinner } from "../redux/spinner/spinner.actions";
 import { connect } from "react-redux";
-import { config } from "../utlis/constants";
+import { API_URLS, config } from "../utlis/constants";
 
 export const ApiCallsContext = React.createContext();
 
@@ -44,9 +44,13 @@ const ApiContext = ({ children, setSpinner }) => {
       axios
         .post(path, data, options)
         .then((response) => {
+          console.log(response.data);
           let resData = response.data.data;
+          // resData = typeof resData === "string" ? resData : JSON.stringify({ resData });
           if (config.ENVIRONMENT === "PROD") {
             resData = decryption(resData);
+
+            console.log(resData);
           }
 
           setSpinner(false);
@@ -67,7 +71,7 @@ const ApiContext = ({ children, setSpinner }) => {
       const path = `${config.BASE_URL}${url}`;
 
       let data = postObj;
-      if (config.ENVIRONMENT === "PROD") {
+      if (config.ENVIRONMENT === "PROD" && url !== API_URLS.UPDATE_USER && url !== API_URLS.UPDATE_VENDOR) {
         data = {
           data: encyption(postObj),
         };

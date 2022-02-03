@@ -50,14 +50,8 @@ export const API_URLS = {
   SOCKET_END_POINT: "http://139.59.1.148",
 };
 
-// export const config = {
-//   ENCRYPTION_KEY: "EZZIFY-PESTO",
-//   ENVIRONMENT: "DEV",
-//   BASE_URL: "http://localhost:",
-// };
-
 export const config = {
   ENCRYPTION_KEY: "EZZIFY-PESTO",
-  ENVIRONMENT: "DEV",
+  ENVIRONMENT: "PROD",
   BASE_URL: "http://139.59.1.148/",
 };
