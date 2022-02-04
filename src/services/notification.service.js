@@ -57,8 +57,12 @@ const NotificationContext = ({ children, userDetails, token, setToasterCofig }) 
   };
 
   useEffect(() => {
-    if (!userDetails) return;
-    fetchNotifications();
+    if (!userDetails?._id) return;
+
+    setTimeout(() => {
+      fetchNotifications();
+    }, 1000);
+
     socket.emit("join", userDetails._id);
 
     socket.on("NEW_ORDER", (data) => {

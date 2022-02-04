@@ -190,9 +190,9 @@ const DashboardContainer = ({ userDetails, token }) => {
       <h2 className="dashboardContainer__greetings">Hello {userDetails.firstName},</h2>
 
       <div className="d-flex align-items-center justify-content-start mt-4">
+        {/* <DashboardCard />
         <DashboardCard />
-        <DashboardCard />
-        <DashboardCard />
+        <DashboardCard /> */}
       </div>
 
       <DashboardLineChart {...lineChartConfigs} />

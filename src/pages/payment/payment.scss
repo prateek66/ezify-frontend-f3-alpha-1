@@ -3,6 +3,10 @@
 .payment-page {
   color: #30334f;
 
+  &__IMG {
+    height: 5.5rem;
+  }
+
   & .custom-blur {
     filter: blur(10px);
   }

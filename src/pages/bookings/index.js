@@ -39,7 +39,7 @@ const Bookings = ({ userToken }) => {
         response.forEach((booking) => {
           if (booking.status === "completed") {
             historyBookingRecords.push(booking);
-          } else if (booking.status === "active") {
+          } else if (booking.status === "active" || booking.status === "received") {
             activeBookingRecords.push(booking);
           }
           // booking.bookings.forEach((bookingObj) => {

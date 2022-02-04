@@ -70,13 +70,17 @@ const BannerForm = ({ history }) => {
 
   const fetchCities = async () => {
     const response = await catchHandler(fetchCitiesAPI);
+
+    console.log(response);
     if (Array.isArray(response) && response.length > 0) {
       let fetchedCities = [];
       response.forEach((city) => {
-        fetchedCities.push({
-          label: city,
-          value: city,
-        });
+        if (city.trim().length > 0) {
+          fetchedCities.push({
+            label: city,
+            value: city,
+          });
+        }
       });
       setCities(fetchedCities);
     }

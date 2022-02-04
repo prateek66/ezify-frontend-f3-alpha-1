@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 
 import loadable from "@loadable/component";
 
+import Dashboard from "./../pages/dashboard/dashboard.js";
+
 import CustomSpinner from "./../components/atmoic/spinner";
 
 const LoadableProfile = loadable(() => import("../pages/profile/profile.js"), {
@@ -76,7 +78,8 @@ const Routes = ({ userDetails }) => {
           <Route exact path="/services/:name/:serviceId/:city?" component={LoadableServices} />
           <Route exact path="/admin" component={LoadableLogin} />
           <Route exact path="/vendorhome" component={LoadableVendor} />
-          <Route path="/dashboard" render={() => renderComponent(<LoadableDashboard />, ["admin", "vendor"])} />
+          {/* <Route path="/dashboard" render={() => renderComponent(<Dashboard />, ["admin", "vendor"])} /> */}
+          <Route path="/dashboard" component={Dashboard} />
           <Route exact path="/bookings" render={() => renderComponent(<LoadableBookings />, ["user"])} />
           <Route exact path="/payment" component={LoadablePayment} />
           <Route exact path="/orders" render={() => renderComponent(<LoadableOrders />, ["user"])} />

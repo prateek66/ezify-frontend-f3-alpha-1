@@ -18,6 +18,7 @@ const Services = ({ cartItems }) => {
   const { name, serviceId, city } = useParams();
 
   const [vendors, setVendors] = useState([]);
+  const [bannerImg, setBannerImg] = useState(bannerPic);
 
   useEffect(() => {
     fetchVendors();
@@ -26,6 +27,9 @@ const Services = ({ cartItems }) => {
   const fetchVendors = async () => {
     const response = await catchHandler(fetchServicesAPI);
     setVendors(response);
+
+    const selectedService = response.map((record) => record.services.find((service) => service.serviceID._id === serviceId));
+    setBannerImg(selectedService[0].serviceID.image);
   };
 
   const fetchServicesAPI = async () => {
@@ -42,19 +46,19 @@ const Services = ({ cartItems }) => {
     <>
       <div className="services">
         <div className="services__banner">
-          <img src={bannerPic} alt="Banner" />
+          <img src={bannerImg} alt="Banner" />
           <h2 className="services__banner--text">{name} Services</h2>
         </div>
         <div className="services__listing-container container">
           <div className="row">
-            <div className="col-4">
+            {/* <div className="col-4">
               <div className="services__filter-box services__filter-box--1">
                 <div className="services__filter-box--title">Sort By</div>
                 <div className="services__filter-box--options">Price: High to Low</div>
                 <div className="services__filter-box--options">Price: Low to High</div>
               </div>
-            </div>
-            <div className="col-8">
+            </div> */}
+            <div className="col-8 mx-auto">
               {vendors.length > 0 &&
                 vendors.map((vendor, index) => <VendorTile key={index} {...vendor} serviceId={serviceId} serviceName={name} cartItems={cartItems} />)}
               {vendors.length <= 0 && <h2 className="text-center">Sorry, No vendor found</h2>}

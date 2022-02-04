@@ -33,7 +33,7 @@ const VendorTile = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const selectedService = services.find((service) => service.serviceID === serviceId);
+  const selectedService = services.find((service) => service.serviceID._id === serviceId);
 
   const handleBookNow = () => {
     if (userDetails?.roles === "vendor" || userDetails?.roles === "admin") {
@@ -89,7 +89,7 @@ const VendorTile = ({
   return (
     <>
       <div className="row vendorTile mb-2">
-        <div className="col-2 d-flex align-items-center justify-content-center">
+        <div className="col-2 d-flex align-items-center justify-content-center vendorTile__IMG">
           <img src={profileImage} alt="Vendor Profile" className="h-100 w-100 vendorTile__profile" />
         </div>
         <div className="col-5">

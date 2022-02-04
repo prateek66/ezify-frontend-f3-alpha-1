@@ -35,11 +35,14 @@ const AdminServiceTile = ({ _id, image, name, updatedAt, description, userToken,
     });
 
     setShowDeletePopup(false);
-
   };
 
   const deleteServiceAPI = async () => {
     const path = `${API_URLS.DELETE_SERVICE}/${_id}`;
+
+    const postObj = {
+      id: _id,
+    };
 
     const headers = {
       Authorization: `Bearer ${userToken}`,

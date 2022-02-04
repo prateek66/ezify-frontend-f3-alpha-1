@@ -126,7 +126,7 @@ const Payment = ({ cartItems, totalAmount, disabledItemFromCart, userToken, setC
                 {cartItems.length > 0 &&
                   cartItems.map((item, index) => (
                     <div className="row payment-page__vendorTile mb-2 mr-2" key={index}>
-                      <div className={`col-2 d-flex align-items-center justify-content-center ${item.active ? null : "custom-blur"}`}>
+                      <div className={`col-2 d-flex align-items-center justify-content-center payment-page__IMG ${item.active ? null : "custom-blur"}`}>
                         <img src={item.profileImage} alt="Vendor Profile" className="h-100 w-100 rounded-circle" />
                       </div>
                       <div className={`col-4 ${item.active ? null : "custom-blur"}`}>
