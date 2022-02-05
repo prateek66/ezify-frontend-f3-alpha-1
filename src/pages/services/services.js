@@ -28,8 +28,8 @@ const Services = ({ cartItems }) => {
     const response = await catchHandler(fetchServicesAPI);
     setVendors(response);
 
-    const selectedService = response.map((record) => record.services.find((service) => service.serviceID._id === serviceId));
-    setBannerImg(selectedService[0].serviceID.image);
+    // const selectedService = response.map((record) => record.services.find((service) => service.serviceID._id === serviceId));
+    // setBannerImg(selectedService[0].serviceID.image);
   };
 
   const fetchServicesAPI = async () => {

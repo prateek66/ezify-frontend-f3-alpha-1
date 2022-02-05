@@ -15,7 +15,8 @@ const NotificationContext = ({ children, userDetails, token, setToasterCofig }) 
 
   const socket = io(API_URLS.SOCKET_END_POINT, {
     transports: ["websocket", "polling"],
-    path: "/socket/mysocket/",
+    // path: "/socket/mysocket/",
+    path: "/mysocket/",
   });
 
   const ApiContext = useContext(ApiCallsContext);
@@ -57,11 +58,11 @@ const NotificationContext = ({ children, userDetails, token, setToasterCofig }) 
   };
 
   useEffect(() => {
-    if (!userDetails?._id) return;
+    if (!userDetails) return;
 
-    setTimeout(() => {
-      fetchNotifications();
-    }, 1000);
+    // setTimeout(() => {
+    // }, 1000);
+    fetchNotifications();
 
     socket.emit("join", userDetails._id);
 

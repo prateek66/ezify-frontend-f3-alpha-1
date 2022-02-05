@@ -33,7 +33,7 @@ const VendorTile = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const selectedService = services.find((service) => service.serviceID._id === serviceId);
+  const selectedService = services.find((service) => service.serviceID === serviceId);
 
   const handleBookNow = () => {
     if (userDetails?.roles === "vendor" || userDetails?.roles === "admin") {
