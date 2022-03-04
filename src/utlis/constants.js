@@ -53,6 +53,6 @@ export const API_URLS = {
 export const config = {
   ENCRYPTION_KEY: "EZZIFY-PESTO",
   ENVIRONMENT: "PROD",
-  BASE_URL: "http://139.59.1.148",
+  BASE_URL: "http://139.59.1.148/",
   // BASE_URL: "http://localhost:",
 };
