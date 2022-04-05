@@ -80,7 +80,7 @@ const FormControl = (props) => {
 
         {type === "input-formik" && (
           <>
-            <input id={id} type="text" className="form-control formControl-input" {...formik.getFieldProps(id)} />
+            <input id={id} type="text" className="form-control formControl-input" {...formik.getFieldProps(id)}  value={value}/>
             <small className="text-danger errorMsg">{formik.touched[id] && formik.errors[id] ? formik.errors[id] : ""}</small>
           </>
         )}

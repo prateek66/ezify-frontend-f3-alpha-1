@@ -15,8 +15,8 @@ const NotificationContext = ({ children, userDetails, token, setToasterCofig }) 
 
   const socket = io(API_URLS.SOCKET_END_POINT, {
     transports: ["websocket", "polling"],
-    // path: "/socket/mysocket/",
-    path: "/mysocket/",
+     path: "/socket/mysocket/",
+    //path: "/mysocket/",
   });
 
   const ApiContext = useContext(ApiCallsContext);

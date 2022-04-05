@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../../../utlis/constants";
+// import OtpPopup from "../otpPopup/otpPopup";
 import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
@@ -17,6 +18,7 @@ const EmailPopup = ({ values, updateState, nextStep, type }) => {
   const formik = useFormik({
     initialValues: {
       email: values.email,
+    //  values: "pesto@pesto.com"
     },
     validationSchema: Yup.object({
       email: Yup.string().min(3).required("Required").matches(emailRegex, "Enter a valid email"),
@@ -40,7 +42,7 @@ const EmailPopup = ({ values, updateState, nextStep, type }) => {
         formik.setFieldError("email", "Your profile is under verification. Please wait for sometime.");
         return;
       }
-
+      updateState("otp",response.otpVerify);
       console.log("otpVerify", response.otpVerify);
       updateState("id", response._id);
       nextStep();
@@ -61,7 +63,7 @@ const EmailPopup = ({ values, updateState, nextStep, type }) => {
     type: "submit",
     text: "SEND OTP",
     classes: "btn-block font-weight-bold",
-    disabled: true,
+    disabled: false,
   });
 
   const emailAttributes = {
@@ -69,6 +71,7 @@ const EmailPopup = ({ values, updateState, nextStep, type }) => {
     label: "ENTER YOUR EMAIL ADDRESS",
     isMandatory: true,
     type: "input-formik",
+    //value: formik.initialValues.values,
     formik,
   };
 
@@ -83,7 +86,10 @@ const EmailPopup = ({ values, updateState, nextStep, type }) => {
 
   useEffect(() => {
     formik.validateForm();
+  
   }, []);
+
+  console.log(emailAttributes.value, "qqqqqqqq");
 
   return (
     <div className="emailPopup">

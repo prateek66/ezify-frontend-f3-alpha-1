@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -11,12 +11,17 @@ import ModalBase from "../atmoic/modal/modal";
 import ProfileOptions from "../profileOptions/profileOptions";
 
 import UserSignup from "../signup/user/userSignup";
+import { ApiCallsContext } from "../../services/api.service";
+import { API_URLS } from "../../utlis/constants";
+import { catchHandler } from "../../utlis/catchHandler.utlis";
 
 import "./Header.scss";
 import VendorSignup from "../signup/vendor/vendorSignup";
 import NotificationBell from "../notificationBell";
+// import GuestSignup from "../signup/guest/GuestSignup";
 
 const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
+  const ApiContext = useContext(ApiCallsContext);
   const history = useHistory();
   const location = useLocation();
 
@@ -47,6 +52,26 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
     setUser(null);
   };
 
+  const handleGuestSignIn = async () => {
+    let type;
+    if (location.pathname === "/") {
+      type = "user";
+      const data = await ApiContext.postData(API_URLS.SEND_OTP, { email: "pesto@pesto.com", role: type });
+      const otp = await ApiContext.postData(API_URLS.VERIFY_OTP, { id: data._id, otp: data.otpVerify });
+
+      setToken(otp.token);
+      setUser(otp.user);
+    } else {
+      type = "vendor";
+      const data = await ApiContext.postData(API_URLS.SEND_OTP, { email: "vendor3@gmail.com", role: type });
+      const otp = await ApiContext.postData(API_URLS.VERIFY_OTP, { id: data._id, otp: data.otpVerify });
+
+      setToken(otp.token);
+      setUser(otp.user);
+    }
+  };
+
+  console.log(token, "tokenn");
   return (
     <>
       <header className="header">
@@ -67,7 +92,16 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
                     Become a Vendor
                   </Link>
                 )}
-                <CustomButton type="button" text={token ? "Sign Out" : "Sign In"} onClick={handleSignupSignIn}></CustomButton>
+                
+                {!token && (
+                  <CustomButton
+                    type="button"
+                    text={token ? "Sign Out" : "sign in as guest"}
+                    onClick={handleGuestSignIn}
+                  ></CustomButton>
+                )}
+                <CustomButton classname="ml-2" type="button" text={token ? "Sign Out" : "Sign In"} onClick={handleSignupSignIn}></CustomButton>
+
                 {token && <ProfileOptions {...userDetails} />}
               </div>
             </div>
@@ -80,6 +114,8 @@ const Header = ({ token, setToken, userDetails, setUser, showVendorBtn }) => {
           {popupType === "user" && <UserSignup setSize={setSize} handleClose={handleClose}></UserSignup>}
 
           {popupType === "vendor" && <VendorSignup setSize={setSize} handleClose={handleClose} />}
+
+          {}
         </>
       </ModalBase>
     </>

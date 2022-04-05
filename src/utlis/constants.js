@@ -47,12 +47,12 @@ export const API_URLS = {
   VIEW_ALL_EARNINGS: "v1/vendor/view_earnings",
   TOGGLE_BOOKING_STATUS: "v1/vendor/toggle_status",
 
-  SOCKET_END_POINT: "http://139.59.1.148",
+  SOCKET_END_POINT: "http://128.199.18.197",
 };
 
 export const config = {
   ENCRYPTION_KEY: "EZZIFY-PESTO",
   ENVIRONMENT: "PROD",
-  BASE_URL: "http://139.59.1.148/",
+  BASE_URL: "http://128.199.18.197/",
   // BASE_URL: "http://localhost:",
 };

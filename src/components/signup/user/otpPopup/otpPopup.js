@@ -6,7 +6,7 @@ import { setCurrentUser, setCurrentUserToken } from "../../../../redux/user/user
 import { ApiCallsContext } from "../../../../services/api.service";
 import { catchHandler } from "../../../../utlis/catchHandler.utlis";
 import { API_URLS } from "../../../../utlis/constants";
-
+import CustomButton from "../../../atmoic/customButton/customButton";
 import FormControl from "../../../atmoic/formControl/formControl";
 
 import "./otpPopup.scss";
@@ -43,12 +43,10 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
   };
 
   const handleOTPChange = async (e) => {
-    const { value } = e.target;
+    const value  = values.otp;
 
     if (value.length === 4) {
       const response = await catchHandler(() => verifyOTPAPI(value));
-
-      console.log(response);
 
       updateState("token", response.token);
       if (!response.user.isActive) {
@@ -73,7 +71,8 @@ const OtpPopup = ({ values, updateState, nextStep, prevStep, handleClose, setTok
               <span onClick={prevStep}>Change Email</span>
             </p>
           </div>
-          <input className="form-control formControl-input mb-3 otp-input" id="otp" maxLength={4} onChange={handleOTPChange} />
+          <input className="form-control formControl-input mb-3 otp-input" id="otp" maxLength={4} value = {values.otp} onChange={handleOTPChange}  />
+          <CustomButton type="button" text={"CLICK"} onClick={handleOTPChange}></CustomButton>
           <p className="emailPopup__change-email">
             <span onClick={sendOTPAPI}>Resend OTP</span>
           </p>
